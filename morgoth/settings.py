@@ -16,6 +16,8 @@ class Core(Configuration):
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+
+        'morgoth.base',
     ]
 
     MIDDLEWARE_CLASSES = [
@@ -94,3 +96,10 @@ class Development(Base):
 class Production(Base):
     """Settings for the production environment."""
     pass
+
+
+class Test(Base):
+    """Settings for test environment."""
+    DOTENV_EXISTS = os.path.exists(os.path.join(Core.BASE_DIR, '.env'))
+    DOTENV = '.env' if DOTENV_EXISTS else None
+    SECRET_KEY = values.Value('not a secret')
