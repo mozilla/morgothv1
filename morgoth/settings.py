@@ -81,6 +81,11 @@ class Base(Core):
 
     # Media and static settings
     STATIC_URL = '/static/'
+    STATIC_ROOT = values.Value(os.path.join(Core.BASE_DIR, 'static'))
+    MEDIA_URL = values.Value('/media/')
+    MEDIA_ROOT = values.Value(os.path.join(Core.BASE_DIR, 'media'))
+
+    ADMIN_ENABLED = values.BooleanValue(True)
 
 
 class Development(Base):
