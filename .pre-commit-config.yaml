@@ -1,0 +1,16 @@
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    sha: e306ff3b7d0d9a6fc7d128ef9ca2e0b6e6e76e8f
+    hooks:
+    -   id: check-added-large-files
+    -   id: check-case-conflict
+    -   id: check-json
+    -   id: check-merge-conflict
+    -   id: check-yaml
+    -   id: debug-statements
+    -   id: trailing-whitespace
+    -   id: flake8
+        exclude: "\
+            (.*migrations.*)|\
+            (docs/.*)|\
+            (kitsune/settings.*)|"
+        args: [--max-line-length=99]
