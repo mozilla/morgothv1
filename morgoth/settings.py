@@ -15,6 +15,7 @@ class Core(Configuration):
         'django.contrib.contenttypes',
         'django.contrib.sessions',
         'django.contrib.messages',
+        'whitenoise.runserver_nostatic',
         'django.contrib.staticfiles',
 
         'morgoth.base',
@@ -22,6 +23,7 @@ class Core(Configuration):
 
     MIDDLEWARE_CLASSES = [
         'django.middleware.security.SecurityMiddleware',
+        'whitenoise.middleware.WhiteNoiseMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
         'django.middleware.csrf.CsrfViewMiddleware',
@@ -84,6 +86,8 @@ class Base(Core):
     STATIC_ROOT = values.Value(os.path.join(Core.BASE_DIR, 'static'))
     MEDIA_URL = values.Value('/media/')
     MEDIA_ROOT = values.Value(os.path.join(Core.BASE_DIR, 'media'))
+
+    STATICFILES_STORAGE = values.Value('whitenoise.django.GzipManifestStaticFilesStorage')
 
     ADMIN_ENABLED = values.BooleanValue(True)
 
