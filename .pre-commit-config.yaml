@@ -12,5 +12,5 @@
         exclude: "\
             (.*migrations.*)|\
             (docs/.*)|\
-            (kitsune/settings.*)|"
+            (kitsune/settings.*)"
         args: [--max-line-length=99]
