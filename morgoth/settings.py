@@ -91,6 +91,22 @@ class Base(Core):
         {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
         {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
     ]
+    PASSWORD_HASHERS = values.ListValue([
+        'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+        'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    ])
+    USE_X_FORWARDED_HOST = values.BooleanValue(False)
+    SECURE_PROXY_SSL_HEADER = values.TupleValue()
+    SECURE_HSTS_SECONDS = values.IntegerValue(3600)
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = values.BooleanValue(True)
+    CSRF_COOKIE_HTTPONLY = values.BooleanValue(True)
+    CSRF_COOKIE_SECURE = values.BooleanValue(True)
+    SECURE_SSL_REDIRECT = values.BooleanValue(True)
+    SECURE_REDIRECT_EXEMPT = values.ListValue([])
+    SESSION_COOKIE_SECURE = values.BooleanValue(True)
+    SECURE_BROWSER_XSS_FILTER = values.BooleanValue(True)
+    SECURE_CONTENT_TYPE_NOSNIFF = values.BooleanValue(True)
+    X_FRAME_OPTIONS = values.Value('DENY')
 
     # Media and static settings
     STATIC_URL = '/static/'
@@ -112,10 +128,16 @@ class Development(Base):
     DEBUG = values.BooleanValue(True)
     SECRET_KEY = values.Value('not a secret')
 
+    INSTALLED_APPS = Base.INSTALLED_APPS + ['sslserver']
+
+    AUTH_PASSWORD_VALIDATORS = values.ListValue([])
+    SECURE_SSL_REDIRECT = values.Value(False)
+
 
 class Production(Base):
     """Settings for the production environment."""
-    pass
+    USE_X_FORWARDED_HOST = values.BooleanValue(True)
+    SECURE_PROXY_SSL_HEADER = values.TupleValue(('HTTP_X_FORWARDED_PROTO', 'https'))
 
 
 class Test(Base):
