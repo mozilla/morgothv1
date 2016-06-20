@@ -18,6 +18,9 @@ class Core(Configuration):
         'whitenoise.runserver_nostatic',
         'django.contrib.staticfiles',
 
+        'rest_framework',
+        'rest_framework.authtoken',
+
         'morgoth.base',
     ]
 
@@ -60,6 +63,14 @@ class Core(Configuration):
     USE_I18N = False
     USE_L10N = False
     USE_TZ = True
+
+    REST_FRAMEWORK = {
+        'DEFAULT_AUTHENTICATION_CLASSES': (
+            'rest_framework.authentication.TokenAuthentication',
+            'rest_framework.authentication.SessionAuthentication'
+        ),
+        'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    }
 
 
 class Base(Core):
