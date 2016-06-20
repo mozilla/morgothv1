@@ -2,4 +2,6 @@ from django.apps import AppConfig
 
 
 class BaseConfig(AppConfig):
-    name = 'base'
+    name = 'morgoth.base'
+    label = 'base'
+    verbose_name = 'Morgoth'

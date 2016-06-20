@@ -10,6 +10,11 @@ class Core(Configuration):
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
     INSTALLED_APPS = [
+        'morgoth.base.apps.BaseConfig',
+
+        'rest_framework',
+        'rest_framework.authtoken',
+
         'django.contrib.admin',
         'django.contrib.auth',
         'django.contrib.contenttypes',
@@ -17,11 +22,6 @@ class Core(Configuration):
         'django.contrib.messages',
         'whitenoise.runserver_nostatic',
         'django.contrib.staticfiles',
-
-        'rest_framework',
-        'rest_framework.authtoken',
-
-        'morgoth.base',
     ]
 
     MIDDLEWARE_CLASSES = [
