@@ -14,4 +14,4 @@ http://morgoth.readthedocs.org/.
 
 # License
 
-Normandy is licensed under the MPLv2. See the `LICENSE` file for details.
+Morgoth is licensed under the MPLv2. See the `LICENSE` file for details.
