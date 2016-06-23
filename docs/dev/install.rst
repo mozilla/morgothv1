@@ -9,7 +9,9 @@ This guide assumes you have already installed and set up the following:
 
 1. Git_
 2. `Python 3.5`_, `pip 8`_ or higher, and virtualenv_
-3. `Postgres 9.4`_
+3. `Node.js`_ and npm.
+4. `Postgres 9.4`_
+5. ``openssl``
 
 These docs assume a Unix-like operating system, although the site should, in
 theory, run on Windows as well. All the example commands given below are
@@ -18,6 +20,7 @@ intended to be run in a terminal.
 .. _Git: https://git-scm.com/
 .. _Python 3.5: https://www.python.org/
 .. _pip 8: https://pip.pypa.io/en/stable/
+.. _Node.js: https://nodejs.org/en/
 .. _virtualenv: https://virtualenv.pypa.io/en/latest/
 .. _Postgres 9.4: http://www.postgresql.org/
 
