@@ -9,7 +9,7 @@ This guide assumes you have already installed and set up the following:
 
 1. Git_
 2. `Python 3.5`_, `pip 8`_ or higher, and virtualenv_
-4. `Postgres 9.4`_
+3. `Postgres 9.4`_
 
 These docs assume a Unix-like operating system, although the site should, in
 theory, run on Windows as well. All the example commands given below are
@@ -54,7 +54,14 @@ Installation
       :ref:`pip-install-error`
          How to troubleshoot errors during ``pip install``.
 
-4. Create a Postgres database for Morgoth. By default it is assumed to be named
+4. Install frontend dependencies and build the frontend code using npm:
+
+   .. code-block:: bash
+
+      npm install
+      npm run build
+
+5. Create a Postgres database for Morgoth. By default it is assumed to be named
    ``morgoth``:
 
    .. code-block:: bash
@@ -71,13 +78,13 @@ Installation
 
          DATABASE_URL=postgres://username:password@server_addr/database_name
 
-5. Initialize your database by running the migrations:
+6. Initialize your database by running the migrations:
 
    .. code-block:: bash
 
       python manage.py migrate
 
-6. Create a new superuser account:
+7. Create a new superuser account:
 
    .. code-block:: bash
 
@@ -88,9 +95,16 @@ running:
 
 .. code-block:: bash
 
-   .manage.py runserver
+   ./bin/runsslserver.sh
 
-The site should be available at http://localhost:8000/.
+.. note::
+
+   The ``runsslserver.sh`` command automatically creates a self-signed
+   certificate in the ``etc/ssl`` directory of the repository. When viewing the
+   site for the first time, you will have to create a certificate exception to
+   allow Firefox to accept the certificate and access the site over HTTPS.
+
+The site should be available at https://localhost:8000/.
 
 .. _fork: http://help.github.com/fork-a-repo/
 .. _issue: https://bugs.python.org/issue18378
