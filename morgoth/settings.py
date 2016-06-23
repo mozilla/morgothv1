@@ -14,6 +14,7 @@ class Core(Configuration):
 
         'rest_framework',
         'rest_framework.authtoken',
+        'webpack_loader',
 
         'django.contrib.admin',
         'django.contrib.auth',
@@ -72,6 +73,13 @@ class Core(Configuration):
         'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     }
 
+    WEBPACK_LOADER = {
+        'DEFAULT': {
+            'BUNDLE_DIR_NAME': 'bundles/',
+            'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+        }
+    }
+
 
 class Base(Core):
     """Settings that may change on a per-environment basis, some with defaults."""
@@ -113,6 +121,10 @@ class Base(Core):
     STATIC_ROOT = values.Value(os.path.join(Core.BASE_DIR, 'static'))
     MEDIA_URL = values.Value('/media/')
     MEDIA_ROOT = values.Value(os.path.join(Core.BASE_DIR, 'media'))
+
+    STATICFILES_DIRS = (
+        os.path.join(Core.BASE_DIR, 'assets'),
+    )
 
     STATICFILES_STORAGE = values.Value('whitenoise.django.GzipManifestStaticFilesStorage')
 

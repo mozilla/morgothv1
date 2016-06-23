@@ -1,11 +1,14 @@
+{% load render_bundle from webpack_loader %}
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
     <title>Morgoth</title>
+    {% render_bundle 'main' 'css' %}
     <meta name="robots" content="NONE,NOARCHIVE">
   </head>
 
   <body>
-    {% block body %}{% endblock %}
+    {% block content %}{% endblock %}
+    {% render_bundle 'main' 'js' %}
   </body>
 </html>

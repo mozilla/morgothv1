@@ -28,6 +28,9 @@ django-configurations==1.0 \
     --hash=sha256:93f4a09134145f4388c2ec2183ce623b1b57fd04e3e0d2a2cf3b32fadc8f9464
 django-sslserver==0.19 \
     --hash=sha256:1363835229a0585f89c42f3beca836572f3f6babdc1508f13352aed84b0924b3
+django-webpack-loader==0.3.0 \
+    --hash=sha256:729c8d1b0d3f1449a2f7964c7e5351d0494bbe0470afdf9570e26593ac75fe13 \
+    --hash=sha256:d07551285bb15db68c26c11c15051fb74dde8a311562e8ed1d36df1160371a47
 djangorestframework==3.3.3 \
     --hash=sha256:4f47056ad798103fc9fb049dff8a67a91963bd215d31bad12ad72b891559ab16 \
     --hash=sha256:f606f2bb4e9bb320937cb6ccce299991b2d302f5cc705a671dffca491e55935c
