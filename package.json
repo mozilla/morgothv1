@@ -7,6 +7,10 @@
     "url": "git://github.com/mozilla/morgoth.git"
   },
   "license": "MPL-2.0",
+  "scripts": {
+    "watch": "webpack --config ./webpack.config.js --watch",
+    "build": "webpack --config ./webpack.config.js"
+  },
   "dependencies": {
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",
