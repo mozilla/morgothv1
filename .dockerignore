@@ -1,0 +1,10 @@
+.cache
+.env*
+.floo*
+docs/_build
+media
+node_modules
+pip-cache
+site-packages
+venv
+webpack-stats.json

@@ -152,6 +152,11 @@ class Production(Base):
     SECURE_PROXY_SSL_HEADER = values.TupleValue(('HTTP_X_FORWARDED_PROTO', 'https'))
 
 
+class Build(Production):
+    """Settings for building the Docker image for production."""
+    SECRET_KEY = values.Value('not a secret')
+
+
 class Test(Base):
     """Settings for test environment."""
     DOTENV_EXISTS = os.path.exists(os.path.join(Core.BASE_DIR, '.env'))
