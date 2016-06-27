@@ -37,6 +37,8 @@ djangorestframework==3.3.3 \
 flake8==2.6.2 \
     --hash=sha256:7ac3bbaac27174d95bc4734ed23a07de567ffbcf4fc7e316854b4f3015d4fd15 \
     --hash=sha256:231cd86194aaec4bdfaa553ae1a1cd9b7b4558332fbc10136c044940d587a778
+flake8-junit-report==2.1.0 \
+    --hash=sha256:f8890c1ebe0acb516fefacddec4b802bca9f89bb07db933e4ee3cd11ceaa1e8b
 gunicorn==19.6.0 \
     --hash=sha256:723234ea1fa8dff370ab69830ba8bc37469a7cba13fd66055faeef24085e6530 \
     --hash=sha256:813f6916d18a4c8e90efde72f419308b357692f81333cb1125f80013d22fb618
