@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 
 import factory
 
+from factory import fuzzy
+
 
 class Whatever(object):
     def __init__(self, test=lambda x: True):
@@ -15,7 +17,7 @@ class Whatever(object):
         return self.test(other)
 
 
-class FuzzyUnicode(factory.fuzzy.FuzzyText):
+class FuzzyUnicode(fuzzy.FuzzyText):
     """A FuzzyText factory that contains at least one non-ASCII character."""
 
     def __init__(self, prefix=u'', **kwargs):
