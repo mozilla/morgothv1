@@ -1,5 +1,5 @@
 *.pyc
-.env
+.env*
 db.sqlite3
 .DS_Store
 webpack-stats.json
