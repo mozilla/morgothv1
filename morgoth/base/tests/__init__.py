@@ -1,0 +1,31 @@
+from django.contrib.auth.models import User
+
+import factory
+
+
+class Whatever(object):
+    def __init__(self, test=lambda x: True):
+        self.test = test
+
+    @classmethod
+    def endswith(cls, suffix):
+        return cls(lambda s: s.endswith(suffix))
+
+    def __eq__(self, other):
+        return self.test(other)
+
+
+class FuzzyUnicode(factory.fuzzy.FuzzyText):
+    """A FuzzyText factory that contains at least one non-ASCII character."""
+
+    def __init__(self, prefix=u'', **kwargs):
+        prefix = '%sđ' % prefix
+        super(FuzzyUnicode, self).__init__(prefix=prefix, **kwargs)
+
+
+class UserFactory(factory.DjangoModelFactory):
+    username = FuzzyUnicode()
+    email = factory.Sequence(lambda n: 'test%s@example.com' % n)
+
+    class Meta:
+        model = User
