@@ -11,6 +11,7 @@ class Core(Configuration):
 
     INSTALLED_APPS = [
         'morgoth.base.apps.BaseConfig',
+        'morgoth.addons.apps.AddonsConfig',
 
         'rest_framework',
         'rest_framework.authtoken',
