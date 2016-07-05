@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
+import AddonsList from './components/AddonsList.jsx'
+import HomeMenu from './components/HomeMenu.jsx'
+import NoMatch from './components/NoMatch.jsx';
 import Page from './components/Page.jsx';
 
 
@@ -11,7 +15,13 @@ injectTapEventPlugin();
 class Root extends React.Component {
   render() {
     return (
-      <Page />
+      <Router history={browserHistory}>
+        <Route path="/" component={Page}>
+          <IndexRoute component={HomeMenu} />
+          <Route path="addons" component={AddonsList} />
+          <Route path="*" component={NoMatch} />
+        </Route>
+      </Router>
     );
   }
 }
