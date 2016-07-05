@@ -10,6 +10,7 @@ if settings.ADMIN_ENABLED:
 
 urlpatterns += [
     url(r'', include('morgoth.base.urls')),
+    url(r'', include('morgoth.addons.urls')),
 ]
 
 if settings.DEBUG:
