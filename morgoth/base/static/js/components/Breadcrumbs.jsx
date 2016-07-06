@@ -24,7 +24,7 @@ class Breadcrumbs extends React.Component {
     return (
       <ul className="breadcrumbs">
         {routes.map((route, index) => {
-          if (route.path) {
+          if (route.path && route.path != '*') {
             return <Crumb route={route} key={index}/>
           }
         })}
