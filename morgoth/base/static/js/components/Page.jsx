@@ -6,6 +6,7 @@ import { blueGrey400, blueGrey500, blueGrey700, orange800 } from 'material-ui/st
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+import Breadcrumbs from './Breadcrumbs.jsx'
 import HomeMenu from './HomeMenu.jsx'
 
 
@@ -20,12 +21,14 @@ const muiTheme = getMuiTheme({
 
 class Page extends React.Component {
   render() {
+    const { routes } = this.props;
+
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
           <AppBar
             className="header"
-            title={<IndexLink to="/" activeClassName="active">Morgoth</IndexLink>}
+            title={<Breadcrumbs routes={routes} />}
             showMenuIconButton={false}
           />
           <div className="wrapper">

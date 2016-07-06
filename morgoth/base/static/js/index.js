@@ -16,9 +16,9 @@ class Root extends React.Component {
   render() {
     return (
       <Router history={browserHistory}>
-        <Route path="/" component={Page}>
+        <Route path="/" title="Morgoth" component={Page}>
           <IndexRoute component={HomeMenu} />
-          <Route path="addons" component={AddonsList} />
+          <Route path="/addons" title="Addons" component={AddonsList} />
           <Route path="*" component={NoMatch} />
         </Route>
       </Router>

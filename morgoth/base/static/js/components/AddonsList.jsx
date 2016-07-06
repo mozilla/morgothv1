@@ -7,6 +7,7 @@ class AddonsList extends React.Component {
   render() {
     return (
       <Paper zDepth={2}>
+        Addons
       </Paper>
     );
   }

@@ -9,9 +9,35 @@ body {
     color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
 
-    &.active,
     &:hover {
       color: #fff;
+    }
+  }
+
+  .breadcrumbs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    > li {
+      display: inline-block;
+
+      &:before {
+        content: '›';
+        margin: 0 10px;
+      }
+
+      &:first-of-type {
+        &:before {
+          display: none;
+        }
+      }
+
+      &:last-of-type {
+        a {
+          color: #fff;
+        }
+      }
     }
   }
 }

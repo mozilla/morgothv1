@@ -10,7 +10,6 @@ import Paper from 'material-ui/Paper';
 
 
 class HomeMenu extends React.Component {
-
   render() {
     return (
       <Paper zDepth={2}>
