@@ -10,18 +10,23 @@ import Paper from 'material-ui/Paper';
 
 
 class HomeMenu extends React.Component {
+  goto(path) {
+    browserHistory.push(path);
+  }
+
   render() {
     return (
       <Paper zDepth={2}>
         <List>
           <ListItem
-            onClick={(() => { browserHistory.push('/addons/') })}
+            onClick={() => this.goto('/addons/')}
             primaryText="Addons"
             leftAvatar={<Avatar icon={<ActionExtension />} />}
             rightIcon={<NavigationChevronRight />}
           />
 
           <ListItem
+            onClick={() => this.goto('/addon_groups/')}
             primaryText="Addon Groups"
             leftAvatar={<Avatar icon={<NavigationApps />} />}
             rightIcon={<NavigationChevronRight />}
