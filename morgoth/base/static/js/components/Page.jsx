@@ -7,7 +7,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Breadcrumbs from './Breadcrumbs.jsx'
-import HomeMenu from './HomeMenu.jsx'
 
 
 const muiTheme = getMuiTheme({

@@ -1,40 +1,52 @@
-import React from 'react';
+import React, { PropTypes as pt } from 'react';
 import { browserHistory } from 'react-router';
 
 import Avatar from 'material-ui/Avatar';
-import ActionExtension from 'material-ui/svg-icons/action/extension';
-import NavigationApps from 'material-ui/svg-icons/navigation/apps';
 import NavigationChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 import { List, ListItem } from 'material-ui/List';
-import Paper from 'material-ui/Paper';
 
 
-class HomeMenu extends React.Component {
+class MenuItem extends React.Component {
   goto(path) {
     browserHistory.push(path);
   }
 
   render() {
+    const { text, linkTo, icon } = this.props;
+    
     return (
-      <Paper zDepth={2}>
-        <List>
-          <ListItem
-            onClick={() => this.goto('/addons/')}
-            primaryText="Addons"
-            leftAvatar={<Avatar icon={<ActionExtension />} />}
-            rightIcon={<NavigationChevronRight />}
-          />
-
-          <ListItem
-            onClick={() => this.goto('/addon_groups/')}
-            primaryText="Addon Groups"
-            leftAvatar={<Avatar icon={<NavigationApps />} />}
-            rightIcon={<NavigationChevronRight />}
-          />
-        </List>
-      </Paper>
+      <ListItem
+        onClick={() => this.goto(linkTo)}
+        primaryText={text}
+        leftAvatar={<Avatar icon={icon} />}
+        rightIcon={<NavigationChevronRight />}
+      />
     );
   }
 }
+
+MenuItem.propTypes = {
+  text: pt.string.isRequired,
+  linkTo: pt.string.isRequired,
+  icon: pt.node.isRequired
+};
+
+class HomeMenu extends React.Component {
+  render() {
+    const { items } = this.props;
+    
+    return (
+      <List>
+        {items.map((item, index) => {
+          return <MenuItem text={item.text} linkTo={item.linkTo} icon={item.icon} key={index} />
+        })}
+      </List>
+    );
+  }
+}
+
+HomeMenu.propTypes = {
+  items: pt.array.isRequired
+};
 
 export default HomeMenu;
