@@ -18,16 +18,20 @@ Crumb.propTypes = {
 };
 
 class Breadcrumbs extends React.Component {
+  renderCrumbs(routes) {
+    return routes.map((route, index) => {
+      if (route.path && route.path != '*') {
+        return <Crumb route={route} key={index}/>
+      }
+    });
+  }
+
   render() {
     const { routes } = this.props;
 
     return (
       <ul className="breadcrumbs">
-        {routes.map((route, index) => {
-          if (route.path && route.path != '*') {
-            return <Crumb route={route} key={index}/>
-          }
-        })}
+        {this.renderCrumbs(routes)}
       </ul>
     );
   }

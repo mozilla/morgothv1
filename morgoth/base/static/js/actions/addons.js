@@ -12,7 +12,7 @@ const API_ROOT = '/api/v1/';
 export function fetchAddons() {
   const request = axios({
     method: 'GET',
-    url: `${API_ROOT}addons/`,
+    url: `${API_ROOT}addon/`,
     headers: []
   });
 

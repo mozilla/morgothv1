@@ -15,7 +15,7 @@ const MENU_ITEMS = [
   },
   {
     text: 'Addon Groups',
-    linkTo: '/addons_groups/',
+    linkTo: '/addon_groups/',
     icon: <NavigationApps />
   }
 ];

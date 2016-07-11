@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Paper from 'material-ui/Paper';
+import { Table, TableHeader, TableHeaderColumn, TableBody, TableRow, TableRowColumn } from 'material-ui/Table';
 
 
 class AddonsList extends React.Component {
@@ -8,13 +8,30 @@ class AddonsList extends React.Component {
     this.props.fetchAddons();
   }
 
+  renderRows(addons) {
+    return addons.map((addon, index) => {
+      return (
+        <TableRow key={index}>
+          <TableRowColumn>{addon.name}</TableRowColumn>
+        </TableRow>
+      );
+    });
+  }
+
   render() {
     const { addons, loading, error } = this.props.addonsList;
 
     return (
-      <Paper zDepth={2}>
-        { addons }
-      </Paper>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHeaderColumn>Name</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {this.renderRows(addons)}
+        </TableBody>
+      </Table>
     );
   }
 }

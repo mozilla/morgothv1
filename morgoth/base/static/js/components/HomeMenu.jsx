@@ -32,14 +32,25 @@ MenuItem.propTypes = {
 };
 
 class HomeMenu extends React.Component {
+  renderItems(items) {
+    return items.map((item, index) => {
+      return (
+        <MenuItem 
+          text={item.text} 
+          linkTo={item.linkTo} 
+          icon={item.icon} 
+          key={index} 
+        />
+      );
+    });
+  }
+  
   render() {
     const { items } = this.props;
     
     return (
       <List>
-        {items.map((item, index) => {
-          return <MenuItem text={item.text} linkTo={item.linkTo} icon={item.icon} key={index} />
-        })}
+        {this.renderItems(items)}
       </List>
     );
   }
