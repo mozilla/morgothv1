@@ -6,7 +6,7 @@ import AddonsList from '../components/AddonsList.jsx';
 
 const mapStateToProps = (state) => {
   return {
-    addonsList: state.addons.AddonsList
+    addonsList: state.addons.addonsList
   }
 };
 
@@ -15,9 +15,9 @@ const mapDispatchToProps = (dispatch) => {
     fetchAddons: () => {
       dispatch(fetchAddons()).then((response) => {
         if (response.error) {
-          fetchAddonsFailure(response.payload);
+          dispatch(fetchAddonsFailure(response.payload));
         } else {
-          fetchAddonsSuccess(response.payload);
+          dispatch(fetchAddonsSuccess(response.payload));
         }
       });
     }
