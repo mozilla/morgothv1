@@ -146,6 +146,10 @@ class Base(Core):
     STATSD_PREFIX = values.Value('morgoth')
     STATSD_MAXUDPSIZE = values.IntegerValue(512)
 
+    # Balrog
+    BALROG_API_BASE_URL = values.Value('https://aus4-admin-dev.allizom.org/api/')
+    BALROG_API_REQUEST_TIMEOUT = values.IntegerValue(60)
+
 
 class Development(Base):
     """Settings for local development."""
