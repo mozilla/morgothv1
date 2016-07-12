@@ -1,4 +1,4 @@
-from rest_framework import permissions
+from rest_framework import permissions, status
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -37,6 +37,8 @@ class AddonGroupViewSet(ModelViewSet):
         for addon in addons:
             group.addons.add(addon)
 
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
     @detail_route(methods=['POST'])
     def remove_addons(self, request, *args, **kwargs):
         group = self.get_object()
@@ -45,3 +47,5 @@ class AddonGroupViewSet(ModelViewSet):
 
         for addon in addons:
             group.addons.remove(addon)
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
