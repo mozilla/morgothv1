@@ -31,7 +31,7 @@ class AddonGroupViewSet(ModelViewSet):
     @detail_route(methods=['POST'])
     def add_addons(self, request, *args, **kwargs):
         group = self.get_object()
-        addon_ids = request.data.get('addon_ids', '').split(',')
+        addon_ids = request.data.get('addon_ids', [])
         addons = Addon.objects.filter(id__in=addon_ids)
 
         for addon in addons:
@@ -42,7 +42,7 @@ class AddonGroupViewSet(ModelViewSet):
     @detail_route(methods=['POST'])
     def remove_addons(self, request, *args, **kwargs):
         group = self.get_object()
-        addon_ids = request.data.get('addon_ids', '').split(',')
+        addon_ids = request.data.get('addon_ids', [])
         addons = Addon.objects.filter(id__in=addon_ids)
 
         for addon in addons:

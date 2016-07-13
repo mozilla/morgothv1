@@ -21,7 +21,7 @@ class TestAddonAPI(object):
     def test_it_can_create_addons(self, api_client):
         res = api_client.post('/api/v1/addon/', {
             'name': 'Test Addon',
-            'version': 1.1,
+            'version': '1.1',
             'ftp_url': 'ftp://something.com/'
         })
         assert res.status_code == 201
@@ -80,7 +80,7 @@ class TestAddonGroupAPI(object):
     def test_it_can_create_groups(self, api_client):
         res = api_client.post('/api/v1/addon_group/', {
             'channel_name': 'Test Group',
-            'browser_version': 3.1
+            'browser_version': '3.1'
         })
         assert res.status_code == 201
 
@@ -112,7 +112,7 @@ class TestAddonGroupAPI(object):
         a1 = AddonFactory()
 
         res = api_client.post('/api/v1/addon_group/%s/add_addons/' % group.id, {
-            'addon_ids': '%s' % a1.pk
+            'addon_ids': [a1.pk]
         })
 
         assert res.status_code == 204
@@ -122,7 +122,7 @@ class TestAddonGroupAPI(object):
         a3 = AddonFactory()
 
         res = api_client.post('/api/v1/addon_group/%s/add_addons/' % group.id, {
-            'addon_ids': '%s,%s' % (a2.pk, a3.pk)
+            'addon_ids': [a2.pk, a3.pk]
         })
 
         assert res.status_code == 204
@@ -135,14 +135,14 @@ class TestAddonGroupAPI(object):
         group.addons.add(AddonFactory())
 
         res = api_client.post('/api/v1/addon_group/%s/remove_addons/' % group.id, {
-            'addon_ids': '%s' % group.addons.first().pk
+            'addon_ids': [group.addons.first().pk]
         })
 
         assert res.status_code == 204
         assert group.addons.count() == 2
 
         res = api_client.post('/api/v1/addon_group/%s/remove_addons/' % group.id, {
-            'addon_ids': '%s,%s' % (group.addons.first().pk, group.addons.last().pk)
+            'addon_ids': [group.addons.first().pk, group.addons.last().pk]
         })
 
         assert res.status_code == 204
