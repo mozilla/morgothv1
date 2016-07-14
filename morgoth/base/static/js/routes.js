@@ -4,7 +4,7 @@ import { Route, IndexRoute } from 'react-router';
 import Page from './components/Page.jsx';
 import AddonsListPage from './pages/AddonsListPage.jsx';
 import HomePage from './pages/HomePage.jsx';
-import NotFoundPage from './components/NotFoundPage.jsx';
+import NotFoundPage from './pages/NotFoundPage.jsx';
 
 
 export default (
@@ -12,6 +12,6 @@ export default (
     <IndexRoute component={HomePage} />
     <Route path="/addons/" title="Addons" component={AddonsListPage} />
     <Route path="/addon_groups/" title="Addon Groups" component={AddonsListPage} />
-    <Route path="*" component={NoMatch} />
+    <Route path="*" component={NotFoundPage} />
   </Route>
 );
