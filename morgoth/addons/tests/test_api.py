@@ -128,6 +128,16 @@ class TestAddonGroupAPI(object):
         assert res.status_code == 204
         assert group.addons.count() == 3
 
+    def test_adding_an_addon_that_doesnt_exist(self, api_client):
+        group = AddonGroupFactory()
+
+        res = api_client.post('/api/v1/addon_group/%s/add_addons/' % group.id, {
+            'addon_ids': [1]
+        })
+
+        assert res.status_code == 204
+        assert group.addons.count() == 0
+
     def test_it_can_remove_addons_from_group(self, api_client):
         group = AddonGroupFactory()
         group.addons.add(AddonFactory())
@@ -147,3 +157,15 @@ class TestAddonGroupAPI(object):
 
         assert res.status_code == 204
         assert group.addons.count() == 0
+
+    def test_removing_an_addon_that_doesnt_exist(self, api_client):
+        group = AddonGroupFactory()
+        addon = AddonFactory()
+        group.addons.add(addon)
+
+        res = api_client.post('/api/v1/addon_group/%s/add_addons/' % group.id, {
+            'addon_ids': [addon.id + 1]
+        })
+
+        assert res.status_code == 204
+        assert group.addons.count() == 1
