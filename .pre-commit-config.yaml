@@ -14,3 +14,7 @@
             (docs/.*)|\
             (kitsune/settings.*)"
         args: [--max-line-length=99]
+-   repo: git://github.com/rehandalal/mirrors-eslint
+    sha: de0005acb5be7ce25d181957cd9939abae194192
+    hooks:
+    -   id: eslint
