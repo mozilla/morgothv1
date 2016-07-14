@@ -11,6 +11,5 @@
     -   id: flake8
         exclude: "\
             (.*migrations.*)|\
-            (docs/.*)|\
-            (kitsune/settings.*)"
+            (docs/.*)"
         args: [--max-line-length=99]
