@@ -135,7 +135,7 @@ class TestAddonGroupAPI(object):
             'addon_ids': [1]
         })
 
-        assert res.status_code == 204
+        assert res.status_code == 400
         assert group.addons.count() == 0
 
     def test_it_can_remove_addons_from_group(self, api_client):
@@ -167,5 +167,5 @@ class TestAddonGroupAPI(object):
             'addon_ids': [addon.id + 1]
         })
 
-        assert res.status_code == 204
+        assert res.status_code == 400
         assert group.addons.count() == 1
