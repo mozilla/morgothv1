@@ -13,25 +13,25 @@ export function fetchAddons() {
   const request = axios({
     method: 'GET',
     url: `${API_ROOT}addon/`,
-    headers: []
+    headers: [],
   });
 
   return {
     type: FETCH_ADDONS,
-    payload: request
-  }
+    payload: request,
+  };
 }
 
 export function fetchAddonsSuccess(addons) {
   return {
     type: FETCH_ADDONS_SUCCESS,
-    payload: addons
+    payload: addons,
   };
 }
 
 export function fetchAddonsFailure(error) {
   return {
     type: FETCH_ADDONS_FAILURE,
-    payload: error
+    payload: error,
   };
 }

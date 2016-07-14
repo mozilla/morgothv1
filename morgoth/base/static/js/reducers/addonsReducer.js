@@ -1,5 +1,5 @@
 import {
-  FETCH_ADDONS, FETCH_ADDONS_SUCCESS, FETCH_ADDONS_FAILURE, RESET_ADDONS
+  FETCH_ADDONS, FETCH_ADDONS_SUCCESS, FETCH_ADDONS_FAILURE, RESET_ADDONS,
 } from '../actions/addons';
 
 
@@ -7,11 +7,11 @@ const INITIAL_STATE = {
   addonsList: {
     addons: [],
     error: null,
-    loading: false
-  }
+    loading: false,
+  },
 };
 
-export default (state=INITIAL_STATE, action) => {
+export default (state = INITIAL_STATE, action) => {
   let error;
 
   switch (action.type) {
@@ -21,8 +21,8 @@ export default (state=INITIAL_STATE, action) => {
         addonsList: {
           addons: [],
           error: null,
-          loading: true
-        }
+          loading: true,
+        },
       };
 
     case FETCH_ADDONS_SUCCESS:
@@ -31,19 +31,19 @@ export default (state=INITIAL_STATE, action) => {
         addonsList: {
           addons: action.payload.data,
           error: null,
-          loading: false
-        }
+          loading: false,
+        },
       };
 
     case FETCH_ADDONS_FAILURE:
-      error = action.payload.data || {message: action.payload.message};
+      error = action.payload.data || { message: action.payload.message };
       return {
         ...state,
         addonsList: {
           addons: [],
-          error: error,
-          loading: false
-        }
+          error,
+          loading: false,
+        },
       };
 
     case RESET_ADDONS:
@@ -52,8 +52,8 @@ export default (state=INITIAL_STATE, action) => {
         addonsList: {
           addons: [],
           error: null,
-          loading: false
-        }
+          loading: false,
+        },
       };
 
     default:

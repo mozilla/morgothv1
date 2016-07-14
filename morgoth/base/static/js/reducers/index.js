@@ -6,7 +6,7 @@ import addonsReducer from './addonsReducer';
 
 const rootReducer = combineReducers({
   addons: addonsReducer,
-  routing: routerReducer
+  routing: routerReducer,
 });
 
 export default rootReducer;
