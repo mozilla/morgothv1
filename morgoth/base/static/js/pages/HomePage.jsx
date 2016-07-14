@@ -20,9 +20,12 @@ const MENU_ITEMS = [
   },
 ];
 
-const HomePage = () =>
-  <Paper zDepth={2}>
-    <HomeMenu items={MENU_ITEMS} />
-  </Paper>;
+function HomePage() {
+  return (
+    <Paper zDepth={2}>
+      <HomeMenu items={MENU_ITEMS} />
+    </Paper>
+  );
+}
 
 export default HomePage;

@@ -5,9 +5,12 @@ import Paper from 'material-ui/Paper';
 import AddonsList from '../containers/AddonsListContainer';
 
 
-const AddonsListPage = () =>
-  <Paper zDepth={2}>
-    <AddonsList />
-  </Paper>;
+function AddonsListPage() {
+  return (
+    <Paper zDepth={2}>
+      <AddonsList />
+    </Paper>
+  );
+}
 
 export default AddonsListPage;

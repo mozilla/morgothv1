@@ -17,9 +17,7 @@ const muiTheme = getMuiTheme({
   },
 });
 
-const Page = props => {
-  const { routes, children } = props;
-
+function Page({ routes, children }) {
   return (
     <MuiThemeProvider muiTheme={muiTheme}>
       <div>
@@ -34,7 +32,7 @@ const Page = props => {
       </div>
     </MuiThemeProvider>
   );
-};
+}
 
 Page.propTypes = {
   routes: pt.array.isRequired,

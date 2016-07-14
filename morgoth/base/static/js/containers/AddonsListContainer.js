@@ -4,21 +4,25 @@ import { fetchAddons, fetchAddonsSuccess, fetchAddonsFailure } from '../actions/
 import AddonsList from '../components/AddonsList.jsx';
 
 
-const mapStateToProps = state => ({
-  addonsList: state.addons.addonsList,
-});
+function mapStateToProps(state) {
+  return {
+    addonsList: state.addons.addonsList,
+  };
+}
 
-const mapDispatchToProps = dispatch => ({
-  fetchAddons: () => {
-    dispatch(fetchAddons()).then(response => {
-      if (response.error) {
-        dispatch(fetchAddonsFailure(response.payload));
-      } else {
-        dispatch(fetchAddonsSuccess(response.payload));
-      }
-    });
-  },
-});
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchAddons: () => {
+      dispatch(fetchAddons()).then(response => {
+        if (response.error) {
+          dispatch(fetchAddonsFailure(response.payload));
+        } else {
+          dispatch(fetchAddonsSuccess(response.payload));
+        }
+      });
+    },
+  };
+}
 
 const AddonsListContainer = connect(mapStateToProps, mapDispatchToProps)(AddonsList);
 
