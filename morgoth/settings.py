@@ -11,6 +11,7 @@ class Core(Configuration):
 
     INSTALLED_APPS = [
         'morgoth.base.apps.BaseConfig',
+        'morgoth.addons.apps.AddonsConfig',
 
         'rest_framework',
         'rest_framework.authtoken',
@@ -162,3 +163,4 @@ class Test(Base):
     DOTENV_EXISTS = os.path.exists(os.path.join(Core.BASE_DIR, '.env'))
     DOTENV = '.env' if DOTENV_EXISTS else None
     SECRET_KEY = values.Value('not a secret')
+    SECURE_SSL_REDIRECT = values.BooleanValue(False)

@@ -9,6 +9,9 @@ if settings.ADMIN_ENABLED:
     urlpatterns += [url(r'^admin/', admin.site.urls)]
 
 urlpatterns += [
+    url(r'', include('morgoth.addons.urls')),
+
+    # This should always go last
     url(r'', include('morgoth.base.urls')),
 ]
 
