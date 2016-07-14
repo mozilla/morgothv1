@@ -9,10 +9,12 @@ class Breadcrumbs extends React.Component {
 
   renderCrumbs(routes) {
     return routes.map((route, index) => {
-      if (route.path && route.path !== '*') {
+      const { path, title } = route;
+
+      if (path && path !== '*') {
         return (
           <li key={index}>
-            <Link to={route.path}>{route.title || route.path}</Link>
+            <Link to={path}>{title || path}</Link>
           </li>
         );
       }
