@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import NoMatch from './components/NoMatch.jsx';
 import Page from './components/Page.jsx';
 import AddonsListPage from './pages/AddonsListPage.jsx';
 import HomePage from './pages/HomePage.jsx';
+import NotFoundPage from './components/NotFoundPage.jsx';
 
 
 export default (

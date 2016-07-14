@@ -16,7 +16,7 @@ class NoMatch extends React.Component {
 
   render() {
     return (
-      <Paper zDepth={2} className="no-match">
+      <div className="no-match">
         <Avatar
           icon={<ActionReportProblem />}
           backgroundColor={amber500}
@@ -31,7 +31,7 @@ class NoMatch extends React.Component {
             icon={<ActionHome />}
           />
         </p>
-      </Paper>
+      </div>
     )
   }
 }
