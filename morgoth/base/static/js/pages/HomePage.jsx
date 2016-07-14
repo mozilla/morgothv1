@@ -11,23 +11,18 @@ const MENU_ITEMS = [
   {
     text: 'Addons',
     linkTo: '/addons/',
-    icon: <ActionExtension />
+    icon: <ActionExtension />,
   },
   {
     text: 'Addon Groups',
     linkTo: '/addon_groups/',
-    icon: <NavigationApps />
-  }
+    icon: <NavigationApps />,
+  },
 ];
 
-class HomePage extends React.Component {
-  render() {
-    return (
-      <Paper zDepth={2}>
-        <HomeMenu items={MENU_ITEMS} />
-      </Paper>
-    )
-  }
-}
+const HomePage = () =>
+  <Paper zDepth={2}>
+    <HomeMenu items={MENU_ITEMS} />
+  </Paper>;
 
 export default HomePage;

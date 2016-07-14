@@ -2,11 +2,10 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 
 import Avatar from 'material-ui/Avatar';
-import RaisedButton from 'material-ui/RaisedButton'
+import RaisedButton from 'material-ui/RaisedButton';
 import { amber500 } from 'material-ui/styles/colors';
 import ActionHome from 'material-ui/svg-icons/action/home';
 import ActionReportProblem from 'material-ui/svg-icons/action/report-problem';
-import Paper from 'material-ui/Paper';
 
 
 class NoMatch extends React.Component {
@@ -26,13 +25,13 @@ class NoMatch extends React.Component {
         <p>
           <RaisedButton
             onClick={this.handleClick}
-            primary={true}
             label="Go back home"
             icon={<ActionHome />}
+            primary
           />
         </p>
       </div>
-    )
+    );
   }
 }
 

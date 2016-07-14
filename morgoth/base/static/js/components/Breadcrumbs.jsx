@@ -1,28 +1,22 @@
 import React, { PropTypes as pt } from 'react';
 import { Link } from 'react-router';
 
-class Crumb extends React.Component {
-  render() {
-    const { path, title } = this.props.route;
-
-    return (
-      <li>
-        <Link to={path}>{title || path}</Link>
-      </li>
-    );
-  }
-}
-
-Crumb.propTypes = {
-  route: pt.object.isRequired
-};
 
 class Breadcrumbs extends React.Component {
+  static propTypes = {
+    routes: pt.array.isRequired,
+  };
+
   renderCrumbs(routes) {
     return routes.map((route, index) => {
-      if (route.path && route.path != '*') {
-        return <Crumb route={route} key={index}/>
+      if (route.path && route.path !== '*') {
+        return (
+          <li key={index}>
+            <Link to={route.path}>{route.title || route.path}</Link>
+          </li>
+        );
       }
+      return '';
     });
   }
 
@@ -36,9 +30,5 @@ class Breadcrumbs extends React.Component {
     );
   }
 }
-
-Breadcrumbs.propTypes = {
-  routes: pt.array.isRequired
-};
 
 export default Breadcrumbs;
