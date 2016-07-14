@@ -34,6 +34,10 @@ class AddonGroupViewSet(ModelViewSet):
         addon_ids = request.data.get('addon_ids', [])
         addons = Addon.objects.filter(id__in=addon_ids)
 
+        if len(addon_ids) != addons.count():
+            return Response({'addon_ids': 'One or more of the IDs provided were invalid'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
         for addon in addons:
             group.addons.add(addon)
 
@@ -47,5 +51,9 @@ class AddonGroupViewSet(ModelViewSet):
 
         for addon in addons:
             group.addons.remove(addon)
+
+        if len(addon_ids) != addons.count():
+            return Response({'addon_ids': 'One or more of the IDs provided were invalid'},
+                            status=status.HTTP_400_BAD_REQUEST)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
