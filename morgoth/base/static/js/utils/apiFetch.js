@@ -19,9 +19,9 @@ export default function apiFetch(url, options = {}) {
       throw new Error('Only pass one of `settings.data` and `settings.body`.');
     }
 
-    const method = (settings.method || 'get').toLowerCase();
+    const method = (settings.method || 'GET').toUpperCase();
 
-    if (method !== 'get' && method !== 'head') {
+    if (method !== 'GET' && method !== 'HEAD') {
       settings.body = JSON.stringify(settings.data);
     }
 
