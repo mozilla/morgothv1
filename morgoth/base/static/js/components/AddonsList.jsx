@@ -1,9 +1,17 @@
 import React, { PropTypes as pt } from 'react';
 
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 import {
   Table, TableHeader, TableHeaderColumn, TableBody, TableRow, TableRowColumn,
 } from 'material-ui/Table';
 
+
+const style = {
+  refresh: {
+    display: 'inline-block',
+    position: 'relative',
+  },
+};
 
 class AddonsList extends React.Component {
   static propTypes = {
@@ -28,7 +36,21 @@ class AddonsList extends React.Component {
   }
 
   render() {
-    const { addons } = this.props.addonsList;
+    const { addons, error, loading } = this.props.addonsList;
+
+    if (loading) {
+      return (
+        <div className="wrapper align-center">
+          <RefreshIndicator size={48} status="loading" style={style.refresh} top={0} left={0} />
+        </div>
+      );
+    }
+
+    if (error) {
+      return (
+        <div className="wrapper align-center">Error!</div>
+      );
+    }
 
     return (
       <Table selectable={false}>

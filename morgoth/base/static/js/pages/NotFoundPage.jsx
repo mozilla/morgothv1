@@ -7,7 +7,7 @@ import NotFound from '../components/NotFound.jsx';
 
 function NotFoundPage() {
   return (
-    <Paper zDepth={2}>
+    <Paper zDepth={2} className="page">
       <NotFound />
     </Paper>
   );

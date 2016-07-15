@@ -42,11 +42,15 @@ body {
   }
 }
 
-.no-match {
-  padding: 30px 60px;
+.align-center {
   text-align: center;
 }
 
 .wrapper {
   margin: 48px 72px;
+
+  .page & {
+    margin: 0;
+    padding: 30px 60px;
+  }
 }

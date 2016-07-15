@@ -15,7 +15,7 @@ class NoMatch extends React.Component {
 
   render() {
     return (
-      <div className="no-match">
+      <div className="wrapper align-center">
         <Avatar
           icon={<ActionReportProblem />}
           backgroundColor={amber500}

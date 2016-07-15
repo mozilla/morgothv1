@@ -1,5 +1,5 @@
 import {
-  FETCH_ADDONS, FETCH_ADDONS_SUCCESS, FETCH_ADDONS_FAILURE, RESET_ADDONS,
+  FETCH_ADDONS_REQUEST, FETCH_ADDONS_SUCCESS, FETCH_ADDONS_FAILURE, RESET_ADDONS,
 } from '../actions/addons';
 
 
@@ -13,7 +13,7 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case FETCH_ADDONS:
+    case FETCH_ADDONS_REQUEST:
       return {
         ...state,
         addonsList: {
@@ -27,7 +27,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         addonsList: {
-          addons: action.payload,
+          addons: action.addons,
           error: null,
           loading: false,
         },
@@ -38,7 +38,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         addonsList: {
           addons: [],
-          error: action.payload,
+          error: action.error,
           loading: false,
         },
       };
