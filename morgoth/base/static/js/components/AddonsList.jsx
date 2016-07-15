@@ -19,6 +19,10 @@ class AddonsList extends React.Component {
     return addons.map((addon, index) =>
       <TableRow key={index}>
         <TableRowColumn>{addon.name}</TableRowColumn>
+        <TableRowColumn>{addon.version}</TableRowColumn>
+        <TableRowColumn>
+          {addon.id}
+        </TableRowColumn>
       </TableRow>
     );
   }
@@ -27,13 +31,15 @@ class AddonsList extends React.Component {
     const { addons } = this.props.addonsList;
 
     return (
-      <Table>
-        <TableHeader>
+      <Table selectable={false}>
+        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
           <TableRow>
             <TableHeaderColumn>Name</TableHeaderColumn>
+            <TableHeaderColumn>Version</TableHeaderColumn>
+            <TableHeaderColumn />
           </TableRow>
         </TableHeader>
-        <TableBody>
+        <TableBody displayRowCheckbox={false} showRowHover>
           {this.renderRows(addons)}
         </TableBody>
       </Table>

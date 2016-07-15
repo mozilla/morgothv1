@@ -13,13 +13,20 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchAddons: () => {
-      dispatch(fetchAddons()).then(response => {
-        if (response.error) {
-          dispatch(fetchAddonsFailure(response.payload));
-        } else {
-          dispatch(fetchAddonsSuccess(response.payload));
-        }
-      });
+      dispatch(fetchAddons())
+        .then(response => {
+          response.payload.json().then(jsonData => {
+            const data = jsonData === '' ? {} : jsonData;
+            if (response.payload.ok) {
+              dispatch(fetchAddonsSuccess(data));
+            } else {
+              dispatch(fetchAddonsFailure(data));
+            }
+          });
+        })
+        .catch(error => {
+          dispatch(fetchAddonsFailure({ message: error.message }));
+        });
     },
   };
 }

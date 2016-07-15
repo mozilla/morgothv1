@@ -12,8 +12,6 @@ const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
-  let error;
-
   switch (action.type) {
     case FETCH_ADDONS:
       return {
@@ -29,19 +27,18 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         addonsList: {
-          addons: action.payload.data,
+          addons: action.payload,
           error: null,
           loading: false,
         },
       };
 
     case FETCH_ADDONS_FAILURE:
-      error = action.payload.data || { message: action.payload.message };
       return {
         ...state,
         addonsList: {
           addons: [],
-          error,
+          error: action.payload,
           loading: false,
         },
       };

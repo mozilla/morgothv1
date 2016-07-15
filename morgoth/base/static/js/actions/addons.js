@@ -1,6 +1,3 @@
-import axios from 'axios';
-
-
 // Addons list
 export const FETCH_ADDONS = 'FETCH_ADDONS';
 export const FETCH_ADDONS_SUCCESS = 'FETCH_ADDONS_SUCCESS';
@@ -10,10 +7,9 @@ export const RESET_ADDONS = 'RESET_ADDONS';
 const API_ROOT = '/api/v1/';
 
 export function fetchAddons() {
-  const request = axios({
+  const request = fetch(`${API_ROOT}addon/`, {
     method: 'GET',
-    url: `${API_ROOT}addon/`,
-    headers: [],
+    headers: new Headers(),
   });
 
   return {
