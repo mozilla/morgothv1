@@ -1,17 +1,12 @@
 import React, { PropTypes as pt } from 'react';
 
-import RefreshIndicator from 'material-ui/RefreshIndicator';
 import {
   Table, TableHeader, TableHeaderColumn, TableBody, TableRow, TableRowColumn,
 } from 'material-ui/Table';
 
+import FetchErrorList from './stateless/FetchErrorList.jsx';
+import LoadingIndicator from './stateless/LoadingIndicator.jsx';
 
-const style = {
-  refresh: {
-    display: 'inline-block',
-    position: 'relative',
-  },
-};
 
 class AddonsList extends React.Component {
   static propTypes = {
@@ -28,7 +23,7 @@ class AddonsList extends React.Component {
       <TableRow key={index}>
         <TableRowColumn>{addon.name}</TableRowColumn>
         <TableRowColumn>{addon.version}</TableRowColumn>
-        <TableRowColumn>
+        <TableRowColumn className="align-right">
           {addon.id}
         </TableRowColumn>
       </TableRow>
@@ -40,15 +35,13 @@ class AddonsList extends React.Component {
 
     if (loading) {
       return (
-        <div className="wrapper align-center">
-          <RefreshIndicator size={48} status="loading" style={style.refresh} top={0} left={0} />
-        </div>
+        <div className="wrapper align-center"><LoadingIndicator /></div>
       );
     }
 
     if (error) {
       return (
-        <div className="wrapper align-center">Error!</div>
+        <div className="wrapper align-center"><FetchErrorList errors={error} /></div>
       );
     }
 
