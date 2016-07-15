@@ -36,8 +36,19 @@ export function fetchAddons() {
     };
 
     return fetch(`${API_ROOT}addon/`, settings)
-      .then(response => response.json())
-      .then(data => dispatch(receivedAddons(data)))
-      .catch(error => dispatch(fetchError(FETCH_ADDONS_FAILURE, { message: error.message })));
+      .then(response => Promise.all([response.ok, response.json()]))
+      .then(values => {
+        const ok = values[0];
+        const data = values[1];
+
+        if (ok) {
+          dispatch(receivedAddons(data));
+        } else {
+          dispatch(fetchError(FETCH_ADDONS_FAILURE, data));
+        }
+      })
+      .catch(error => {
+        dispatch(fetchError(FETCH_ADDONS_FAILURE, { message: error.message }));
+      });
   };
 }
