@@ -1,10 +1,11 @@
+import apiFetch from '../utils/apiFetch';
+
+
 // Addons list
 export const FETCH_ADDONS_REQUEST = 'FETCH_ADDONS_REQUEST';
 export const FETCH_ADDONS_SUCCESS = 'FETCH_ADDONS_SUCCESS';
 export const FETCH_ADDONS_FAILURE = 'FETCH_ADDONS_FAILURE';
 export const RESET_ADDONS = 'RESET_ADDONS';
-
-const API_ROOT = '/api/v1/';
 
 function fetchError(type, error) {
   return {
@@ -30,25 +31,11 @@ export function fetchAddons() {
   return dispatch => {
     dispatch(requestAddons());
 
-    const settings = {
+    return apiFetch('addon/', {
       method: 'GET',
-      headers: new Headers(),
-    };
-
-    return fetch(`${API_ROOT}addon/`, settings)
-      .then(response => Promise.all([response.ok, response.json()]))
-      .then(values => {
-        const ok = values[0];
-        const data = values[1];
-
-        if (ok) {
-          dispatch(receivedAddons(data));
-        } else {
-          dispatch(fetchError(FETCH_ADDONS_FAILURE, data));
-        }
-      })
-      .catch(error => {
-        dispatch(fetchError(FETCH_ADDONS_FAILURE, { message: error.message }));
-      });
+      success: receivedAddons,
+      error: error => fetchError(FETCH_ADDONS_FAILURE, error),
+      dispatch,
+    });
   };
 }
