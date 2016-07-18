@@ -142,9 +142,11 @@ class Development(Base):
     SECRET_KEY = values.Value('not a secret')
 
     INSTALLED_APPS = Base.INSTALLED_APPS + ['sslserver']
+    MIDDLEWARE_CLASSES = Base.MIDDLEWARE_CLASSES + ['morgoth.base.middleware.SleepMiddleware']
 
     AUTH_PASSWORD_VALIDATORS = values.ListValue([])
     SECURE_SSL_REDIRECT = values.Value(False)
+    SLEEP_SECONDS = values.IntegerValue(0)
 
 
 class Production(Base):
