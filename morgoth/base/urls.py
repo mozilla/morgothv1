@@ -10,7 +10,6 @@ router = DefaultRouter()
 router.register(r'user', UserViewSet)
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-
     url(r'^api/v1/', include(router.urls)),
+    url(r'', views.index, name='index'),
 ]

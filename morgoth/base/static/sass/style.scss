@@ -1,3 +1,70 @@
-.green {
-  color: limegreen;
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  a {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  .breadcrumbs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    > li {
+      display: inline-block;
+
+      &:before {
+        content: '»';
+        margin: 0 10px;
+      }
+
+      &:first-of-type {
+        &:before {
+          display: none;
+        }
+      }
+
+      &:last-of-type {
+        a {
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+
+.align-center {
+  text-align: center;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.error-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  margin: 48px 72px;
+
+  .page & {
+    margin: 0;
+    padding: 30px 60px;
+  }
 }
