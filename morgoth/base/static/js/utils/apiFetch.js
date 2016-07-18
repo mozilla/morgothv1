@@ -4,6 +4,7 @@ export default function apiFetch(url, options = {}) {
   let dispatch;
   let handleSuccess;
   let handleError;
+  let queryString = '';
 
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
@@ -23,10 +24,17 @@ export default function apiFetch(url, options = {}) {
 
     if (method !== 'GET' && method !== 'HEAD') {
       settings.body = JSON.stringify(settings.data);
+    } else {
+      queryString = '?';
+      Object.keys(settings.data).forEach(key => {
+        queryString += `${key}=${encodeURIComponent(settings.data[key])}`;
+      });
     }
 
     delete settings.data;
   }
+
+  // TODO: Clean up the following section.
 
   // Extract the `dispatch` function from settings.
   if (typeof settings.dispatch === 'function') {
@@ -52,12 +60,9 @@ export default function apiFetch(url, options = {}) {
     throw new Error('A valid `error` function must be provided.');
   }
 
-  return fetch(`${API_ROOT}${url}`, settings)
+  return fetch(`${API_ROOT}${url}${queryString}`, settings)
     .then(response => Promise.all([response.ok, response.json()]))
-    .then(values => {
-      const ok = values[0];
-      const data = values[1];
-
+    .then(([ok, data]) => {
       if (ok) {
         dispatch(handleSuccess(data));
       } else {
