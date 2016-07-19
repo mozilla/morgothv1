@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
   </head>
 
-  <body>
+  <body data-csrf="{{csrf_token}}">
     {% block content %}{% endblock %}
     {% render_bundle 'main' 'js' %}
   </body>
