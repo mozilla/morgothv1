@@ -1,11 +1,17 @@
 import {
   FETCH_ADDONS_REQUEST, FETCH_ADDONS_SUCCESS, FETCH_ADDONS_FAILURE, RESET_ADDONS,
+  FETCH_ADDON_REQUEST, FETCH_ADDON_SUCCESS, FETCH_ADDON_FAILURE, RESET_ADDON,
 } from '../actions/addons';
 
 
 const INITIAL_STATE = {
   addonsList: {
     addons: [],
+    error: null,
+    loading: false,
+  },
+  activeAddon: {
+    addon: null,
     error: null,
     loading: false,
   },
@@ -48,6 +54,46 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         addonsList: {
           addons: [],
+          error: null,
+          loading: false,
+        },
+      };
+
+    case FETCH_ADDON_REQUEST:
+      return {
+        ...state,
+        activeAddon: {
+          addon: null,
+          error: null,
+          loading: true,
+        },
+      };
+
+    case FETCH_ADDON_SUCCESS:
+      return {
+        ...state,
+        activeAddon: {
+          addon: action.addon,
+          error: null,
+          loading: false,
+        },
+      };
+
+    case FETCH_ADDON_FAILURE:
+      return {
+        ...state,
+        activeAddon: {
+          addon: null,
+          error: action.error,
+          loading: false,
+        },
+      };
+
+    case RESET_ADDON:
+      return {
+        ...state,
+        activeAddon: {
+          addon: null,
           error: null,
           loading: false,
         },

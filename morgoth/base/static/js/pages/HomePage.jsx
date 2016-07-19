@@ -22,7 +22,7 @@ const MENU_ITEMS = [
 
 function HomePage() {
   return (
-    <Paper zDepth={2} className="Page">
+    <Paper zDepth={2} className="page">
       <HomeMenu items={MENU_ITEMS} />
     </Paper>
   );

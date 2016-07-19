@@ -6,7 +6,7 @@ import ActionReportProblem from 'material-ui/svg-icons/action/report-problem';
 
 
 function renderErrorItem(key, value) {
-  return <li>{key.toUpperCase()}: {value}</li>;
+  return <li key={key}>{key.toUpperCase()}: {value}</li>;
 }
 
 function FetchErrorList({ errors }) {

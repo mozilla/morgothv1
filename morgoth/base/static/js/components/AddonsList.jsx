@@ -1,5 +1,7 @@
 import React, { PropTypes as pt } from 'react';
+import { browserHistory, Link } from 'react-router';
 
+import RaisedButton from 'material-ui/RaisedButton';
 import {
   Table, TableHeader, TableHeaderColumn, TableBody, TableRow, TableRowColumn,
 } from 'material-ui/Table';
@@ -7,6 +9,12 @@ import {
 import FetchErrorList from './stateless/FetchErrorList.jsx';
 import LoadingIndicator from './stateless/LoadingIndicator.jsx';
 
+
+const style = {
+  button: {
+    float: 'right',
+  },
+};
 
 class AddonsList extends React.Component {
   static propTypes = {
@@ -18,13 +26,26 @@ class AddonsList extends React.Component {
     this.props.fetchAddons();
   }
 
+  goto(url) {
+    browserHistory.push(url);
+  }
+
   renderRows(addons) {
     return addons.map((addon, index) =>
       <TableRow key={index}>
-        <TableRowColumn>{addon.name}</TableRowColumn>
-        <TableRowColumn>{addon.version}</TableRowColumn>
+        <TableRowColumn>
+          <Link to={`/addons/${addon.id}/`}>{addon.name}</Link>
+        </TableRowColumn>
+        <TableRowColumn>
+          <Link to={`/addons/${addon.id}/`}>{addon.version}</Link>
+        </TableRowColumn>
         <TableRowColumn className="align-right">
-          {addon.id}
+          <RaisedButton
+            onClick={() => this.goto(`/addons/${addon.id}/`)}
+            label="Edit"
+            style={style.button}
+            primary
+          />
         </TableRowColumn>
       </TableRow>
     );
@@ -35,13 +56,17 @@ class AddonsList extends React.Component {
 
     if (loading) {
       return (
-        <div className="wrapper align-center"><LoadingIndicator /></div>
+        <div className="wrapper align-center">
+          <LoadingIndicator />
+        </div>
       );
     }
 
     if (error) {
       return (
-        <div className="wrapper align-center"><FetchErrorList errors={error} /></div>
+        <div className="wrapper align-center">
+          <FetchErrorList errors={error} />
+        </div>
       );
     }
 
