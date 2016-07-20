@@ -1,7 +1,7 @@
 import React, { PropTypes as pt } from 'react';
 
 import AppBar from 'material-ui/AppBar';
-import { blueGrey400, blueGrey500, blueGrey700, orange800 } from 'material-ui/styles/colors';
+import { indigo500, indigo700, grey400, orange800 } from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -10,9 +10,9 @@ import Breadcrumbs from './Breadcrumbs.jsx';
 
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: blueGrey500,
-    primary2Color: blueGrey700,
-    primary3Color: blueGrey400,
+    primary1Color: indigo500,
+    primary2Color: indigo700,
+    primary3Color: grey400,
     accent1Color: orange800,
   },
 });

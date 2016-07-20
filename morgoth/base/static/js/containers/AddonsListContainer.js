@@ -6,7 +6,7 @@ import AddonsList from '../components/AddonsList.jsx';
 
 function mapStateToProps(state) {
   return {
-    addonsList: state.addons.addonsList,
+    addonsList: state.addons.list,
   };
 }
 
