@@ -1,10 +1,10 @@
 import React from 'react';
 
 import Paper from 'material-ui/Paper';
-import ActionExtension from 'material-ui/svg-icons/action/extension';
-import NavigationApps from 'material-ui/svg-icons/navigation/apps';
+import ActionExtension from '../../../../../../node_modules/material-ui/svg-icons/action/extension';
+import NavigationApps from '../../../../../../node_modules/material-ui/svg-icons/navigation/apps';
 
-import HomeMenu from '../components/HomeMenu.jsx';
+import HomeMenu from '../HomeMenu.jsx';
 
 
 const MENU_ITEMS = [
