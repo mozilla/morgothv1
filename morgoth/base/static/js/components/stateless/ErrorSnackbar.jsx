@@ -3,7 +3,7 @@ import Snackbar from 'material-ui/Snackbar';
 
 
 function ErrorSnackbar({ error }) {
-  const isError = error && error.detail;
+  const isError = Boolean(error && error.detail);
 
   return (
     <Snackbar
@@ -15,8 +15,7 @@ function ErrorSnackbar({ error }) {
 }
 
 ErrorSnackbar.propTypes = {
-  error: pt.array.isRequired,
-  open: pt.bool,
+  error: pt.array,
 };
 
 export default ErrorSnackbar;

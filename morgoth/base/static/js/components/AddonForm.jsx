@@ -33,6 +33,7 @@ class AddonForm extends React.Component {
     handleSave: pt.func.isRequired,
     handleSaveAndContinue: pt.func.isRequired,
     pk: pt.any,
+    resetAll: pt.func.isRequired,
     updateAddon: pt.object.isRequired,
     values: pt.object,
   }
@@ -42,6 +43,10 @@ class AddonForm extends React.Component {
     if (pk) {
       fetchAddon();
     }
+  }
+
+  componentWillUnmount() {
+    this.props.resetAll();
   }
 
   goto(url) {

@@ -13,6 +13,7 @@ export default (
     <IndexRoute component={HomePage} />
     <Route path="/addons/" title="Addons">
       <IndexRoute component={AddonsListPage} />
+      <Route path="/addons/new/" title="New Addon" component={AddonDetailsPage} />
       <Route path="/addons/:pk/" title="Edit" component={AddonDetailsPage} />
     </Route>
     <Route path="/addon_groups/" title="Addon Groups" component={AddonsListPage} />

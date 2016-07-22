@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 
-import { createAddon, fetchAddon, updateAddon } from '../actions/addons';
+import {
+  createAddon, fetchAddon, resetAddon, resetCreateAddon, resetUpdateAddon, updateAddon,
+} from '../actions/addons';
 import AddonForm from '../components/AddonForm.jsx';
 
 
@@ -30,6 +32,11 @@ function mapDispatchToProps(dispatch, { pk }) {
   return {
     handleSave: data => saveAddon(data),
     handleSaveAndContinue: data => saveAddon(data, true),
+    resetAll: () => {
+      dispatch(resetAddon());
+      dispatch(resetCreateAddon());
+      dispatch(resetUpdateAddon());
+    },
     fetchAddon: () => {
       if (pk) {
         dispatch(fetchAddon(pk));

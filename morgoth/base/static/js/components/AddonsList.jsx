@@ -5,6 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {
   Table, TableHeader, TableHeaderColumn, TableBody, TableRow, TableRowColumn,
 } from 'material-ui/Table';
+import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 
 import FetchErrorList from './stateless/FetchErrorList.jsx';
 import LoadingIndicator from './stateless/LoadingIndicator.jsx';
@@ -13,6 +14,9 @@ import LoadingIndicator from './stateless/LoadingIndicator.jsx';
 const style = {
   button: {
     float: 'right',
+  },
+  toolbar: {
+    justifyContent: 'flex-end',
   },
 };
 
@@ -71,18 +75,28 @@ class AddonsList extends React.Component {
     }
 
     return (
-      <Table selectable={false}>
-        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-          <TableRow>
-            <TableHeaderColumn>Name</TableHeaderColumn>
-            <TableHeaderColumn>Version</TableHeaderColumn>
-            <TableHeaderColumn />
-          </TableRow>
-        </TableHeader>
-        <TableBody displayRowCheckbox={false} showRowHover>
-          {this.renderRows(addons)}
-        </TableBody>
-      </Table>
+      <div>
+        <Toolbar style={style.toolbar}>
+          <ToolbarGroup className="align-right" lastChild>
+            <RaisedButton
+              label="Create New Addon"
+              onClick={() => this.goto('/addons/new/')}
+            />
+          </ToolbarGroup>
+        </Toolbar>
+        <Table selectable={false}>
+          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+            <TableRow>
+              <TableHeaderColumn>Name</TableHeaderColumn>
+              <TableHeaderColumn>Version</TableHeaderColumn>
+              <TableHeaderColumn />
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false} showRowHover>
+            {this.renderRows(addons)}
+          </TableBody>
+        </Table>
+      </div>
     );
   }
 }

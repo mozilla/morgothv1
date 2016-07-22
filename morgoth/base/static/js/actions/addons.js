@@ -98,6 +98,24 @@ function receivedUpdateAddon(addon, saveAndContinue) {
   };
 }
 
+export function resetAddon() {
+  return {
+    type: RESET_ADDON,
+  };
+}
+
+export function resetCreateAddon() {
+  return {
+    type: RESET_NEW_ADDON,
+  };
+}
+
+export function resetUpdateAddon() {
+  return {
+    type: RESET_UPDATE_ADDON,
+  };
+}
+
 export function fetchAddons() {
   return dispatch => {
     dispatch(requestAddons());
