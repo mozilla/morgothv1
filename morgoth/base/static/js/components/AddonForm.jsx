@@ -9,6 +9,7 @@ import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left
 import TextField from 'material-ui/TextField';
 import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
 
+import ErrorSnackbar from './stateless/ErrorSnackbar.jsx';
 import FetchErrorList from './stateless/FetchErrorList.jsx';
 import LoadingIndicator from './stateless/LoadingIndicator.jsx';
 
@@ -49,9 +50,10 @@ class AddonForm extends React.Component {
 
   render() {
     const {
-      activeAddon, createAddon, fields, handleSave, handleSaveAndContinue, updateAddon,
+      activeAddon, createAddon, fields, handleSave, handleSaveAndContinue, updateAddon, values,
     } = this.props;
     const isSaving = createAddon.loading || updateAddon.loading;
+    const saveError = createAddon.error || updateAddon.error;
 
     if (activeAddon.loading) {
       return (
@@ -71,6 +73,7 @@ class AddonForm extends React.Component {
 
     return (
       <form>
+        <ErrorSnackbar error={saveError} />
         <Toolbar>
           <ToolbarGroup firstChild>
             <FlatButton
@@ -111,7 +114,7 @@ class AddonForm extends React.Component {
         <Toolbar style={style.toolbar}>
           <ToolbarGroup lastChild>
             <RaisedButton
-              onClick={() => handleSaveAndContinue(this.props.values)}
+              onClick={() => handleSaveAndContinue(values)}
               label="Save & Continue"
               disabled={isSaving}
             />
@@ -119,7 +122,7 @@ class AddonForm extends React.Component {
           <ToolbarSeparator />
           <ToolbarGroup lastChild>
             <RaisedButton
-              onClick={() => handleSave(this.props.values)}
+              onClick={() => handleSave(values)}
               label="Save"
               disabled={isSaving}
               primary

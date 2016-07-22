@@ -2,10 +2,10 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import Page from './components/Page.jsx';
-import AddonDetailsPage from './pages/AddonDetailsPage.jsx';
-import AddonsListPage from './pages/AddonsListPage.jsx';
-import HomePage from './pages/HomePage.jsx';
-import NotFoundPage from './pages/NotFoundPage.jsx';
+import AddonDetailsPage from './components/pages/AddonDetailsPage.jsx';
+import AddonsListPage from './components/pages/AddonsListPage.jsx';
+import HomePage from './components/pages/HomePage.jsx';
+import NotFoundPage from './components/pages/NotFoundPage.jsx';
 
 
 export default (
