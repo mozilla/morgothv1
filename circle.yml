@@ -7,6 +7,15 @@ dependencies:
   cache_directories:
     - "~/cache/"
   override:
+    # create a version.json per https://github.com/mozilla-services/Dockerflow/blob/master/docs/version_object.md
+    - >
+        printf '{"commit":"%s","version":"%s","source":"https://github.com/%s/%s","build":"%s"}\n'
+        "$CIRCLE_SHA1"
+        "$CIRCLE_TAG"
+        "$CIRCLE_PROJECT_USERNAME"
+        "$CIRCLE_PROJECT_REPONAME"
+        "$CIRCLE_BUILD_URL" > version.json
+    - cp version.json $CIRCLE_ARTIFACTS
     - docker info
     # use circleci's docker cache workaround
     - if [ -e ~/cache/docker/image.tar ]; then echo "Loading image.tar"; docker load -i ~/cache/docker/image.tar || rm ~/cache/docker/image.tar; fi
