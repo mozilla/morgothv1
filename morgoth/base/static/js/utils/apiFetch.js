@@ -13,6 +13,7 @@ export default function apiFetch(url, options = {}) {
 
   const settings = {
     headers,
+    credentials: 'include',
     ...options,
   };
 
