@@ -48,7 +48,6 @@ class AddonsList extends React.Component {
             onClick={() => this.goto(`/addons/${addon.id}/`)}
             label="Edit"
             style={style.button}
-            primary
           />
         </TableRowColumn>
       </TableRow>
@@ -81,6 +80,7 @@ class AddonsList extends React.Component {
             <RaisedButton
               label="Create New Addon"
               onClick={() => this.goto('/addons/new/')}
+              primary
             />
           </ToolbarGroup>
         </Toolbar>
