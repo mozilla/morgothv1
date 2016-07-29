@@ -4,7 +4,7 @@ import Paper from 'material-ui/Paper';
 import ActionExtension from 'material-ui/svg-icons/action/extension';
 import NavigationApps from 'material-ui/svg-icons/navigation/apps';
 
-import HomeMenu from '../components/HomeMenu.jsx';
+import HomeMenu from '../HomeMenu.jsx';
 
 
 const MENU_ITEMS = [
@@ -22,7 +22,7 @@ const MENU_ITEMS = [
 
 function HomePage() {
   return (
-    <Paper zDepth={2} className="Page">
+    <Paper zDepth={2} className="page">
       <HomeMenu items={MENU_ITEMS} />
     </Paper>
   );

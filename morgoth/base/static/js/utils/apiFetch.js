@@ -7,10 +7,13 @@ export default function apiFetch(url, options = {}) {
   let queryString = '';
 
   const headers = new Headers();
+  headers.append('Accept', 'application/json');
   headers.append('Content-Type', 'application/json');
+  headers.append('X-CSRFToken', document.getElementsByTagName('body')[0].dataset.csrf);
 
   const settings = {
     headers,
+    credentials: 'include',
     ...options,
   };
 
@@ -27,8 +30,9 @@ export default function apiFetch(url, options = {}) {
     } else {
       queryString = '?';
       Object.keys(settings.data).forEach(key => {
-        queryString += `${key}=${encodeURIComponent(settings.data[key])}`;
+        queryString += `${key}=${encodeURIComponent(settings.data[key])}&`;
       });
+      queryString.slice(0, -1);
     }
 
     delete settings.data;
