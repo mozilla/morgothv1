@@ -8,18 +8,18 @@ CERT="$SSL_DIR/morgoth_dev.cert"
 
 
 # If the key or cert don't exist, generate them.
-if [ ! -f $KEY ]; then
-    mkdir -p $SSL_DIR
-    openssl genrsa -out $KEY 2048
+if [ ! -f "$KEY" ]; then
+    mkdir -p "$SSL_DIR"
+    openssl genrsa -out "$KEY" 2048
 fi
 
-if [ ! -f $CERT ]; then
-    openssl req -new -x509 -nodes -sha256 -key $KEY \
-        -subj "/C=US/ST=Test/L=Test/O=Mozilla/CN=morgoth_dev" > $CERT
+if [ ! -f "$CERT" ]; then
+    openssl req -new -x509 -nodes -sha256 -key "$KEY" \
+        -subj "/C=US/ST=Test/L=Test/O=Mozilla/CN=morgoth_dev" > "$CERT"
 fi
 
 
-$BASE_DIR/manage.py runsslserver \
-    --certificate=$CERT \
-    --key=$KEY \
+"$BASE_DIR"/manage.py runsslserver \
+    --certificate="$CERT" \
+    --key="$KEY" \
     "$@"
