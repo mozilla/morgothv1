@@ -2,15 +2,15 @@ import React from 'react';
 
 import Paper from 'material-ui/Paper';
 
-import AddonGroupsListContainer from '../../containers/AddonGroupsListContainer';
+import AddonsListContainer from '../../containers/AddonsListContainer';
 
 
-function AddonGroupsListPage() {
+function AddonsListPage() {
   return (
     <Paper zDepth={2} className="page">
-      <AddonGroupsListContainer />
+      <AddonsListContainer />
     </Paper>
   );
 }
 
-export default AddonGroupsListPage;
+export default AddonsListPage;
