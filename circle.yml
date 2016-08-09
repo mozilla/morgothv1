@@ -22,8 +22,12 @@ dependencies:
     - if [ -e ~/cache/docker/image.tar ]; then echo "Loading image.tar"; docker load -i ~/cache/docker/image.tar || rm ~/cache/docker/image.tar; fi
     # build image
     - docker build -t morgoth:build .
-    # write the sha256 sum to an artifact to make image verification easier
-    - docker inspect -f '{{.Config.Image}}' morgoth:build | tee $CIRCLE_ARTIFACTS/docker-image-shasum256.txt
+    # Clean up old image and save the new one
+    - >
+      mkdir -p ~/cache/docker;
+      rm -f ~/cache/docker/image.tar;
+      docker save morgoth:build > ~/cache/docker/image.tar;
+      ls -l ~/cache/docker
 
 test:
   pre:
@@ -33,13 +37,6 @@ test:
     - bin/ci/docker-run.sh therapist run --use-tracked-files
     # Run Python tests
     - bin/ci/docker-run.sh py.test --junitxml=/test_artifacts/pytest.xml morgoth/
-  post:
-    # Clean up old image and save the new one
-    - >
-      mkdir -p ~/cache/docker;
-      rm -f ~/cache/docker/image.tar;
-      docker save morgoth:build > ~/cache/docker/image.tar;
-      ls -l ~/cache/docker
 
 # appropriately tag and push the container to dockerhub
 deployment:
