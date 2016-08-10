@@ -1,12 +1,12 @@
 import React, { PropTypes as pt } from 'react';
 import { browserHistory } from 'react-router';
-import { reduxForm } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
+import { TextField } from 'redux-form-material-ui';
 
 import FlatButton from 'material-ui/FlatButton';
 import LinearProgress from 'material-ui/LinearProgress';
 import RaisedButton from 'material-ui/RaisedButton';
 import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
-import TextField from 'material-ui/TextField';
 import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
 
 import ErrorSnackbar from './stateless/ErrorSnackbar.jsx';
@@ -29,7 +29,7 @@ class AddonGroupForm extends React.Component {
     activeAddonGroup: pt.object.isRequired,
     createAddonGroup: pt.object.isRequired,
     fetchAddonGroup: pt.func.isRequired,
-    fields: pt.object.isRequired,
+    fields: pt.array.isRequired,
     handleSave: pt.func.isRequired,
     handleSaveAndContinue: pt.func.isRequired,
     pk: pt.any,
@@ -55,8 +55,8 @@ class AddonGroupForm extends React.Component {
 
   render() {
     const {
-      activeAddonGroup, createAddonGroup, fields, handleSave, handleSaveAndContinue,
-      updateAddonGroup, values,
+      activeAddonGroup, createAddonGroup, handleSave, handleSaveAndContinue, updateAddonGroup,
+      values,
     } = this.props;
     const isSaving = createAddonGroup.loading || updateAddonGroup.loading;
     const saveError = createAddonGroup.error || updateAddonGroup.error;
@@ -96,17 +96,19 @@ class AddonGroupForm extends React.Component {
         }
         <div className="wrapper">
           <div>
-            <TextField
+            <Field
+              name="channel_name"
               floatingLabelText="Channel Name"
               disabled={isSaving}
-              {...fields.channel_name}
+              component={TextField}
             />
           </div>
           <div>
-            <TextField
+            <Field
+              name="browser_version"
               floatingLabelText="Browser Version"
               disabled={isSaving}
-              {...fields.browser_version}
+              component={TextField}
             />
           </div>
         </div>

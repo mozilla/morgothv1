@@ -1,12 +1,12 @@
 import React, { PropTypes as pt } from 'react';
 import { browserHistory } from 'react-router';
-import { reduxForm } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
+import { TextField } from 'redux-form-material-ui';
 
 import FlatButton from 'material-ui/FlatButton';
 import LinearProgress from 'material-ui/LinearProgress';
 import RaisedButton from 'material-ui/RaisedButton';
 import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
-import TextField from 'material-ui/TextField';
 import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
 
 import ErrorSnackbar from './stateless/ErrorSnackbar.jsx';
@@ -29,7 +29,7 @@ class AddonForm extends React.Component {
     activeAddon: pt.object.isRequired,
     createAddon: pt.object.isRequired,
     fetchAddon: pt.func.isRequired,
-    fields: pt.object.isRequired,
+    fields: pt.array.isRequired,
     handleSave: pt.func.isRequired,
     handleSaveAndContinue: pt.func.isRequired,
     pk: pt.any,
@@ -55,7 +55,7 @@ class AddonForm extends React.Component {
 
   render() {
     const {
-      activeAddon, createAddon, fields, handleSave, handleSaveAndContinue, updateAddon, values,
+      activeAddon, createAddon, handleSave, handleSaveAndContinue, updateAddon, values,
     } = this.props;
     const isSaving = createAddon.loading || updateAddon.loading;
     const saveError = createAddon.error || updateAddon.error;
@@ -95,24 +95,27 @@ class AddonForm extends React.Component {
         }
         <div className="wrapper">
           <div>
-            <TextField
+            <Field
+              name="name"
               floatingLabelText="Name"
               disabled={isSaving}
-              {...fields.name}
+              component={TextField}
             />
           </div>
           <div>
-            <TextField
+            <Field
+              name="version"
               floatingLabelText="Version"
               disabled={isSaving}
-              {...fields.version}
+              component={TextField}
             />
           </div>
           <div>
-            <TextField
+            <Field
+              name="ftp_url"
               floatingLabelText="FTP URL"
               disabled={isSaving}
-              {...fields.ftp_url}
+              component={TextField}
             />
           </div>
         </div>
