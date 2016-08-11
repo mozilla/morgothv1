@@ -2,8 +2,12 @@ actions:
   flake8:
     run: flake8 {files}
     include: "*.py"
+    exclude: "docs/*.py"
   eslint:
     run: ./node_modules/.bin/eslint {files}
     include:
       - "*.js"
       - "*.jsx"
+  shellcheck:
+    run: shellcheck {files}
+    include: "*.sh"
