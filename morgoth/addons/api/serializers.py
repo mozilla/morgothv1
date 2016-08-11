@@ -15,9 +15,8 @@ class AddonSerializer(serializers.ModelSerializer):
 
 
 class AddonGroupSerializer(serializers.ModelSerializer):
-    addons = AddonSerializer(many=True, read_only=True)
-    addon_ids = serializers.PrimaryKeyRelatedField(source='addons', queryset=Addon.objects.all(),
-                                                   many=True, write_only=True, required=False)
+    addons = serializers.PrimaryKeyRelatedField(many=True, queryset=Addon.objects.all(),
+                                                required=False)
 
     class Meta:
         model = AddonGroup
@@ -26,5 +25,4 @@ class AddonGroupSerializer(serializers.ModelSerializer):
             'channel_name',
             'browser_version',
             'addons',
-            'addon_ids',
         ]
