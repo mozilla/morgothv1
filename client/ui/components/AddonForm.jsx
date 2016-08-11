@@ -29,11 +29,11 @@ class AddonForm extends React.Component {
     activeAddon: pt.object.isRequired,
     createAddon: pt.object.isRequired,
     fetchAddon: pt.func.isRequired,
-    fields: pt.array.isRequired,
-    handleSave: pt.func.isRequired,
-    handleSaveAndContinue: pt.func.isRequired,
+    handleSubmit: pt.func.isRequired,
     pk: pt.any,
     resetAll: pt.func.isRequired,
+    save: pt.func.isRequired,
+    saveAndContinue: pt.func.isRequired,
     updateAddon: pt.object.isRequired,
     values: pt.object,
   }
@@ -55,7 +55,7 @@ class AddonForm extends React.Component {
 
   render() {
     const {
-      activeAddon, createAddon, handleSave, handleSaveAndContinue, updateAddon, values,
+      activeAddon, createAddon, handleSubmit, save, saveAndContinue, updateAddon,
     } = this.props;
     const isSaving = createAddon.loading || updateAddon.loading;
     const saveError = createAddon.error || updateAddon.error;
@@ -122,7 +122,7 @@ class AddonForm extends React.Component {
         <Toolbar style={style.toolbar}>
           <ToolbarGroup lastChild>
             <RaisedButton
-              onClick={() => handleSaveAndContinue(values)}
+              onClick={handleSubmit(saveAndContinue)}
               label="Save & Continue"
               disabled={isSaving}
             />
@@ -130,7 +130,7 @@ class AddonForm extends React.Component {
           <ToolbarSeparator />
           <ToolbarGroup lastChild>
             <RaisedButton
-              onClick={() => handleSave(values)}
+              onClick={handleSubmit(save)}
               label="Save"
               disabled={isSaving}
               primary
@@ -144,5 +144,4 @@ class AddonForm extends React.Component {
 
 export default reduxForm({
   form: 'addon',
-  fields: ['name', 'version', 'ftp_url'],
 })(AddonForm);

@@ -4,12 +4,14 @@ import {
   createAddonGroup, fetchAddonGroup, resetAddonGroup, resetCreateAddonGroup, resetUpdateAddonGroup,
   updateAddonGroup,
 } from '../actions/addon-groups';
+import { fetchAddons } from '../actions/addons';
 import AddonGroupForm from '../components/AddonGroupForm.jsx';
 
 
-function mapStateToProps({ addonGroups }) {
+function mapStateToProps({ addonGroups, addons }) {
   const props = {
     activeAddonGroup: addonGroups.active,
+    addonsList: addons.list,
     createAddonGroup: addonGroups.create,
     updateAddonGroup: addonGroups.update,
   };
@@ -31,18 +33,21 @@ function mapDispatchToProps(dispatch, { pk }) {
   }
 
   return {
-    handleSave: data => saveAddonGroup(data),
-    handleSaveAndContinue: data => saveAddonGroup(data, true),
-    resetAll: () => {
-      dispatch(resetAddonGroup());
-      dispatch(resetCreateAddonGroup());
-      dispatch(resetUpdateAddonGroup());
-    },
     fetchAddonGroup: () => {
       if (pk) {
         dispatch(fetchAddonGroup(pk));
       }
     },
+    fetchAddons: () => {
+      dispatch(fetchAddons());
+    },
+    resetAll: () => {
+      dispatch(resetAddonGroup());
+      dispatch(resetCreateAddonGroup());
+      dispatch(resetUpdateAddonGroup());
+    },
+    save: data => saveAddonGroup(data),
+    saveAndContinue: data => saveAddonGroup(data, true),
   };
 }
 
