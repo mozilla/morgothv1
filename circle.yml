@@ -69,6 +69,7 @@ deployment:
       - bin/ci/deploy-dockerhub.sh "$CIRCLE_TAG"
 
   # this is just for dev, uncomment for testing circleci building
+  # test
   hub_all:
    branch: /.*/
    commands:
