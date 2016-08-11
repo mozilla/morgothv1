@@ -67,3 +67,12 @@ deployment:
       # set DOCKER_DEPLOY=true in Circle UI to do deploys
       - "${DOCKER_DEPLOY:-false}"
       - bin/ci/deploy-dockerhub.sh "$CIRCLE_TAG"
+
+  # this is just for dev, uncomment for testing circleci building
+  hub_all:
+   branch: /.*/
+   commands:
+      - "[ ! -z $DOCKERHUB_REPO ]"
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker tag app:build ${DOCKERHUB_REPO}:unstable
+      - docker push ${DOCKERHUB_REPO}:unstable
