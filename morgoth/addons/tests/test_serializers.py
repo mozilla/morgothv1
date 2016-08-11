@@ -31,10 +31,5 @@ class TestAddonGroupSerializer(object):
             'id': group.id,
             'channel_name': group.channel_name,
             'browser_version': '%s' % group.browser_version,
-            'addons': [{
-                'id': addon.id,
-                'name': addon.name,
-                'version': '%s' % addon.version,
-                'ftp_url': addon.ftp_url
-            }]
+            'addons': [addon.id]
         }

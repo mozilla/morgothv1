@@ -75,7 +75,7 @@ class TestAddonGroupAPI(object):
         res = api_client.get('/api/v1/addon_group/')
         assert res.status_code == 200
         assert res.data[0]['channel_name'] == group.channel_name
-        assert res.data[0]['addons'][0]['name'] == addon.name
+        assert res.data[0]['addons'][0] == addon.id
 
     def test_it_can_create_groups(self, api_client):
         res = api_client.post('/api/v1/addon_group/', {
