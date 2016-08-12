@@ -11,5 +11,6 @@ router.register(r'user', UserViewSet)
 
 urlpatterns = [
     url(r'^api/v1/', include(router.urls)),
-    url(r'', views.index, name='index'),
+    url(r'^$', views.index, name='index'),
+    url(r'^(?!(__lbheartbeat__)|(__heartbeat__)|(__version__)).+', views.index),
 ]
