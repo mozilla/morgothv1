@@ -12,6 +12,7 @@ class Core(Configuration):
     INSTALLED_APPS = [
         'morgoth.base.apps.BaseConfig',
         'morgoth.addons.apps.AddonsConfig',
+        'morgoth.health.apps.HealthConfig',
 
         'rest_framework',
         'rest_framework.authtoken',
@@ -27,6 +28,7 @@ class Core(Configuration):
     ]
 
     MIDDLEWARE_CLASSES = [
+        'morgoth.base.middleware.ShortCircuitMiddleware',
         'django.middleware.security.SecurityMiddleware',
         'whitenoise.middleware.WhiteNoiseMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',

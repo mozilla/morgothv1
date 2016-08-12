@@ -10,6 +10,7 @@ if settings.ADMIN_ENABLED:
 
 urlpatterns += [
     url(r'', include('morgoth.addons.urls')),
+    url(r'', include('morgoth.health.urls')),
 
     # This should always go last
     url(r'', include('morgoth.base.urls')),
