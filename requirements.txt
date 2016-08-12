@@ -139,6 +139,9 @@ pytest==2.9.2 \
 pytest-django==2.9.1 \
     --hash=sha256:8be15b637738c8cbd1422a6461465c0aeab7839cf76ad2b5d190b6f1f53facd6 \
     --hash=sha256:743d0056e127ef424850ea76d93d45c92c313da0e56765806a59fc7680c25ab7
+pytest-mock==1.2 \
+    --hash=sha256:f78971ed376fcb265255d1e4bb313731b3a1be92d7f3ecb19ea7fedc4a56fd0f \
+    --hash=sha256:2911668c5ea518a07e2da53a170e2f86eaccf1245ec9605c37eadf6578dec468
 python-dateutil==2.5.3 \
     --hash=sha256:1408fdb07c6a1fa9997567ce3fcee6a337b39a503d80699e0f213de4aa4b32ed \
     --hash=sha256:9d94861f04ce14f9a3d835206067c889b8f1244f1415035dadcf9c10066adf04 \
@@ -173,6 +176,3 @@ therapist==0.3.1 \
 whitenoise==3.2 \
     --hash=sha256:13e5d6673c7c0805c73037b7745e027141a8e39c5b6ba669b631c8fb3d05b06e \
     --hash=sha256:bf6488a3c7c947385d663bcf24957a4f1b5d3c215e86ec121eb5f3b7670ed693
-pytest-mock==1.2 \
-    --hash=sha256:f78971ed376fcb265255d1e4bb313731b3a1be92d7f3ecb19ea7fedc4a56fd0f \
-    --hash=sha256:2911668c5ea518a07e2da53a170e2f86eaccf1245ec9605c37eadf6578dec468
