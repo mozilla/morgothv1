@@ -11,6 +11,12 @@ class TestApp(object):
         res = client.get('/')
         assert res.status_code == 200
 
+        res = client.get('/addons/')
+        assert res.status_code == 200
+
+        res = client.get('/api/v1/addon/')
+        assert res.status_code == 200
+
         res = client.get('/__lbheartbeat__/')
         assert res.status_code == 404
 
