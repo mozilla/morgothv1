@@ -133,6 +133,13 @@ class Base(Core):
 
     ADMIN_ENABLED = values.BooleanValue(True)
 
+    # statsd
+    STATSD_HOST = values.Value('localhost')
+    STATSD_PORT = values.IntegerValue(8125)
+    STATSD_IPV6 = values.BooleanValue(False)
+    STATSD_PREFIX = values.Value('morgoth')
+    STATSD_MAXUDPSIZE = values.IntegerValue(512)
+
 
 class Development(Base):
     """Settings for local development."""
