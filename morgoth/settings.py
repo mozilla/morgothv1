@@ -187,3 +187,4 @@ class Test(Base):
     DOTENV = '.env' if DOTENV_EXISTS else None
     SECRET_KEY = values.Value('not a secret')
     SECURE_SSL_REDIRECT = values.BooleanValue(False)
+    STATICFILES_STORAGE = values.Value('django.contrib.staticfiles.storage.StaticFilesStorage')
