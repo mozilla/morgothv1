@@ -38,6 +38,12 @@ class Core(Configuration):
         'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'morgoth.base.middleware.LDAPAuthenticationMiddleware',
+    ]
+
+    AUTHENTICATION_BACKENDS = [
+        'morgoth.base.backends.LDAPBackend',
+        'django.contrib.auth.backends.ModelBackend',
     ]
 
     ROOT_URLCONF = 'morgoth.urls'
@@ -139,6 +145,10 @@ class Base(Core):
     STATSD_IPV6 = values.BooleanValue(False)
     STATSD_PREFIX = values.Value('morgoth')
     STATSD_MAXUDPSIZE = values.IntegerValue(512)
+
+    # Balrog
+    BALROG_API_BASE_URL = values.Value('https://aus4-admin-dev.allizom.org/api/')
+    BALROG_API_REQUEST_TIMEOUT = values.IntegerValue(60)
 
 
 class Development(Base):
