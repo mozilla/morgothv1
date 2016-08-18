@@ -17,7 +17,7 @@ class BalrogAPI(object):
             return True
 
         expiry = self.csrf_token.split('##')[0]
-        if expiry <= datetime.now().strftime('%Y%m%d%H%M%S'):
+        if datetime.strftime(expiry, '%Y%m%d%H%M%S') <= datetime.now():
             return True
 
         return False
@@ -29,8 +29,9 @@ class BalrogAPI(object):
         url = '%s%s' % (settings.BALROG_API_BASE_URL, url)
 
         req = self.session.request(method=method, url=url, data=data,
-                                   timeout=settings.BALROG_API_REQUEST_TIMEOUT,
-                                   verify=False, auth=self.auth, headers=headers)
+                                   timeout=getattr(settings, 'BALROG_API_REQUEST_TIMEOUT', 60),
+                                   verify=getattr(settings, 'BALROG_API_REQUEST_VERIFY', False),
+                                   auth=self.auth, headers=headers)
 
         req.raise_for_status()
         return req
