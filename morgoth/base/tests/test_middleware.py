@@ -16,15 +16,15 @@ def setup_request(request):
 
 @pytest.mark.django_db
 class TestLDAPAuthenticationMiddleware():
-    def test_no_auth_header(self, request_factory):
+    def test_no_auth_header(self, rf):
         mw = LDAPAuthenticationMiddleware()
-        request = request_factory.get('/')
+        request = rf.get('/')
         mw.process_request(request=request)
         assert request.ldap is None
 
-    def test_existing_user(self, request_factory):
+    def test_existing_user(self, rf):
         auth_header = 'basic {}'.format(b64encode(b'test@mozilla.com:testpass').decode())
-        request = request_factory.get('/', AUTHORIZATION=auth_header)
+        request = rf.get('/', AUTHORIZATION=auth_header)
         setup_request(request)
 
         u = UserFactory(username='test@mozilla.com')
@@ -34,9 +34,9 @@ class TestLDAPAuthenticationMiddleware():
         assert request.ldap == ('test@mozilla.com', 'testpass')
         assert request.user == u
 
-    def test_create_user(self, request_factory):
+    def test_create_user(self, rf):
         auth_header = 'basic {}'.format(b64encode(b'newuser@mozilla.com:testpass').decode())
-        request = request_factory.get('/', AUTHORIZATION=auth_header)
+        request = rf.get('/', AUTHORIZATION=auth_header)
         setup_request(request)
 
         assert User.objects.count() == 0

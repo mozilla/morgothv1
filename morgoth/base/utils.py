@@ -52,12 +52,6 @@ class BalrogAPI(object):
             # token, and maybe it's data version.
             try:
                 res = self._make_request(prerequest_url, None, 'HEAD')
-
-                # If a data_version was specified we shouldn't overwrite it because the caller may
-                # be acting on a modified version of a specific older version of the data.
-                if 'data_version' not in data:
-                    data['data_version'] = res.headers['X-Data-Version']
-
                 self.csrf_token = res.headers['X-CSRF-Token']
             except requests.HTTPError as error:
                 # However, if the resource doesn't exist yet we may as well not bother doing
