@@ -1,5 +1,6 @@
 import pytest
 
+from django.test import RequestFactory
 from django.test.client import Client
 from rest_framework.test import APIClient
 
@@ -22,3 +23,9 @@ def client():
     client = Client()
     client.force_login(user=user)
     return client
+
+
+@pytest.fixture
+def request_factory():
+    """Fixture to provide a RequestFactory instance."""
+    return RequestFactory()

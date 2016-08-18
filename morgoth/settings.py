@@ -38,6 +38,12 @@ class Core(Configuration):
         'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'morgoth.base.middleware.LDAPAuthenticationMiddleware',
+    ]
+
+    AUTHENTICATION_BACKENDS = [
+        'morgoth.base.backends.LDAPBackend',
+        'django.contrib.auth.backends.ModelBackend',
     ]
 
     ROOT_URLCONF = 'morgoth.urls'

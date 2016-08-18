@@ -1,13 +1,33 @@
+from base64 import b64decode
 from time import sleep
 
 from django.conf import settings
+from django.contrib.auth import authenticate, login
 from django.core.urlresolvers import Resolver404, resolve
+
+
+class LDAPAuthenticationMiddleware(object):
+    """Middleware that handles LDAP authentication."""
+
+    def process_request(self, request):
+        request.ldap = None
+        auth_header = request.META.get('AUTHORIZATION')
+
+        if auth_header:
+            credentials = b64decode(auth_header.split()[1]).decode()
+            username, password = credentials.split(':', 1)
+            request.ldap = (username, password)
+
+        if request.ldap and not request.user.is_authenticated():
+            user = authenticate(ldap_username=request.ldap[0])
+            if user:
+                login(request, user)
 
 
 class ShortCircuitMiddleware(object):
     """
     Middleware that skips remaining middleware when a view is marked with
-    normandy.base.decorators.short_circuit_middlewares
+    morgoth.base.decorators.short_circuit_middlewares
     """
 
     def process_request(self, request):
