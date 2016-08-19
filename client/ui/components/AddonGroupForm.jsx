@@ -68,7 +68,14 @@ class AddonSelectField extends Component {
 
     addons.forEach(addon => {
       if (input.value.indexOf(addon.id) === -1) {
-        items.push(<MenuItem key={addon.id} value={addon.id} primaryText={addon.name} />);
+        items.push(
+          <MenuItem
+            key={addon.id}
+            value={addon.id}
+            primaryText={addon.name}
+            secondaryText={`v${addon.version}`}
+          />
+        );
       }
     });
 
@@ -88,7 +95,7 @@ class AddonSelectField extends Component {
           style={style.addonChip}
           onRequestDelete={() => this.handleRequestDelete(addonId)}
         >
-          {addon.name}
+          <strong>{addon.name}</strong> v{addon.version}
         </Chip>
       );
     });

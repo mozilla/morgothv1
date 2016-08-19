@@ -1,4 +1,4 @@
-import { browserHistory } from 'react-router';
+import { push } from 'react-router';
 
 import apiFetch from '../utils/apiFetch';
 
@@ -54,13 +54,7 @@ function requestCreateAddon() {
   };
 }
 
-function receivedCreateAddon(addon, saveAndContinue) {
-  if (saveAndContinue) {
-    browserHistory.push(`/addons/${addon.id}/`);
-  } else {
-    browserHistory.push('/addons/');
-  }
-
+function receivedCreateAddon(addon) {
   return {
     type: CREATE_ADDON_SUCCESS,
     addon,
@@ -87,11 +81,7 @@ function requestUpdateAddon() {
   };
 }
 
-function receivedUpdateAddon(addon, saveAndContinue) {
-  if (!saveAndContinue) {
-    browserHistory.push('/addons/');
-  }
-
+function receivedUpdateAddon(addon) {
   return {
     type: UPDATE_ADDON_SUCCESS,
     addon,
@@ -136,7 +126,15 @@ export function createAddon(data, saveAndContinue) {
     return apiFetch('addon/', {
       method: 'POST',
       data,
-      success: addon => receivedCreateAddon(addon, saveAndContinue),
+      success: addon => {
+        if (saveAndContinue) {
+          dispatch(push(`/addons/${addon.id}/`));
+        } else {
+          dispatch(push('/addons/'));
+        }
+
+        return receivedCreateAddon(addon);
+      },
       error: error => apiError(CREATE_ADDON_FAILURE, error),
       dispatch,
     });
@@ -163,7 +161,13 @@ export function updateAddon(pk, data, saveAndContinue) {
     return apiFetch(`addon/${pk}/`, {
       method: 'PATCH',
       data,
-      success: addon => receivedUpdateAddon(addon, saveAndContinue),
+      success: addon => {
+        if (!saveAndContinue) {
+          dispatch(push('/addons/'));
+        }
+
+        return receivedUpdateAddon(addon);
+      },
       error: error => apiError(UPDATE_ADDON_FAILURE, error),
       dispatch,
     });

@@ -1,4 +1,4 @@
-import { browserHistory } from 'react-router';
+import { push } from 'react-router';
 
 import apiFetch from '../utils/apiFetch';
 
@@ -54,13 +54,7 @@ function requestCreateAddonGroup() {
   };
 }
 
-function receivedCreateAddonGroup(addonGroup, saveAndContinue) {
-  if (saveAndContinue) {
-    browserHistory.push(`/addon_groups/${addonGroup.id}/`);
-  } else {
-    browserHistory.push('/addon_groups/');
-  }
-
+function receivedCreateAddonGroup(addonGroup) {
   return {
     type: CREATE_ADDON_GROUP_SUCCESS,
     addonGroup,
@@ -87,11 +81,7 @@ function requestUpdateAddonGroup() {
   };
 }
 
-function receivedUpdateAddonGroup(addonGroup, saveAndContinue) {
-  if (!saveAndContinue) {
-    browserHistory.push('/addon_groups/');
-  }
-
+function receivedUpdateAddonGroup(addonGroup) {
   return {
     type: UPDATE_ADDON_GROUP_SUCCESS,
     addonGroup,
@@ -136,7 +126,15 @@ export function createAddonGroup(data, saveAndContinue) {
     return apiFetch('addon_group/', {
       method: 'POST',
       data,
-      success: addonGroup => receivedCreateAddonGroup(addonGroup, saveAndContinue),
+      success: addonGroup => {
+        if (saveAndContinue) {
+          dispatch(push(`/addon_groups/${addonGroup.id}/`));
+        } else {
+          dispatch(push('/addon_groups/'));
+        }
+
+        return receivedCreateAddonGroup(addonGroup);
+      },
       error: error => apiError(CREATE_ADDON_GROUP_FAILURE, error),
       dispatch,
     });
@@ -163,7 +161,13 @@ export function updateAddonGroup(pk, data, saveAndContinue) {
     return apiFetch(`addon_group/${pk}/`, {
       method: 'PATCH',
       data,
-      success: addonGroup => receivedUpdateAddonGroup(addonGroup, saveAndContinue),
+      success: addonGroup => {
+        if (!saveAndContinue) {
+          dispatch(push('/addon_groups/'));
+        }
+
+        return receivedUpdateAddonGroup(addonGroup);
+      },
       error: error => apiError(UPDATE_ADDON_GROUP_FAILURE, error),
       dispatch,
     });

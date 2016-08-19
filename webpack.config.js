@@ -8,7 +8,7 @@ module.exports = [
 
     entry: {
       main: [
-        './client/ui/index.js',
+        './client/ui/index.jsx',
         './client/ui/sass/style.scss',
       ],
     },

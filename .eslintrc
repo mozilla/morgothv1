@@ -14,4 +14,3 @@ rules:
   no-use-before-define: [warn, { functions: false }]
   react/no-multi-comp: [off]
   no-throw-literal: [off]
-  import/no-unresolved: [warn]
