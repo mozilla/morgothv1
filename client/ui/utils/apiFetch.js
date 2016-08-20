@@ -1,3 +1,5 @@
+/* global document, fetch, Headers */
+
 const API_ROOT = '/api/v1/';
 
 export default function apiFetch(url, options = {}) {

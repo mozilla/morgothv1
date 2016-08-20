@@ -30,18 +30,18 @@ function mapDispatchToProps(dispatch, { pk }) {
   }
 
   return {
-    handleSave: data => saveAddon(data),
-    handleSaveAndContinue: data => saveAddon(data, true),
-    resetAll: () => {
-      dispatch(resetAddon());
-      dispatch(resetCreateAddon());
-      dispatch(resetUpdateAddon());
-    },
     fetchAddon: () => {
       if (pk) {
         dispatch(fetchAddon(pk));
       }
     },
+    resetAll: () => {
+      dispatch(resetAddon());
+      dispatch(resetCreateAddon());
+      dispatch(resetUpdateAddon());
+    },
+    save: data => saveAddon(data),
+    saveAndContinue: data => saveAddon(data, true),
   };
 }
 

@@ -15,7 +15,8 @@ class AddonSerializer(serializers.ModelSerializer):
 
 
 class AddonGroupSerializer(serializers.ModelSerializer):
-    addons = AddonSerializer(many=True, read_only=True)
+    addons = serializers.PrimaryKeyRelatedField(many=True, queryset=Addon.objects.all(),
+                                                required=False)
 
     class Meta:
         model = AddonGroup
