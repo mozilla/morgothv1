@@ -24,7 +24,7 @@ class TestLDAPAuthenticationMiddleware():
 
     def test_existing_user(self, rf):
         auth_header = 'basic {}'.format(b64encode(b'test@mozilla.com:testpass').decode())
-        request = rf.get('/', AUTHORIZATION=auth_header)
+        request = rf.get('/', HTTP_AUTHORIZATION=auth_header)
         setup_request(request)
 
         u = UserFactory(username='test@mozilla.com')
@@ -36,7 +36,7 @@ class TestLDAPAuthenticationMiddleware():
 
     def test_create_user(self, rf):
         auth_header = 'basic {}'.format(b64encode(b'newuser@mozilla.com:testpass').decode())
-        request = rf.get('/', AUTHORIZATION=auth_header)
+        request = rf.get('/', HTTP_AUTHORIZATION=auth_header)
         setup_request(request)
 
         assert User.objects.count() == 0
