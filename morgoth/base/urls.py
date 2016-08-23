@@ -11,5 +11,6 @@ router.register(r'user', UserViewSet)
 
 urlpatterns = [
     url(r'^api/v1/', include(router.urls)),
+    url(r'^logout/$', views.logout, name='logout'),
     url(r'', views.index, name='index'),
 ]

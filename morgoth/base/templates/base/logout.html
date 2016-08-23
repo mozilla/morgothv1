@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head></head>
+  <body>
+    <p>You were sucessfully logged out&hellip;</p>
+    <script>
+      // Redirect the user after 3 seconds.
+      window.setTimeout(function() {
+        window.location.replace('{% url 'index' %}');
+      }, 3000);
+    </script>
+  </body>
+</html>
