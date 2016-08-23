@@ -166,6 +166,7 @@ class Development(Base):
     AUTH_PASSWORD_VALIDATORS = values.ListValue([])
     SECURE_SSL_REDIRECT = values.Value(False)
     SLEEP_SECONDS = values.IntegerValue(0)
+    BASIC_AUTH_ENABLED = values.Value(True)
 
 
 class Production(Base):

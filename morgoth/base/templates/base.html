@@ -1,15 +1,14 @@
-{% load render_bundle from webpack_loader %}
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
     <title>Morgoth</title>
-    {% render_bundle 'main' 'css' %}
     <meta name="robots" content="NONE,NOARCHIVE">
+    {% block after_head %}{% endblock %}
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
   </head>
 
   <body data-csrf="{{csrf_token}}">
     {% block content %}{% endblock %}
-    {% render_bundle 'main' 'js' %}
+    {% block after_body %}{% endblock %}
   </body>
 </html>
