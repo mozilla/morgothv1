@@ -27,7 +27,7 @@ def require_ldap_auth(view_func):
 
         response = render(request, 'base/401.html', status=401)
 
-        if getattr(settings, 'BASIC_AUTH_ENABLED', False):
+        if settings.BASIC_AUTH_ENABLED:
             response['WWW-Authenticate'] = 'Basic realm="Morgoth"'
 
         return response
