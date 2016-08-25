@@ -138,6 +138,7 @@ class Base(Core):
     STATICFILES_STORAGE = values.Value('whitenoise.django.GzipManifestStaticFilesStorage')
 
     ADMIN_ENABLED = values.BooleanValue(True)
+    BASIC_AUTH_ENABLED = values.BooleanValue(False)
 
     # statsd
     STATSD_HOST = values.Value('localhost')
@@ -166,6 +167,7 @@ class Development(Base):
     AUTH_PASSWORD_VALIDATORS = values.ListValue([])
     SECURE_SSL_REDIRECT = values.Value(False)
     SLEEP_SECONDS = values.IntegerValue(0)
+    BASIC_AUTH_ENABLED = values.BooleanValue(True)
 
 
 class Production(Base):

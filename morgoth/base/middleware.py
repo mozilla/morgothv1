@@ -11,7 +11,7 @@ class LDAPAuthenticationMiddleware(object):
 
     def process_request(self, request):
         request.ldap = None
-        auth_header = request.META.get('AUTHORIZATION')
+        auth_header = request.META.get('HTTP_AUTHORIZATION')
 
         if auth_header:
             credentials = b64decode(auth_header.split()[1]).decode()
