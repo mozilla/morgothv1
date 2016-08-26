@@ -20,5 +20,5 @@ def client():
     """Fixture to provide Django test client."""
     user = UserFactory(is_superuser=True)
     client = Client()
-    client.force_login(user=user)
+    client.force_login(user=user, backend='django.contrib.auth.backends.ModelBackend')
     return client
