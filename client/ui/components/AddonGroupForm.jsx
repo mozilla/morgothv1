@@ -86,19 +86,21 @@ class AddonSelectField extends Component {
     const { addons, input } = this.props;
     const items = [];
 
-    input.value.forEach(addonId => {
-      const addon = addons.find(a => a.id === addonId);
+    if (input.value) {
+      input.value.forEach(addonId => {
+        const addon = addons.find(a => a.id === addonId);
 
-      items.push(
-        <Chip
-          key={addonId}
-          style={style.addonChip}
-          onRequestDelete={() => this.handleRequestDelete(addonId)}
-        >
-          <strong>{addon.name}</strong> v{addon.version}
-        </Chip>
-      );
-    });
+        items.push(
+          <Chip
+            key={addonId}
+            style={style.addonChip}
+            onRequestDelete={() => this.handleRequestDelete(addonId)}
+          >
+            <strong>{addon.name}</strong> v{addon.version}
+          </Chip>
+        );
+      });
+    }
 
     return items;
   }
@@ -220,7 +222,6 @@ class AddonGroupForm extends React.Component {
               name="addons"
               floatingLabelText="Addons"
               addons={addonsList.addons}
-              defaultValue={[]}
               component={AddonSelectField}
             />
           </div>
