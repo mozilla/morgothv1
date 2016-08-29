@@ -62,4 +62,4 @@ deployment:
    commands:
      # set DOCKER_DEPLOY=true in Circle UI to do deploys
      - "${DOCKER_DEPLOY:-true}"
-- bin/ci/deploy-dockerhub.sh unstable
+     - bin/ci/deploy-dockerhub.sh unstable
