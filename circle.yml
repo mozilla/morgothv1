@@ -54,3 +54,12 @@ deployment:
       # set DOCKER_DEPLOY=true in Circle UI to do deploys
       - "${DOCKER_DEPLOY:-false}"
       - bin/ci/deploy-dockerhub.sh "$CIRCLE_TAG"
+
+  # this is just for dev, uncomment for testing circleci building
+  # test
+  hub_all:
+   branch: /.*/
+   commands:
+     # set DOCKER_DEPLOY=true in Circle UI to do deploys
+     - "${DOCKER_DEPLOY:-true}"
+- bin/ci/deploy-dockerhub.sh unstable
