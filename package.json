@@ -39,7 +39,7 @@
     "redux-form": "6.0.1",
     "redux-form-material-ui": "4.0.1",
     "redux-thunk": "2.1.0",
-    "sass-loader": "4.0.0",
+    "sass-loader": "4.0.1",
     "style-loader": "0.13.1",
     "webpack": "1.13.2",
     "webpack-bundle-tracker": "0.0.93"
