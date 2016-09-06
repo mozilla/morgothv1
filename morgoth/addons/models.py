@@ -8,6 +8,19 @@ from django.db import models
 from dirtyfields import DirtyFieldsMixin
 
 
+PLATFORMS = (
+    'Darwin_x86-gcc3-u-i386-x86_64',
+    'Darwin_x86_64-gcc3-u-i386-x86_64',
+    'Linux_x86-gcc3',
+    'Linux_x86_64-gcc3',
+    'WINNT_x86-msvc',
+    'WINNT_x86-msvc-x64',
+    'WINNT_x86-msvc-x86',
+    'WINNT_x86_64-msvc',
+    'WINNT_x86_64-msvc-x64',
+)
+
+
 class Addon(DirtyFieldsMixin, models.Model):
     name = models.CharField(max_length=100)
     version = models.CharField(max_length=32)
@@ -35,8 +48,40 @@ class Addon(DirtyFieldsMixin, models.Model):
 
         super(Addon, self).save(*args, **kwargs)
 
+    @property
+    def release_data(self):
+        data = {
+            'platforms': {
+                'default': {
+                    'fileUrl': self.ftp_url,
+                    'hashValue': self.xpi_hash,
+                    'filesize': self.xpi_filesize,
+                }
+            }
+        }
+
+        for p in PLATFORMS:
+            data['platforms'][p] = {'alias': 'default'}
+
+        return data
+
 
 class AddonGroup(models.Model):
     channel_name = models.CharField(max_length=100)
     browser_version = models.CharField(max_length=32)
     addons = models.ManyToManyField(Addon, related_name='groups')
+
+    @property
+    def release_data(self):
+        data = {
+            'addons': {},
+            'hashFunction': 'sha512',
+            'name': 'SystemAddons-ff{}'.format(self.browser_version),
+            'schema_version': 5000,
+        }
+
+        for a in self.addons.order_by('name'):
+            data['addons'][a.name] = a.release_data
+            data['name'] = '{}-{}-{}'.format(data['name'], a.name, a.version)
+
+        return data

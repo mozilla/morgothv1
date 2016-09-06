@@ -1,7 +1,7 @@
 import pytest
 
 from morgoth.addons.api.serializers import AddonSerializer, AddonGroupSerializer
-from morgoth.addons.tests import AddonFactory, AddonGroupFactory
+from morgoth.addons.tests import AddonFactory, AddonGroupFactory, FAKE_XPI_FILESIZE, FAKE_XPI_HASH
 
 
 @pytest.mark.django_db()
@@ -15,9 +15,8 @@ class TestAddonSerializer(object):
             'name': addon.name,
             'version': '%s' % addon.version,
             'ftp_url': addon.ftp_url,
-            'xpi_hash': 'c383ffa8d660821158c1313690e7676eaeb917ac12de0bde06e3059920d106e8'
-                        '656a6273655fbc2bc28d694dce433d11784807c27065f6f7f6e83b276b1d2926',
-            'xpi_filesize': 9,
+            'xpi_hash': FAKE_XPI_HASH,
+            'xpi_filesize': FAKE_XPI_FILESIZE,
         }
 
 
