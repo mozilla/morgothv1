@@ -2,13 +2,13 @@ import React from 'react';
 
 import Paper from 'material-ui/Paper';
 
-import AddonsListContainer from '../../containers/AddonsListContainer';
+import AddonsList from '../AddonsList';
 
 
 function AddonsListPage() {
   return (
     <Paper zDepth={2} className="page">
-      <AddonsListContainer />
+      <AddonsList />
     </Paper>
   );
 }

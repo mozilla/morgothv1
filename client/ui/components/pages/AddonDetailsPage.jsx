@@ -2,13 +2,13 @@ import React, { PropTypes as pt } from 'react';
 
 import Paper from 'material-ui/Paper';
 
-import AddonDetailsContainer from '../../containers/AddonDetailsContainer';
+import AddonForm from '../AddonForm.jsx';
 
 
 function AddonDetailsPage(props) {
   return (
     <Paper zDepth={2} className="page">
-      <AddonDetailsContainer pk={props.params.pk} />
+      <AddonForm pk={props.params.pk} />
     </Paper>
   );
 }
