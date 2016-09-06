@@ -6,12 +6,18 @@ from morgoth.addons.models import Addon, AddonGroup
 class AddonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Addon
-        fields = [
+        fields = (
             'id',
             'name',
             'version',
             'ftp_url',
-        ]
+            'xpi_hash',
+            'xpi_filesize',
+        )
+        read_only_fields = (
+            'xpi_hash',
+            'xpi_filesize',
+        )
 
 
 class AddonGroupSerializer(serializers.ModelSerializer):
@@ -20,9 +26,9 @@ class AddonGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AddonGroup
-        fields = [
+        fields = (
             'id',
             'channel_name',
             'browser_version',
             'addons',
-        ]
+        )

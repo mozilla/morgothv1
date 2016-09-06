@@ -22,7 +22,7 @@ class TestAddonAPI(object):
         res = api_client.post('/api/v1/addon/', {
             'name': 'Test Addon',
             'version': '1.1',
-            'ftp_url': 'ftp://something.com/'
+            'ftp_url': ''
         })
         assert res.status_code == 201
 

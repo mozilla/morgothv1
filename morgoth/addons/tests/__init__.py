@@ -1,5 +1,8 @@
 import factory
 
+from tempfile import NamedTemporaryFile
+from unittest.mock import patch
+
 from factory import fuzzy
 
 from morgoth.addons.models import Addon, AddonGroup
@@ -13,6 +16,22 @@ class AddonFactory(factory.DjangoModelFactory):
 
     class Meta:
         model = Addon
+
+    @classmethod
+    def _create(cls, model_class, *args, **kwargs):
+        obj = model_class(*args, **kwargs)
+
+        def mock_urlretrieve(*args, **kwargs):
+            f = NamedTemporaryFile(delete=False)
+            f.write(b'Testfile\n')
+            tmp_file = f.name
+            f.close()
+            return tmp_file, None
+
+        with patch('urllib.request.urlretrieve', mock_urlretrieve):
+            obj.save()
+
+        return obj
 
 
 class AddonGroupFactory(factory.DjangoModelFactory):

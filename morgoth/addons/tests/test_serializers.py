@@ -14,7 +14,10 @@ class TestAddonSerializer(object):
             'id': addon.id,
             'name': addon.name,
             'version': '%s' % addon.version,
-            'ftp_url': addon.ftp_url
+            'ftp_url': addon.ftp_url,
+            'xpi_hash': 'c383ffa8d660821158c1313690e7676eaeb917ac12de0bde06e3059920d106e8'
+                        '656a6273655fbc2bc28d694dce433d11784807c27065f6f7f6e83b276b1d2926',
+            'xpi_filesize': 9,
         }
 
 
