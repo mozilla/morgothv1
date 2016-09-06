@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import {
   createAddon, fetchAddon, resetAddon, resetCreateAddon, resetUpdateAddon, updateAddon,
 } from '../actions/addons';
-import AddonForm from '../components/AddonForm.jsx';
 
 
 function mapStateToProps({ addons }) {
@@ -45,6 +44,4 @@ function mapDispatchToProps(dispatch, { pk }) {
   };
 }
 
-const AddonDetailsContainer = connect(mapStateToProps, mapDispatchToProps)(AddonForm);
-
-export default AddonDetailsContainer;
+export default connect(mapStateToProps, mapDispatchToProps);

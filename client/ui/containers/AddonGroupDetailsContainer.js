@@ -5,7 +5,6 @@ import {
   updateAddonGroup,
 } from '../actions/addon-groups';
 import { fetchAddons } from '../actions/addons';
-import AddonGroupForm from '../components/AddonGroupForm.jsx';
 
 
 function mapStateToProps({ addonGroups, addons }) {
@@ -51,6 +50,4 @@ function mapDispatchToProps(dispatch, { pk }) {
   };
 }
 
-const AddonDetailsContainer = connect(mapStateToProps, mapDispatchToProps)(AddonGroupForm);
-
-export default AddonDetailsContainer;
+export default connect(mapStateToProps, mapDispatchToProps);
