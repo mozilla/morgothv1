@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 
 import { fetchAddonGroups } from '../actions/addon-groups';
-import AddonGroupsList from '../components/AddonGroupsList.jsx';
 
 
 function mapStateToProps(state) {
@@ -18,6 +17,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const AddonsListContainer = connect(mapStateToProps, mapDispatchToProps)(AddonGroupsList);
-
-export default AddonsListContainer;
+export default connect(mapStateToProps, mapDispatchToProps);

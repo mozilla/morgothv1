@@ -15,6 +15,7 @@ import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
 import ErrorSnackbar from './stateless/ErrorSnackbar.jsx';
 import FetchErrorList from './stateless/FetchErrorList.jsx';
 import LoadingIndicator from './stateless/LoadingIndicator.jsx';
+import containAddonGroupDetails from '../containers/AddonGroupDetailsContainer';
 
 
 const style = {
@@ -249,6 +250,8 @@ class AddonGroupForm extends React.Component {
   }
 }
 
+const ContainedAddonGroupForm = containAddonGroupDetails(AddonGroupForm);
+
 export default reduxForm({
   form: 'addonGroup',
-})(AddonGroupForm);
+})(ContainedAddonGroupForm);

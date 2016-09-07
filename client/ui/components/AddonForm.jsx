@@ -12,6 +12,7 @@ import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
 import ErrorSnackbar from './stateless/ErrorSnackbar.jsx';
 import FetchErrorList from './stateless/FetchErrorList.jsx';
 import LoadingIndicator from './stateless/LoadingIndicator.jsx';
+import containAddonDetails from '../containers/AddonDetailsContainer';
 
 
 const style = {
@@ -142,6 +143,8 @@ class AddonForm extends React.Component {
   }
 }
 
+const ContainedAddonForm = containAddonDetails(AddonForm);
+
 export default reduxForm({
   form: 'addon',
-})(AddonForm);
+})(ContainedAddonForm);

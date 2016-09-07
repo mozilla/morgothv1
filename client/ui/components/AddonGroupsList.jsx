@@ -9,6 +9,7 @@ import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 
 import FetchErrorList from './stateless/FetchErrorList.jsx';
 import LoadingIndicator from './stateless/LoadingIndicator.jsx';
+import containAddonGroupsList from '../containers/AddonGroupsListContainer';
 
 
 const style = {
@@ -101,4 +102,4 @@ class AddonGroupsList extends React.Component {
   }
 }
 
-export default AddonGroupsList;
+export default containAddonGroupsList(AddonGroupsList);

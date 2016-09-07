@@ -2,13 +2,13 @@ import React, { PropTypes as pt } from 'react';
 
 import Paper from 'material-ui/Paper';
 
-import AddonGroupDetailsContainer from '../../containers/AddonGroupDetailsContainer';
+import AddonGroupForm from '../AddonGroupForm.jsx';
 
 
 function AddonGroupDetailsPage(props) {
   return (
     <Paper zDepth={2} className="page">
-      <AddonGroupDetailsContainer pk={props.params.pk} />
+      <AddonGroupForm pk={props.params.pk} />
     </Paper>
   );
 }
