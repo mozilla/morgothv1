@@ -72,16 +72,22 @@ class AddonGroup(models.Model):
     addons = models.ManyToManyField(Addon, related_name='groups')
 
     @property
+    def name(self):
+        n = 'SystemAddons-ff{}'.format(self.browser_version)
+        for a in self.addons.order_by('name'):
+            n = '{}-{}-{}'.format(n, a.name, a.version)
+        return n
+
+    @property
     def release_data(self):
         data = {
             'addons': {},
             'hashFunction': 'sha512',
-            'name': 'SystemAddons-ff{}'.format(self.browser_version),
+            'name': self.name,
             'schema_version': 5000,
         }
 
         for a in self.addons.order_by('name'):
             data['addons'][a.name] = a.release_data
-            data['name'] = '{}-{}-{}'.format(data['name'], a.name, a.version)
 
         return data

@@ -137,6 +137,8 @@ class AddonGroupForm extends React.Component {
     resetAll: pt.func.isRequired,
     save: pt.func.isRequired,
     saveAndContinue: pt.func.isRequired,
+    syncAddonGroup: pt.func.isRequired,
+    syncedAddonGroup: pt.object.isRequired,
     updateAddonGroup: pt.object.isRequired,
     values: pt.object,
   }
@@ -161,8 +163,8 @@ class AddonGroupForm extends React.Component {
 
   render() {
     const {
-      activeAddonGroup, addonsList, createAddonGroup, handleSubmit, save, saveAndContinue,
-      updateAddonGroup,
+      activeAddonGroup, addonsList, createAddonGroup, handleSubmit, pk, save, saveAndContinue,
+      syncAddonGroup, updateAddonGroup,
     } = this.props;
     const isSaving = createAddonGroup.loading || updateAddonGroup.loading;
     const saveError = createAddonGroup.error || updateAddonGroup.error;
@@ -193,6 +195,13 @@ class AddonGroupForm extends React.Component {
               label="Back to Addon Group List"
               icon={<NavigationChevronLeft />}
               disabled={isSaving}
+            />
+          </ToolbarGroup>
+          <ToolbarGroup lastChild>
+            <RaisedButton
+              onClick={syncAddonGroup}
+              label="Sync"
+              disabled={!pk}
             />
           </ToolbarGroup>
         </Toolbar>

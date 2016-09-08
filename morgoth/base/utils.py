@@ -36,13 +36,15 @@ class BalrogAPI(object):
         req.raise_for_status()
         return req
 
-    def request(self, url, prerequest_url=None, url_vars=None, data=None, method='GET'):
-        url = url % url_vars
+    def request(self, url, prerequest_url='csrf_token', url_vars=None, data=None, method='GET'):
+        if url_vars:
+            url = url % url_vars
 
         data['csrf_token'] = self.csrf_token
 
         if prerequest_url is not None:
-            prerequest_url = prerequest_url % url_vars
+            if url_vars:
+                prerequest_url = prerequest_url % url_vars
         else:
             prerequest_url = url
 

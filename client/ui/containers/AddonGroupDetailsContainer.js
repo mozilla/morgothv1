@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import {
   createAddonGroup, fetchAddonGroup, resetAddonGroup, resetCreateAddonGroup, resetUpdateAddonGroup,
-  updateAddonGroup,
+  updateAddonGroup, syncAddonGroup,
 } from '../actions/addon-groups';
 import { fetchAddons } from '../actions/addons';
 import AddonGroupForm from '../components/AddonGroupForm.jsx';
@@ -13,6 +13,7 @@ function mapStateToProps({ addonGroups, addons }) {
     activeAddonGroup: addonGroups.active,
     addonsList: addons.list,
     createAddonGroup: addonGroups.create,
+    syncedAddonGroup: addonGroups.sync,
     updateAddonGroup: addonGroups.update,
   };
 
@@ -48,6 +49,9 @@ function mapDispatchToProps(dispatch, { pk }) {
     },
     save: data => saveAddonGroup(data),
     saveAndContinue: data => saveAddonGroup(data, true),
+    syncAddonGroup: () => {
+      dispatch(syncAddonGroup(pk));
+    },
   };
 }
 

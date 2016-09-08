@@ -47,24 +47,7 @@ class TestAddonGroup(object):
         addon_group = AddonGroupFactory(addons=[addon])
         assert addon_group.release_data == {
             'addons': {
-                addon.name: {
-                    'platforms': {
-                        'Darwin_x86-gcc3-u-i386-x86_64': {'alias': 'default'},
-                        'Darwin_x86_64-gcc3-u-i386-x86_64': {'alias': 'default'},
-                        'Linux_x86-gcc3': {'alias': 'default'},
-                        'Linux_x86_64-gcc3': {'alias': 'default'},
-                        'WINNT_x86-msvc': {'alias': 'default'},
-                        'WINNT_x86-msvc-x64': {'alias': 'default'},
-                        'WINNT_x86-msvc-x86': {'alias': 'default'},
-                        'WINNT_x86_64-msvc': {'alias': 'default'},
-                        'WINNT_x86_64-msvc-x64': {'alias': 'default'},
-                        'default': {
-                            'fileUrl': addon.ftp_url,
-                            'filesize': FAKE_XPI_FILESIZE,
-                            'hashValue': FAKE_XPI_HASH
-                        }
-                    }
-                }
+                addon.name: addon.release_data
             },
             'hashFunction': 'sha512',
             'name': 'SystemAddons-ff{}-{}-{}'.format(addon_group.browser_version, addon.name,

@@ -1,3 +1,5 @@
+import json
+
 from rest_framework import permissions, status
 from rest_framework.decorators import detail_route
 from rest_framework.response import Response
@@ -5,6 +7,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from morgoth.addons.api.serializers import AddonSerializer, AddonGroupSerializer
 from morgoth.addons.models import Addon, AddonGroup
+from morgoth.base.utils import BalrogAPI
 
 
 class AddonViewSet(ModelViewSet):
@@ -55,5 +58,16 @@ class AddonGroupViewSet(ModelViewSet):
         if len(addon_ids) != addons.count():
             return Response({'addon_ids': 'One or more of the IDs provided were invalid'},
                             status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @detail_route(methods=['POST'])
+    def sync(self, request, *args, **kwargs):
+        group = self.get_object()
+        balrog = BalrogAPI(auth=request.ldap)
+
+        balrog.request('releases', method='POST', data={'name': group.name,
+                                                        'product': 'SystemAddons',
+                                                        'blob': json.dumps(group.release_data)})
 
         return Response(status=status.HTTP_204_NO_CONTENT)
