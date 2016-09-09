@@ -30,5 +30,6 @@ class AddonGroupSerializer(serializers.ModelSerializer):
             'id',
             'channel_name',
             'browser_version',
+            'no_update_version',
             'addons',
         )

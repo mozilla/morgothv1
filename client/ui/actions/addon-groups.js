@@ -1,4 +1,4 @@
-import { push } from 'react-router';
+import { push } from 'react-router-redux';
 
 import apiFetch from '../utils/apiFetch';
 

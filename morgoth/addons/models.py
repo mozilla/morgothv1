@@ -69,6 +69,7 @@ class Addon(DirtyFieldsMixin, models.Model):
 class AddonGroup(models.Model):
     channel_name = models.CharField(max_length=100)
     browser_version = models.CharField(max_length=32)
+    no_update_version = models.CharField(max_length=32)
     addons = models.ManyToManyField(Addon, related_name='groups')
 
     @property

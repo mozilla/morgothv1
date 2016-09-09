@@ -228,6 +228,14 @@ class AddonGroupForm extends React.Component {
           </div>
           <div>
             <Field
+              name="no_update_version"
+              floatingLabelText="No-Update Version"
+              disabled={isSaving}
+              component={TextField}
+            />
+          </div>
+          <div>
+            <Field
               name="addons"
               floatingLabelText="Addons"
               addons={addonsList.addons}
