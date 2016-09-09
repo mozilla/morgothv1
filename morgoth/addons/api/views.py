@@ -66,8 +66,9 @@ class AddonGroupViewSet(ModelViewSet):
         group = self.get_object()
         balrog = BalrogAPI(auth=request.ldap)
 
-        balrog.request('releases', method='POST', data={
+        r = balrog.request('releases', method='POST', data={
             'name': group.name, 'product': 'SystemAddons', 'blob': json.dumps(group.release_data)})
+        print(r.content)
 
         balrog.request('rules', method='POST', data={
             'priority': 1000, 'backgroundRate': 100, 'product': 'SystemAddons',
