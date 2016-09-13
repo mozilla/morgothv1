@@ -1,3 +1,4 @@
+-r requirements.txt
 click==6.6 \
     --hash=sha256:cc6a19da8ebff6e7074f731447ef7e112bd23adf3de5c597cf9989f2fd8defe9
 factory_boy==2.7.0 \

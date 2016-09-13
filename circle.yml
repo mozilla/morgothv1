@@ -4,8 +4,6 @@ machine:
     - docker
 
 dependencies:
-  cache_directories:
-    - "~/cache/"
   override:
     # create a version.json per https://github.com/mozilla-services/Dockerflow/blob/master/docs/version_object.md
     - >
@@ -17,21 +15,14 @@ dependencies:
         "$CIRCLE_BUILD_URL" > version.json
     - cp version.json $CIRCLE_ARTIFACTS
     - docker info
-    # use circleci's docker cache workaround
-    - mkdir -p ~/cache/
-    - if [ -e ~/cache/docker/image.tar ]; then echo "Loading image.tar"; docker load -i ~/cache/docker/image.tar || rm ~/cache/docker/image.tar; fi
     # build image
     - docker build -t morgoth:build .
-    # Clean up old image and save the new one
-    - >
-      mkdir -p ~/cache/docker;
-      rm -f ~/cache/docker/image.tar;
-      docker save morgoth:build > ~/cache/docker/image.tar;
-      ls -l ~/cache/docker
 
 test:
   pre:
     - chmod -R 777 $CIRCLE_TEST_REPORTS
+    # Install dev dependencies
+    - bin/ci/docker-run.sh pip install -r requirements-dev.txt --require-hashes
   override:
     # Run lint checks
     - bin/ci/docker-run.sh therapist run --use-tracked-files
