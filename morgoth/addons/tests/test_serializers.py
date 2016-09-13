@@ -33,5 +33,6 @@ class TestAddonGroupSerializer(object):
             'id': group.id,
             'channel_name': group.channel_name,
             'browser_version': '%s' % group.browser_version,
+            'no_update_version': '%s' % group.no_update_version,
             'addons': [addon.id]
         }
