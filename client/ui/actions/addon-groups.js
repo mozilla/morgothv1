@@ -193,7 +193,7 @@ export function updateAddonGroup(pk, data, saveAndContinue) {
 
 export function syncAddonGroup(pk) {
   return dispatch => {
-    dispatch(requestSyncAddonGroup(pk));
+    dispatch(requestSyncAddonGroup());
 
     return apiFetch(`addon_group/${pk}/sync/`, {
       method: 'POST',

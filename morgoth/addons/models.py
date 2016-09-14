@@ -46,7 +46,7 @@ class Addon(DirtyFieldsMixin, models.Model):
                 self.xpi_hash = None
                 self.xpi_filesize = None
 
-        super(Addon, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     @property
     def release_data(self):

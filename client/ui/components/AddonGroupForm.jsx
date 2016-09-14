@@ -138,7 +138,6 @@ class AddonGroupForm extends React.Component {
     save: pt.func.isRequired,
     saveAndContinue: pt.func.isRequired,
     syncAddonGroup: pt.func.isRequired,
-    syncedAddonGroup: pt.object.isRequired,
     updateAddonGroup: pt.object.isRequired,
     values: pt.object,
   }
