@@ -4,7 +4,8 @@ import {
   CREATE_ADDON_GROUP_FAILURE, RESET_NEW_ADDON_GROUP, FETCH_ADDON_GROUP_REQUEST,
   FETCH_ADDON_GROUP_SUCCESS, FETCH_ADDON_GROUP_FAILURE, RESET_ADDON_GROUP,
   UPDATE_ADDON_GROUP_REQUEST, UPDATE_ADDON_GROUP_SUCCESS, UPDATE_ADDON_GROUP_FAILURE,
-  RESET_UPDATE_ADDON_GROUP,
+  RESET_UPDATE_ADDON_GROUP, SYNC_ADDON_GROUP_REQUEST, SYNC_ADDON_GROUP_SUCCESS,
+  SYNC_ADDON_GROUP_FAILURE,
 } from '../actions/addon-groups';
 
 
@@ -26,6 +27,11 @@ const INITIAL_STATE = {
   },
   update: {
     addonGroup: null,
+    error: null,
+    loading: false,
+  },
+  sync: {
+    synced: false,
     error: null,
     loading: false,
   },
@@ -189,6 +195,36 @@ export default (state = INITIAL_STATE, action) => {
         update: {
           addonGroup: null,
           error: null,
+          loading: false,
+        },
+      };
+
+    case SYNC_ADDON_GROUP_REQUEST:
+      return {
+        ...state,
+        sync: {
+          synced: false,
+          error: null,
+          loading: true,
+        },
+      };
+
+    case SYNC_ADDON_GROUP_SUCCESS:
+      return {
+        ...state,
+        sync: {
+          synced: true,
+          error: null,
+          loading: false,
+        },
+      };
+
+    case SYNC_ADDON_GROUP_FAILURE:
+      return {
+        ...state,
+        sync: {
+          synced: false,
+          error: action.error,
           loading: false,
         },
       };

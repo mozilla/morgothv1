@@ -138,6 +138,7 @@ class AddonGroupForm extends React.Component {
     resetAll: pt.func.isRequired,
     save: pt.func.isRequired,
     saveAndContinue: pt.func.isRequired,
+    syncAddonGroup: pt.func.isRequired,
     updateAddonGroup: pt.object.isRequired,
     values: pt.object,
   }
@@ -162,8 +163,8 @@ class AddonGroupForm extends React.Component {
 
   render() {
     const {
-      activeAddonGroup, addonsList, createAddonGroup, handleSubmit, save, saveAndContinue,
-      updateAddonGroup,
+      activeAddonGroup, addonsList, createAddonGroup, handleSubmit, pk, save, saveAndContinue,
+      syncAddonGroup, updateAddonGroup,
     } = this.props;
     const isSaving = createAddonGroup.loading || updateAddonGroup.loading;
     const saveError = createAddonGroup.error || updateAddonGroup.error;
@@ -196,6 +197,13 @@ class AddonGroupForm extends React.Component {
               disabled={isSaving}
             />
           </ToolbarGroup>
+          <ToolbarGroup lastChild>
+            <RaisedButton
+              onClick={syncAddonGroup}
+              label="Sync"
+              disabled={!pk}
+            />
+          </ToolbarGroup>
         </Toolbar>
         {
           isSaving ?
@@ -214,6 +222,14 @@ class AddonGroupForm extends React.Component {
             <Field
               name="browser_version"
               floatingLabelText="Browser Version"
+              disabled={isSaving}
+              component={TextField}
+            />
+          </div>
+          <div>
+            <Field
+              name="no_update_version"
+              floatingLabelText="No-Update Version"
               disabled={isSaving}
               component={TextField}
             />

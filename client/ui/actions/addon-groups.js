@@ -1,4 +1,4 @@
-import { push } from 'react-router';
+import { push } from 'react-router-redux';
 
 import apiFetch from '../utils/apiFetch';
 
@@ -26,6 +26,11 @@ export const UPDATE_ADDON_GROUP_REQUEST = 'UPDATE_ADDON_GROUP_REQUEST';
 export const UPDATE_ADDON_GROUP_SUCCESS = 'UPDATE_ADDON_GROUP_SUCCESS';
 export const UPDATE_ADDON_GROUP_FAILURE = 'UPDATE_ADDON_GROUP_FAILURE';
 export const RESET_UPDATE_ADDON_GROUP = 'RESET_UPDATE_ADDON_GROUP';
+
+// Sync an addon group
+export const SYNC_ADDON_GROUP_REQUEST = 'SYNC_ADDON_GROUP_REQUEST';
+export const SYNC_ADDON_GROUP_SUCCESS = 'SYNC_ADDON_GROUP_SUCCESS';
+export const SYNC_ADDON_GROUP_FAILURE = 'SYNC_ADDON_GROUP_FAILURE';
 
 
 function apiError(type, error) {
@@ -106,6 +111,18 @@ export function resetUpdateAddonGroup() {
   };
 }
 
+function requestSyncAddonGroup() {
+  return {
+    type: SYNC_ADDON_GROUP_REQUEST,
+  };
+}
+
+function receivedSyncAddonGroup() {
+  return {
+    type: SYNC_ADDON_GROUP_REQUEST,
+  };
+}
+
 export function fetchAddonGroups() {
   return dispatch => {
     dispatch(requestAddonGroups());
@@ -169,6 +186,19 @@ export function updateAddonGroup(pk, data, saveAndContinue) {
         return receivedUpdateAddonGroup(addonGroup);
       },
       error: error => apiError(UPDATE_ADDON_GROUP_FAILURE, error),
+      dispatch,
+    });
+  };
+}
+
+export function syncAddonGroup(pk) {
+  return dispatch => {
+    dispatch(requestSyncAddonGroup());
+
+    return apiFetch(`addon_group/${pk}/sync/`, {
+      method: 'POST',
+      success: () => receivedSyncAddonGroup(),
+      error: error => apiError(SYNC_ADDON_GROUP_FAILURE, error),
       dispatch,
     });
   };

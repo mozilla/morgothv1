@@ -44,6 +44,9 @@ class AddonGroupsList extends React.Component {
         <TableRowColumn>
           <Link to={`/addon_groups/${addonGroup.id}/`}>{addonGroup.browser_version}</Link>
         </TableRowColumn>
+        <TableRowColumn>
+          <Link to={`/addon_groups/${addonGroup.id}/`}>{addonGroup.no_update_version}</Link>
+        </TableRowColumn>
         <TableRowColumn className="align-right">
           <RaisedButton
             onClick={() => this.goto(`/addon_groups/${addonGroup.id}/`)}
@@ -90,6 +93,7 @@ class AddonGroupsList extends React.Component {
             <TableRow>
               <TableHeaderColumn>Channel Name</TableHeaderColumn>
               <TableHeaderColumn>Browser Version</TableHeaderColumn>
+              <TableHeaderColumn>No-Update Version</TableHeaderColumn>
               <TableHeaderColumn />
             </TableRow>
           </TableHeader>

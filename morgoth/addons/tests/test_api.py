@@ -22,7 +22,7 @@ class TestAddonAPI(object):
         res = api_client.post('/api/v1/addon/', {
             'name': 'Test Addon',
             'version': '1.1',
-            'ftp_url': 'ftp://something.com/'
+            'ftp_url': ''
         })
         assert res.status_code == 201
 
@@ -80,7 +80,8 @@ class TestAddonGroupAPI(object):
     def test_it_can_create_groups(self, api_client):
         res = api_client.post('/api/v1/addon_group/', {
             'channel_name': 'Test Group',
-            'browser_version': '3.1'
+            'browser_version': '3.1',
+            'no_update_version': '2.1',
         })
         assert res.status_code == 201
 
