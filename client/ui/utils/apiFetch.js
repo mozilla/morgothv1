@@ -3,9 +3,6 @@
 const API_ROOT = '/api/v1/';
 
 export default function apiFetch(url, options = {}) {
-  let dispatch;
-  let handleSuccess;
-  let handleError;
   let queryString = '';
 
   const headers = new Headers();
@@ -19,7 +16,7 @@ export default function apiFetch(url, options = {}) {
     ...options,
   };
 
-  // Convert `data` to `body` if necessary.
+  // Convert `data` to `body` or querystring if necessary.
   if ('data' in settings) {
     if ('body' in settings) {
       throw new Error('Only pass one of `settings.data` and `settings.body`.');
@@ -40,42 +37,13 @@ export default function apiFetch(url, options = {}) {
     delete settings.data;
   }
 
-  // TODO: Clean up the following section.
-
-  // Extract the `dispatch` function from settings.
-  if (typeof settings.dispatch === 'function') {
-    dispatch = settings.dispatch;
-    delete settings.dispatch;
-  } else {
-    throw new Error('A valid `dispatch` function must be provided.');
-  }
-
-  // Extract the `handleSuccess` function from settings.
-  if (typeof settings.success === 'function') {
-    handleSuccess = settings.success;
-    delete settings.success;
-  } else {
-    throw new Error('A valid `success` function must be provided.');
-  }
-
-  // Extract the `handleError` function from settings.
-  if (typeof settings.error === 'function') {
-    handleError = settings.error;
-    delete settings.error;
-  } else {
-    throw new Error('A valid `error` function must be provided.');
-  }
-
   return fetch(`${API_ROOT}${url}${queryString}`, settings)
     .then(response => Promise.all([response.ok, response.json()]))
+    .catch(error => [false, { message: error.message }])
     .then(([ok, data]) => {
-      if (ok) {
-        dispatch(handleSuccess(data));
-      } else {
-        dispatch(handleError(data));
+      if (!ok) {
+        throw data;
       }
-    })
-    .catch(error => {
-      dispatch(handleError({ message: error.message }));
+      return data;
     });
 }

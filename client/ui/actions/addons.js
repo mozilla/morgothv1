@@ -110,34 +110,27 @@ export function fetchAddons() {
   return dispatch => {
     dispatch(requestAddons());
 
-    return apiFetch('addon/', {
-      method: 'GET',
-      success: receivedAddons,
-      error: error => apiError(FETCH_ADDONS_FAILURE, error),
-      dispatch,
-    });
+    return apiFetch('addon/', { method: 'GET' })
+      .then(data => dispatch(receivedAddons(data)))
+      .catch(error => dispatch(apiError(FETCH_ADDONS_FAILURE, error)));
   };
 }
 
-export function createAddon(data, saveAndContinue) {
+export function createAddon(addonData, saveAndContinue) {
   return dispatch => {
     dispatch(requestCreateAddon());
 
-    return apiFetch('addon/', {
-      method: 'POST',
-      data,
-      success: addon => {
+    return apiFetch('addon/', { method: 'POST', data: addonData })
+      .then(data => {
         if (saveAndContinue) {
-          dispatch(push(`/addons/${addon.id}/`));
+          dispatch(push(`/addons/${data.id}/`));
         } else {
           dispatch(push('/addons/'));
         }
 
-        return receivedCreateAddon(addon);
-      },
-      error: error => apiError(CREATE_ADDON_FAILURE, error),
-      dispatch,
-    });
+        return dispatch(receivedCreateAddon(data));
+      })
+      .catch(error => dispatch(apiError(CREATE_ADDON_FAILURE, error)));
   };
 }
 
@@ -145,31 +138,24 @@ export function fetchAddon(pk) {
   return dispatch => {
     dispatch(requestAddon(pk));
 
-    return apiFetch(`addon/${pk}/`, {
-      method: 'GET',
-      success: receivedAddon,
-      error: error => apiError(FETCH_ADDON_FAILURE, error),
-      dispatch,
-    });
+    return apiFetch(`addon/${pk}/`, { method: 'GET' })
+      .then(data => dispatch(receivedAddon(data)))
+      .catch(error => dispatch(apiError(FETCH_ADDON_FAILURE, error)));
   };
 }
 
-export function updateAddon(pk, data, saveAndContinue) {
+export function updateAddon(pk, addonData, saveAndContinue) {
   return dispatch => {
     dispatch(requestUpdateAddon());
 
-    return apiFetch(`addon/${pk}/`, {
-      method: 'PATCH',
-      data,
-      success: addon => {
+    return apiFetch(`addon/${pk}/`, { method: 'PATCH', data: addonData })
+      .then(data => {
         if (!saveAndContinue) {
           dispatch(push('/addons/'));
         }
 
-        return receivedUpdateAddon(addon);
-      },
-      error: error => apiError(UPDATE_ADDON_FAILURE, error),
-      dispatch,
-    });
+        return dispatch(receivedUpdateAddon(data));
+      })
+      .catch(error => dispatch(apiError(UPDATE_ADDON_FAILURE, error)));
   };
 }

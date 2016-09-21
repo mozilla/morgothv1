@@ -127,34 +127,27 @@ export function fetchAddonGroups() {
   return dispatch => {
     dispatch(requestAddonGroups());
 
-    return apiFetch('addon_group/', {
-      method: 'GET',
-      success: receivedAddonGroups,
-      error: error => apiError(FETCH_ADDON_GROUPS_FAILURE, error),
-      dispatch,
-    });
+    return apiFetch('addon_group/', { method: 'GET' })
+      .then(data => dispatch(receivedAddonGroups(data)))
+      .catch(error => dispatch(apiError(FETCH_ADDON_GROUPS_FAILURE, error)));
   };
 }
 
-export function createAddonGroup(data, saveAndContinue) {
+export function createAddonGroup(addonGroupData, saveAndContinue) {
   return dispatch => {
     dispatch(requestCreateAddonGroup());
 
-    return apiFetch('addon_group/', {
-      method: 'POST',
-      data,
-      success: addonGroup => {
+    return apiFetch('addon_group/', { method: 'POST', data: addonGroupData })
+      .then(data => {
         if (saveAndContinue) {
-          dispatch(push(`/addon_groups/${addonGroup.id}/`));
+          dispatch(push(`/addon_groups/${data.id}/`));
         } else {
           dispatch(push('/addon_groups/'));
         }
 
-        return receivedCreateAddonGroup(addonGroup);
-      },
-      error: error => apiError(CREATE_ADDON_GROUP_FAILURE, error),
-      dispatch,
-    });
+        return dispatch(receivedCreateAddonGroup(data));
+      })
+      .catch(error => dispatch(apiError(CREATE_ADDON_GROUP_FAILURE, error)));
   };
 }
 
@@ -162,32 +155,25 @@ export function fetchAddonGroup(pk) {
   return dispatch => {
     dispatch(requestAddonGroup(pk));
 
-    return apiFetch(`addon_group/${pk}/`, {
-      method: 'GET',
-      success: receivedAddonGroup,
-      error: error => apiError(FETCH_ADDON_GROUP_FAILURE, error),
-      dispatch,
-    });
+    return apiFetch(`addon_group/${pk}/`, { method: 'GET' })
+      .then(data => dispatch(receivedAddonGroup((data))))
+      .catch(error => dispatch(apiError(FETCH_ADDON_GROUP_FAILURE, error)));
   };
 }
 
-export function updateAddonGroup(pk, data, saveAndContinue) {
+export function updateAddonGroup(pk, addonGroupData, saveAndContinue) {
   return dispatch => {
     dispatch(requestUpdateAddonGroup());
 
-    return apiFetch(`addon_group/${pk}/`, {
-      method: 'PATCH',
-      data,
-      success: addonGroup => {
+    return apiFetch(`addon_group/${pk}/`, { method: 'PATCH', data: addonGroupData })
+      .then(data => {
         if (!saveAndContinue) {
           dispatch(push('/addon_groups/'));
         }
 
-        return receivedUpdateAddonGroup(addonGroup);
-      },
-      error: error => apiError(UPDATE_ADDON_GROUP_FAILURE, error),
-      dispatch,
-    });
+        return dispatch(receivedUpdateAddonGroup(data));
+      })
+      .catch(error => dispatch(apiError(UPDATE_ADDON_GROUP_FAILURE, error)));
   };
 }
 
@@ -195,11 +181,8 @@ export function syncAddonGroup(pk) {
   return dispatch => {
     dispatch(requestSyncAddonGroup());
 
-    return apiFetch(`addon_group/${pk}/sync/`, {
-      method: 'POST',
-      success: () => receivedSyncAddonGroup(),
-      error: error => apiError(SYNC_ADDON_GROUP_FAILURE, error),
-      dispatch,
-    });
+    return apiFetch(`addon_group/${pk}/sync/`, { method: 'POST' })
+      .then(data => dispatch(receivedSyncAddonGroup(data)))
+      .catch(error => dispatch(apiError(SYNC_ADDON_GROUP_FAILURE, error)));
   };
 }
