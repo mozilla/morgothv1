@@ -143,6 +143,10 @@ class AddonGroupForm extends React.Component {
     values: pt.object,
   }
 
+  static goto(url) {
+    browserHistory.push(url);
+  }
+
   componentWillMount() {
     const { fetchAddonGroup, fetchAddons, pk } = this.props;
 
@@ -155,10 +159,6 @@ class AddonGroupForm extends React.Component {
 
   componentWillUnmount() {
     this.props.resetAll();
-  }
-
-  goto(url) {
-    browserHistory.push(url);
   }
 
   render() {

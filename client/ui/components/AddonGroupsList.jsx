@@ -27,12 +27,12 @@ class AddonGroupsList extends React.Component {
     fetchAddonGroups: pt.func.isRequired,
   };
 
-  componentWillMount() {
-    this.props.fetchAddonGroups();
+  static goto(url) {
+    browserHistory.push(url);
   }
 
-  goto(url) {
-    browserHistory.push(url);
+  componentWillMount() {
+    this.props.fetchAddonGroups();
   }
 
   renderRows(addonGroups) {
