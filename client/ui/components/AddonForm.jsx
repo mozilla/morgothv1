@@ -39,6 +39,10 @@ class AddonForm extends React.Component {
     values: pt.object,
   }
 
+  static goto(url) {
+    browserHistory.push(url);
+  }
+
   componentWillMount() {
     const { fetchAddon, pk } = this.props;
     if (pk) {
@@ -48,10 +52,6 @@ class AddonForm extends React.Component {
 
   componentWillUnmount() {
     this.props.resetAll();
-  }
-
-  goto(url) {
-    browserHistory.push(url);
   }
 
   render() {

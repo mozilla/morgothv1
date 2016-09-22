@@ -13,7 +13,7 @@ class MenuItem extends React.Component {
     icon: pt.node.isRequired,
   };
 
-  goto(path) {
+  static goto(path) {
     browserHistory.push(path);
   }
 
@@ -36,7 +36,7 @@ class HomeMenu extends React.Component {
     items: pt.array.isRequired,
   };
 
-  renderItems(items) {
+  static renderItems(items) {
     return items.map((item, index) => (
       <MenuItem
         text={item.text}

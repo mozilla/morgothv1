@@ -7,7 +7,7 @@ class Breadcrumbs extends React.Component {
     routes: pt.array.isRequired,
   };
 
-  renderCrumbs(routes) {
+  static renderCrumbs(routes) {
     return routes.map((route, index) => {
       const { path, title } = route;
 

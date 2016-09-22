@@ -27,12 +27,12 @@ class AddonsList extends React.Component {
     fetchAddons: pt.func.isRequired,
   };
 
-  componentWillMount() {
-    this.props.fetchAddons();
+  static goto(url) {
+    browserHistory.push(url);
   }
 
-  goto(url) {
-    browserHistory.push(url);
+  componentWillMount() {
+    this.props.fetchAddons();
   }
 
   renderRows(addons) {

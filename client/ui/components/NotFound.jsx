@@ -9,7 +9,7 @@ import ActionReportProblem from 'material-ui/svg-icons/action/report-problem';
 
 
 class NoMatch extends React.Component {
-  handleClick() {
+  static handleClick() {
     browserHistory.push('/');
   }
 
