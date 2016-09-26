@@ -14,6 +14,8 @@ class Core(Configuration):
         'morgoth.addons.apps.AddonsConfig',
         'morgoth.health.apps.HealthConfig',
 
+        'django_crontab',
+        'product_details',
         'rest_framework',
         'rest_framework.authtoken',
         'webpack_loader',
@@ -88,6 +90,13 @@ class Core(Configuration):
             'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
         }
     }
+
+    CRONTAB_DJANGO_PROJECT_NAME = 'morgoth'
+
+    CRONJOBS = (
+        ('0 0 * * *', 'django.core.management.call_command', ['update_product_details']),
+        ('0 1 * * *', 'morgoth.addons.cron.update_addon_group'),
+    )
 
 
 class Base(Core):

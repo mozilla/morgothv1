@@ -79,6 +79,9 @@ django-configurations==2.0 \
     --hash=sha256:be47e25d070fd005cc8fbd6c913c9ec37e83d04686937afe18ca6c579b2cdedb
 django-dirtyfields==1.2 \
     --hash=sha256:e8e985b4382ca6b5a69efdcbe34333fdbf013fb35d1489be581b45b2782340dd
+django-mozilla-product-details==0.12.1 \
+    --hash=sha256:a31a51102e8c2f047f8aa62b8bdc552f7a31d9c69f2cb16393225c3ee0db72b5 \
+    --hash=sha256:25ac11bd4544fef3236f32439f6b1de3bcf931f8b34c7786ab40f0ec85626eeb
 django-sslserver==0.19 \
     --hash=sha256:1363835229a0585f89c42f3beca836572f3f6babdc1508f13352aed84b0924b3
 django-webpack-loader==0.3.3 \
@@ -191,3 +194,5 @@ therapist==0.3.2 \
 whitenoise==3.2.1 \
     --hash=sha256:a875382e670bdd5ab642b26d930463af4509a6de63b52402c23a7216dc382a99 \
     --hash=sha256:51d48bd426d3cf64c1ec5082d1f0d5437649d8ae59114a495e7406faae4fcbd2
+django-crontab==0.7.1 \
+    --hash=sha256:1201810a212460aaaa48eb6a766738740daf42c1a4f6aafecfb1525036929236
