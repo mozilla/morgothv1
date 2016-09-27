@@ -95,7 +95,7 @@ class Core(Configuration):
 
     CRONJOBS = (
         ('0 0 * * *', 'django.core.management.call_command', ['update_product_details']),
-        ('0 1 * * *', 'morgoth.addons.cron.update_addon_group'),
+        ('0 1 * * *', 'django.core.management.call_command', ['update_addon_groups']),
     )
 
 
