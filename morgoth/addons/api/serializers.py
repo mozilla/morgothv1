@@ -29,6 +29,5 @@ class AddonGroupSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'browser_version',
-            'no_update_version',
             'addons',
         )
