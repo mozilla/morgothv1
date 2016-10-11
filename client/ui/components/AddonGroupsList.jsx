@@ -7,8 +7,8 @@ import {
 } from 'material-ui/Table';
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 
-import FetchErrorList from './stateless/FetchErrorList.jsx';
-import LoadingIndicator from './stateless/LoadingIndicator.jsx';
+import FetchErrorList from './stateless/FetchErrorList';
+import LoadingIndicator from './stateless/LoadingIndicator';
 import containAddonGroupsList from '../containers/AddonGroupsListContainer';
 
 

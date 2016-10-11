@@ -2,7 +2,7 @@ import React from 'react';
 
 import Paper from 'material-ui/Paper';
 
-import NotFound from '../NotFound.jsx';
+import NotFound from '../NotFound';
 
 
 function NotFoundPage() {

@@ -12,9 +12,9 @@ import SelectField from 'material-ui/SelectField';
 import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
 import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
 
-import ErrorSnackbar from './stateless/ErrorSnackbar.jsx';
-import FetchErrorList from './stateless/FetchErrorList.jsx';
-import LoadingIndicator from './stateless/LoadingIndicator.jsx';
+import ErrorSnackbar from './stateless/ErrorSnackbar';
+import FetchErrorList from './stateless/FetchErrorList';
+import LoadingIndicator from './stateless/LoadingIndicator';
 import containAddonGroupDetails from '../containers/AddonGroupDetailsContainer';
 
 

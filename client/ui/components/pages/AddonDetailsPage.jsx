@@ -2,7 +2,7 @@ import React, { PropTypes as pt } from 'react';
 
 import Paper from 'material-ui/Paper';
 
-import AddonForm from '../AddonForm.jsx';
+import AddonForm from '../AddonForm';
 
 
 function AddonDetailsPage(props) {

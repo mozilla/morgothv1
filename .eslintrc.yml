@@ -5,7 +5,6 @@ plugins:
 rules:
   arrow-parens: [off]
   babel/arrow-parens: [warn, as-needed]
-  import/extensions: [off]
   import/no-mutable-exports: [off]
   no-console: [off]
   no-param-reassign: [warn, { props: false }]

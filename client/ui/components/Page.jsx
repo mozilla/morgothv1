@@ -5,7 +5,7 @@ import { indigo500, indigo700, grey400, orange800 } from 'material-ui/styles/col
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import Breadcrumbs from './Breadcrumbs.jsx';
+import Breadcrumbs from './Breadcrumbs';
 
 
 const muiTheme = getMuiTheme({

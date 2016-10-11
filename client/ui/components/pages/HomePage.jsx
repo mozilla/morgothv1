@@ -4,7 +4,7 @@ import Paper from 'material-ui/Paper';
 import ActionExtension from 'material-ui/svg-icons/action/extension';
 import NavigationApps from 'material-ui/svg-icons/navigation/apps';
 
-import HomeMenu from '../HomeMenu.jsx';
+import HomeMenu from '../HomeMenu';
 
 
 const MENU_ITEMS = [
