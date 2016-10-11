@@ -27,7 +27,7 @@ class Breadcrumbs extends React.Component {
 
     return (
       <ul className="breadcrumbs">
-        {this.renderCrumbs(routes)}
+        {Breadcrumbs.renderCrumbs(routes)}
       </ul>
     );
   }

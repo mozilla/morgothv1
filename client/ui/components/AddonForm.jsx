@@ -83,7 +83,7 @@ class AddonForm extends React.Component {
         <Toolbar>
           <ToolbarGroup firstChild>
             <FlatButton
-              onClick={() => this.goto('/addons/')}
+              onClick={() => AddonForm.goto('/addons/')}
               label="Back to Addon List"
               icon={<NavigationChevronLeft />}
               disabled={isSaving}

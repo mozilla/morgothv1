@@ -22,7 +22,7 @@ class MenuItem extends React.Component {
 
     return (
       <ListItem
-        onClick={() => this.goto(linkTo)}
+        onClick={() => MenuItem.goto(linkTo)}
         primaryText={text}
         leftAvatar={<Avatar icon={icon} />}
         rightIcon={<NavigationChevronRight />}
@@ -52,7 +52,7 @@ class HomeMenu extends React.Component {
 
     return (
       <List>
-        {this.renderItems(items)}
+        {HomeMenu.renderItems(items)}
       </List>
     );
   }

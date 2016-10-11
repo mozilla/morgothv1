@@ -191,7 +191,7 @@ class AddonGroupForm extends React.Component {
         <Toolbar>
           <ToolbarGroup firstChild>
             <FlatButton
-              onClick={() => this.goto('/addon_groups/')}
+              onClick={() => AddonGroupForm.goto('/addon_groups/')}
               label="Back to Addon Group List"
               icon={<NavigationChevronLeft />}
               disabled={isSaving}

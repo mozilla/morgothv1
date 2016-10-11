@@ -31,11 +31,7 @@ class AddonsList extends React.Component {
     browserHistory.push(url);
   }
 
-  componentWillMount() {
-    this.props.fetchAddons();
-  }
-
-  renderRows(addons) {
+  static renderRows(addons) {
     return addons.map((addon, index) =>
       <TableRow key={index}>
         <TableRowColumn>
@@ -46,13 +42,17 @@ class AddonsList extends React.Component {
         </TableRowColumn>
         <TableRowColumn className="align-right">
           <RaisedButton
-            onClick={() => this.goto(`/addons/${addon.id}/`)}
+            onClick={() => AddonsList.goto(`/addons/${addon.id}/`)}
             label="Edit"
             style={style.button}
           />
         </TableRowColumn>
       </TableRow>
     );
+  }
+
+  componentWillMount() {
+    this.props.fetchAddons();
   }
 
   render() {
@@ -80,7 +80,7 @@ class AddonsList extends React.Component {
           <ToolbarGroup className="align-right" lastChild>
             <RaisedButton
               label="Create New Addon"
-              onClick={() => this.goto('/addons/new/')}
+              onClick={() => AddonsList.goto('/addons/new/')}
               primary
             />
           </ToolbarGroup>
@@ -94,7 +94,7 @@ class AddonsList extends React.Component {
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false} showRowHover>
-            {this.renderRows(addons)}
+            {AddonsList.renderRows(addons)}
           </TableBody>
         </Table>
       </div>
