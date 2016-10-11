@@ -1,5 +1,5 @@
 import React, { PropTypes as pt } from 'react';
-import { browserHistory, Link } from 'react-router';
+import { Link } from 'react-router';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import {
@@ -10,6 +10,7 @@ import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 import FetchErrorList from './stateless/FetchErrorList';
 import LoadingIndicator from './stateless/LoadingIndicator';
 import containAddonsList from '../containers/AddonsListContainer';
+import goTo from '../utils/goTo';
 
 
 const style = {
@@ -27,10 +28,6 @@ class AddonsList extends React.Component {
     fetchAddons: pt.func.isRequired,
   };
 
-  static goto(url) {
-    browserHistory.push(url);
-  }
-
   static renderRows(addons) {
     return addons.map((addon, index) =>
       <TableRow key={index}>
@@ -42,7 +39,7 @@ class AddonsList extends React.Component {
         </TableRowColumn>
         <TableRowColumn className="align-right">
           <RaisedButton
-            onClick={() => AddonsList.goto(`/addons/${addon.id}/`)}
+            onClick={() => goTo(`/addons/${addon.id}/`)}
             label="Edit"
             style={style.button}
           />
@@ -80,7 +77,7 @@ class AddonsList extends React.Component {
           <ToolbarGroup className="align-right" lastChild>
             <RaisedButton
               label="Create New Addon"
-              onClick={() => AddonsList.goto('/addons/new/')}
+              onClick={() => goTo('/addons/new/')}
               primary
             />
           </ToolbarGroup>
