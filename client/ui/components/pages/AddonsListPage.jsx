@@ -2,7 +2,7 @@ import React from 'react';
 
 import Paper from 'material-ui/Paper';
 
-import AddonsList from '../AddonsList';
+import AddonsList from '../AddonsList.jsx';
 
 
 function AddonsListPage() {
