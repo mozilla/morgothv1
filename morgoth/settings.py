@@ -14,7 +14,6 @@ class Core(Configuration):
         'morgoth.addons.apps.AddonsConfig',
         'morgoth.health.apps.HealthConfig',
 
-        'django_crontab',
         'product_details',
         'rest_framework',
         'rest_framework.authtoken',
