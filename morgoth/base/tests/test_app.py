@@ -1,4 +1,10 @@
+import base64
 import pytest
+
+
+AUTH_HEADERS = {
+    'HTTP_AUTHORIZATION': 'Basic {}'.format(base64.b64encode(b'user@test.com:testpass').decode()),
+}
 
 
 class TestApp(object):
@@ -9,8 +15,8 @@ class TestApp(object):
     @pytest.mark.django_db
     def test_routing(self, client):
         """Make sure the catch-all works as intended."""
-        res = client.get('/')
+        res = client.get('/', **AUTH_HEADERS)
         assert res.status_code == 200
 
-        res = client.get('/addons/')
+        res = client.get('/addons/', **AUTH_HEADERS)
         assert res.status_code == 200

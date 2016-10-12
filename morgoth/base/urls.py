@@ -14,5 +14,5 @@ urlpatterns = [
     url(r'^api/v1/', include(router.urls)),
     url(r'^logout/$', views.log_out, name='logout'),
     url(r'^$', views.index, name='index'),
-    url(r'^(?!(api)|(admin)).+$', views.index),
+    url(r'^(?!(api)|(admin)|(static)).+$', views.index),
 ]
