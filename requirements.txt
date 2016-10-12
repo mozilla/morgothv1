@@ -194,5 +194,3 @@ therapist==0.3.2 \
 whitenoise==3.2.1 \
     --hash=sha256:a875382e670bdd5ab642b26d930463af4509a6de63b52402c23a7216dc382a99 \
     --hash=sha256:51d48bd426d3cf64c1ec5082d1f0d5437649d8ae59114a495e7406faae4fcbd2
-django-crontab==0.7.1 \
-    --hash=sha256:1201810a212460aaaa48eb6a766738740daf42c1a4f6aafecfb1525036929236

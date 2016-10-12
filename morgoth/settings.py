@@ -91,13 +91,6 @@ class Core(Configuration):
         }
     }
 
-    CRONTAB_DJANGO_PROJECT_NAME = 'morgoth'
-
-    CRONJOBS = (
-        ('0 0 * * *', 'django.core.management.call_command', ['update_product_details']),
-        ('0 1 * * *', 'django.core.management.call_command', ['update_addon_groups']),
-    )
-
 
 class Base(Core):
     """Settings that may change on a per-environment basis, some with defaults."""
