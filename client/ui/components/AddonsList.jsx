@@ -1,5 +1,5 @@
 import React, { PropTypes as pt } from 'react';
-import { browserHistory, Link } from 'react-router';
+import { Link } from 'react-router';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import {
@@ -7,9 +7,10 @@ import {
 } from 'material-ui/Table';
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 
-import FetchErrorList from './stateless/FetchErrorList.jsx';
-import LoadingIndicator from './stateless/LoadingIndicator.jsx';
+import FetchErrorList from './stateless/FetchErrorList';
+import LoadingIndicator from './stateless/LoadingIndicator';
 import containAddonsList from '../containers/AddonsListContainer';
+import goTo from '../utils/goTo';
 
 
 const style = {
@@ -27,15 +28,7 @@ class AddonsList extends React.Component {
     fetchAddons: pt.func.isRequired,
   };
 
-  static goto(url) {
-    browserHistory.push(url);
-  }
-
-  componentWillMount() {
-    this.props.fetchAddons();
-  }
-
-  renderRows(addons) {
+  static renderRows(addons) {
     return addons.map((addon, index) =>
       <TableRow key={index}>
         <TableRowColumn>
@@ -46,13 +39,17 @@ class AddonsList extends React.Component {
         </TableRowColumn>
         <TableRowColumn className="align-right">
           <RaisedButton
-            onClick={() => this.goto(`/addons/${addon.id}/`)}
+            onClick={() => goTo(`/addons/${addon.id}/`)}
             label="Edit"
             style={style.button}
           />
         </TableRowColumn>
       </TableRow>
     );
+  }
+
+  componentWillMount() {
+    this.props.fetchAddons();
   }
 
   render() {
@@ -80,7 +77,7 @@ class AddonsList extends React.Component {
           <ToolbarGroup className="align-right" lastChild>
             <RaisedButton
               label="Create New Addon"
-              onClick={() => this.goto('/addons/new/')}
+              onClick={() => goTo('/addons/new/')}
               primary
             />
           </ToolbarGroup>
@@ -94,7 +91,7 @@ class AddonsList extends React.Component {
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false} showRowHover>
-            {this.renderRows(addons)}
+            {AddonsList.renderRows(addons)}
           </TableBody>
         </Table>
       </div>

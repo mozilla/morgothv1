@@ -1,5 +1,5 @@
 import React, { PropTypes as pt } from 'react';
-import { browserHistory, Link } from 'react-router';
+import { Link } from 'react-router';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import {
@@ -7,9 +7,10 @@ import {
 } from 'material-ui/Table';
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 
-import FetchErrorList from './stateless/FetchErrorList.jsx';
-import LoadingIndicator from './stateless/LoadingIndicator.jsx';
+import FetchErrorList from './stateless/FetchErrorList';
+import LoadingIndicator from './stateless/LoadingIndicator';
 import containAddonGroupsList from '../containers/AddonGroupsListContainer';
+import goTo from '../utils/goTo';
 
 
 const style = {
@@ -27,15 +28,7 @@ class AddonGroupsList extends React.Component {
     fetchAddonGroups: pt.func.isRequired,
   };
 
-  static goto(url) {
-    browserHistory.push(url);
-  }
-
-  componentWillMount() {
-    this.props.fetchAddonGroups();
-  }
-
-  renderRows(addonGroups) {
+  static renderRows(addonGroups) {
     return addonGroups.map((addonGroup, index) =>
       <TableRow key={index}>
         <TableRowColumn>
@@ -49,13 +42,17 @@ class AddonGroupsList extends React.Component {
         </TableRowColumn>
         <TableRowColumn className="align-right">
           <RaisedButton
-            onClick={() => this.goto(`/addon_groups/${addonGroup.id}/`)}
+            onClick={() => goTo(`/addon_groups/${addonGroup.id}/`)}
             label="Edit"
             style={style.button}
           />
         </TableRowColumn>
       </TableRow>
     );
+  }
+
+  componentWillMount() {
+    this.props.fetchAddonGroups();
   }
 
   render() {
@@ -83,7 +80,7 @@ class AddonGroupsList extends React.Component {
           <ToolbarGroup className="align-right" lastChild>
             <RaisedButton
               label="Create New Addon Group"
-              onClick={() => this.goto('/addon_groups/new/')}
+              onClick={() => goTo('/addon_groups/new/')}
               primary
             />
           </ToolbarGroup>
@@ -98,7 +95,7 @@ class AddonGroupsList extends React.Component {
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false} showRowHover>
-            {this.renderRows(addonGroups)}
+            {AddonGroupsList.renderRows(addonGroups)}
           </TableBody>
         </Table>
       </div>

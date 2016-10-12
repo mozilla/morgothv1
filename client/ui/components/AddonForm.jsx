@@ -1,5 +1,5 @@
 import React, { PropTypes as pt } from 'react';
-import { browserHistory } from 'react-router';
+
 import { Field, reduxForm } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 
@@ -9,10 +9,11 @@ import RaisedButton from 'material-ui/RaisedButton';
 import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
 import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
 
-import ErrorSnackbar from './stateless/ErrorSnackbar.jsx';
-import FetchErrorList from './stateless/FetchErrorList.jsx';
-import LoadingIndicator from './stateless/LoadingIndicator.jsx';
+import ErrorSnackbar from './stateless/ErrorSnackbar';
+import FetchErrorList from './stateless/FetchErrorList';
+import LoadingIndicator from './stateless/LoadingIndicator';
 import containAddonDetails from '../containers/AddonDetailsContainer';
+import goTo from '../utils/goTo';
 
 
 const style = {
@@ -36,11 +37,6 @@ class AddonForm extends React.Component {
     save: pt.func.isRequired,
     saveAndContinue: pt.func.isRequired,
     updateAddon: pt.object.isRequired,
-    values: pt.object,
-  }
-
-  static goto(url) {
-    browserHistory.push(url);
   }
 
   componentWillMount() {
@@ -83,7 +79,7 @@ class AddonForm extends React.Component {
         <Toolbar>
           <ToolbarGroup firstChild>
             <FlatButton
-              onClick={() => this.goto('/addons/')}
+              onClick={() => goTo('/addons/')}
               label="Back to Addon List"
               icon={<NavigationChevronLeft />}
               disabled={isSaving}

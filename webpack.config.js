@@ -24,6 +24,10 @@ module.exports = [
       new ExtractTextPlugin('[name]-[hash].css'),
     ],
 
+    resolve: {
+      extensions: ['', '.js', '.jsx'],
+    },
+
     module: {
       loaders: [
         {

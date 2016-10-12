@@ -6,7 +6,6 @@ rules:
   arrow-parens: [off]
   babel/arrow-parens: [warn, as-needed]
   import/no-mutable-exports: [off]
-  import/no-unresolved: [warn]
   no-console: [off]
   no-param-reassign: [warn, { props: false }]
   no-restricted-syntax: [off]

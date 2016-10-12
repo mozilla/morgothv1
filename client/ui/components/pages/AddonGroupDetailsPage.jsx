@@ -2,7 +2,7 @@ import React, { PropTypes as pt } from 'react';
 
 import Paper from 'material-ui/Paper';
 
-import AddonGroupForm from '../AddonGroupForm.jsx';
+import AddonGroupForm from '../AddonGroupForm';
 
 
 function AddonGroupDetailsPage(props) {

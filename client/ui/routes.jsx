@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import Page from './components/Page.jsx';
-import AddonDetailsPage from './components/pages/AddonDetailsPage.jsx';
-import AddonGroupDetailsPage from './components/pages/AddonGroupDetailsPage.jsx';
-import AddonsListPage from './components/pages/AddonsListPage.jsx';
-import AddonGroupsListPage from './components/pages/AddonGroupsListPage.jsx';
-import HomePage from './components/pages/HomePage.jsx';
-import NotFoundPage from './components/pages/NotFoundPage.jsx';
+import Page from './components/Page';
+import AddonDetailsPage from './components/pages/AddonDetailsPage';
+import AddonGroupDetailsPage from './components/pages/AddonGroupDetailsPage';
+import AddonsListPage from './components/pages/AddonsListPage';
+import AddonGroupsListPage from './components/pages/AddonGroupsListPage';
+import HomePage from './components/pages/HomePage';
+import NotFoundPage from './components/pages/NotFoundPage';
 
 
 export default (
