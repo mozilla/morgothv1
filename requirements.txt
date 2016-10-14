@@ -79,6 +79,9 @@ django-configurations==2.0 \
     --hash=sha256:be47e25d070fd005cc8fbd6c913c9ec37e83d04686937afe18ca6c579b2cdedb
 django-dirtyfields==1.2 \
     --hash=sha256:e8e985b4382ca6b5a69efdcbe34333fdbf013fb35d1489be581b45b2782340dd
+django-mozilla-product-details==0.12.1 \
+    --hash=sha256:a31a51102e8c2f047f8aa62b8bdc552f7a31d9c69f2cb16393225c3ee0db72b5 \
+    --hash=sha256:25ac11bd4544fef3236f32439f6b1de3bcf931f8b34c7786ab40f0ec85626eeb
 django-sslserver==0.19 \
     --hash=sha256:1363835229a0585f89c42f3beca836572f3f6babdc1508f13352aed84b0924b3
 django-webpack-loader==0.3.3 \

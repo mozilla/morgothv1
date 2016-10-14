@@ -14,6 +14,7 @@ class Core(Configuration):
         'morgoth.addons.apps.AddonsConfig',
         'morgoth.health.apps.HealthConfig',
 
+        'product_details',
         'rest_framework',
         'rest_framework.authtoken',
         'webpack_loader',

@@ -28,8 +28,6 @@ class AddonGroupSerializer(serializers.ModelSerializer):
         model = AddonGroup
         fields = (
             'id',
-            'channel_name',
             'browser_version',
-            'no_update_version',
             'addons',
         )

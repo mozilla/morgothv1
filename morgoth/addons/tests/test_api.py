@@ -57,7 +57,7 @@ class TestAddonAPI(object):
         res = api_client.get('/api/v1/addon/%s/groups/' % addon.id)
         assert res.status_code == 200
 
-        assert res.data[0]['channel_name'] == group.channel_name
+        assert res.data[0]['id'] == group.id
 
 
 @pytest.mark.django_db()
@@ -74,14 +74,11 @@ class TestAddonGroupAPI(object):
 
         res = api_client.get('/api/v1/addon_group/')
         assert res.status_code == 200
-        assert res.data[0]['channel_name'] == group.channel_name
         assert res.data[0]['addons'][0] == addon.id
 
     def test_it_can_create_groups(self, api_client):
         res = api_client.post('/api/v1/addon_group/', {
-            'channel_name': 'Test Group',
             'browser_version': '3.1',
-            'no_update_version': '2.1',
         })
         assert res.status_code == 201
 
@@ -89,15 +86,15 @@ class TestAddonGroupAPI(object):
         assert groups.count() == 1
 
     def test_it_can_edit_groups(self, api_client):
-        group = AddonGroupFactory(channel_name='unchanged')
+        group = AddonGroupFactory(browser_version='1.0')
 
         res = api_client.patch('/api/v1/addon_group/%s/' % group.id, {
-            'channel_name': 'changed'
+            'browser_version': '2.0a'
         })
         assert res.status_code == 200
 
         group = AddonGroup.objects.first()
-        assert group.channel_name == 'changed'
+        assert group.browser_version == '2.0a'
 
     def test_it_can_delete_groups(self, api_client):
         group = AddonGroupFactory()

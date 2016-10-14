@@ -41,9 +41,7 @@ class AddonFactory(factory.DjangoModelFactory):
 
 
 class AddonGroupFactory(factory.DjangoModelFactory):
-    channel_name = FuzzyUnicode()
     browser_version = fuzzy.FuzzyDecimal(0.1, 99.9, 1)
-    no_update_version = fuzzy.FuzzyDecimal(0.1, 99.9, 1)
 
     class Meta:
         model = AddonGroup
