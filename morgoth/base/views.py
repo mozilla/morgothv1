@@ -5,7 +5,7 @@ from morgoth.base.decorators import require_ldap_auth
 
 
 @require_ldap_auth
-def index(request):
+def index(request, *args, **kwargs):
     return render(request, 'base/index.html')
 
 
