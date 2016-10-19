@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { initialize } from 'redux-form';
 
 import {
   createAddonGroup, fetchAddonGroup, resetAddonGroup, resetCreateAddonGroup, resetUpdateAddonGroup,
@@ -41,6 +42,7 @@ function mapDispatchToProps(dispatch, { pk }) {
     fetchAddons: () => {
       dispatch(fetchAddons());
     },
+    initialize: (...args) => dispatch(initialize(...args)),
     resetAll: () => {
       dispatch(resetAddonGroup());
       dispatch(resetCreateAddonGroup());

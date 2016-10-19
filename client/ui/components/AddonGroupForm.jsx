@@ -39,6 +39,8 @@ class AddonSelectField extends Component {
   static propTypes = {
     addons: pt.array.isRequired,
     floatingLabelText: pt.string.isRequired,
+    initialize: pt.func.isRequired,
+    initialValues: pt.object,
     input: pt.object.isRequired,
     name: pt.string.isRequired,
   };
@@ -51,6 +53,14 @@ class AddonSelectField extends Component {
     this.handleRequestDelete = this.handleRequestDelete.bind(this);
     this.renderAddonChips = this.renderAddonChips.bind(this);
     this.renderAddonItems = this.renderAddonItems.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { initialize, initialValues } = this.props;
+
+    if (initialValues !== nextProps.initialValues) {
+      initialize('addonGroup', nextProps.initialValues, false);
+    }
   }
 
   handleChange(event, index, addonId) {

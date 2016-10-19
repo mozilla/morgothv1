@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { initialize } from 'redux-form';
 
 import {
   createAddon, fetchAddon, resetAddon, resetCreateAddon, resetUpdateAddon, updateAddon,
@@ -34,6 +35,7 @@ function mapDispatchToProps(dispatch, { pk }) {
         dispatch(fetchAddon(pk));
       }
     },
+    initialize: (...args) => dispatch(initialize(...args)),
     resetAll: () => {
       dispatch(resetAddon());
       dispatch(resetCreateAddon());

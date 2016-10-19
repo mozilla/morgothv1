@@ -32,6 +32,8 @@ class AddonForm extends React.Component {
     createAddon: pt.object.isRequired,
     fetchAddon: pt.func.isRequired,
     handleSubmit: pt.func.isRequired,
+    initialize: pt.func.isRequired,
+    initialValues: pt.object,
     pk: pt.any,
     resetAll: pt.func.isRequired,
     save: pt.func.isRequired,
@@ -43,6 +45,14 @@ class AddonForm extends React.Component {
     const { fetchAddon, pk } = this.props;
     if (pk) {
       fetchAddon();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { initialize, initialValues } = this.props;
+
+    if (initialValues !== nextProps.initialValues) {
+      initialize('addon', nextProps.initialValues, false);
     }
   }
 
