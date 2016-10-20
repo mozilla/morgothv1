@@ -1,7 +1,7 @@
 import json
 
 from rest_framework import permissions, status
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -30,6 +30,21 @@ class AddonGroupViewSet(ModelViewSet):
     permission_classes = [
         permissions.DjangoModelPermissionsOrAnonReadOnly,
     ]
+
+    @list_route(methods=['POST'])
+    def update_built_in(self, request, *args, **kwargs):
+        browser_version = request.data.get('browser_version')
+        group, _ = AddonGroup.objects.get_or_create(browser_version=browser_version)
+
+        group.built_in_addons.clear()
+
+        if 'addons' in request.data:
+            for addon in request.data.get('addons'):
+                addon, _ = Addon.objects.get_or_create(name=addon.get('name'),
+                                                       version=addon.get('version'))
+                group.built_in_addons.add(addon)
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     @detail_route(methods=['POST'])
     def add_addons(self, request, *args, **kwargs):
