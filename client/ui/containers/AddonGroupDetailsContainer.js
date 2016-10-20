@@ -5,7 +5,7 @@ import {
   createAddonGroup, fetchAddonGroup, resetAddonGroup, resetCreateAddonGroup, resetUpdateAddonGroup,
   updateAddonGroup, syncAddonGroup,
 } from '../actions/addon-groups';
-import { fetchAddons } from '../actions/addons';
+import { requestAddons } from '../state/addons/actions';
 
 
 function mapStateToProps({ addonGroups, addons }) {
@@ -40,7 +40,7 @@ function mapDispatchToProps(dispatch, { pk }) {
       }
     },
     fetchAddons: () => {
-      dispatch(fetchAddons());
+      dispatch(requestAddons());
     },
     initialize: (...args) => dispatch(initialize(...args)),
     resetAll: () => {

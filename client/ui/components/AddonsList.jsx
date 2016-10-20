@@ -7,6 +7,7 @@ import {
 } from 'material-ui/Table';
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 
+import QueryAddons from './data/QueryAddons';
 import FetchErrorList from './stateless/FetchErrorList';
 import LoadingIndicator from './stateless/LoadingIndicator';
 import containAddonsList from '../containers/AddonsListContainer';
@@ -24,8 +25,8 @@ const style = {
 
 class AddonsList extends React.Component {
   static propTypes = {
-    addonsList: pt.object.isRequired,
-    fetchAddons: pt.func.isRequired,
+    addons: pt.array,
+    request: pt.object,
   };
 
   static renderRows(addons) {
@@ -48,12 +49,31 @@ class AddonsList extends React.Component {
     );
   }
 
-  componentWillMount() {
-    this.props.fetchAddons();
+  renderRows() {
+    const { addons } = this.props;
+
+    return addons.map((addon, index) =>
+      <TableRow key={index}>
+        <TableRowColumn>
+          <Link to={`/addons/${addon.id}/`}>{addon.name}</Link>
+        </TableRowColumn>
+        <TableRowColumn>
+          <Link to={`/addons/${addon.id}/`}>{addon.version}</Link>
+        </TableRowColumn>
+        <TableRowColumn className="align-right">
+          <RaisedButton
+            onClick={() => goTo(`/addons/${addon.id}/`)}
+            label="Edit"
+            style={style.button}
+          />
+        </TableRowColumn>
+      </TableRow>
+    );
   }
 
   render() {
-    const { addons, error, loading } = this.props.addonsList;
+    const { addons } = this.props;
+    const { loading, error } = this.props.request;
 
     if (loading) {
       return (
@@ -69,6 +89,10 @@ class AddonsList extends React.Component {
           <FetchErrorList errors={error} />
         </div>
       );
+    }
+
+    if (!addons.length) {
+      return <QueryAddons />;
     }
 
     return (
@@ -91,7 +115,7 @@ class AddonsList extends React.Component {
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false} showRowHover>
-            {AddonsList.renderRows(addons)}
+            {this.renderRows()}
           </TableBody>
         </Table>
       </div>

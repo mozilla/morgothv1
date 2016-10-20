@@ -1,20 +1,13 @@
 import { connect } from 'react-redux';
 
-import { fetchAddons } from '../actions/addons';
+import { getAddonsList, getRequest } from '../state/addons/selectors';
 
 
 function mapStateToProps(state) {
   return {
-    addonsList: state.addons.list,
+    addons: getAddonsList(state),
+    request: getRequest(state, 'addons'),
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    fetchAddons: () => {
-      dispatch(fetchAddons());
-    },
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps);
+export default connect(mapStateToProps);
