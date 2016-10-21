@@ -2,16 +2,16 @@ import React, { PropTypes as pt } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { requestAddons } from '../../state/addons/actions';
+import { requestAddonGroups } from '../../state/addonGroups/actions';
 
 
-class QueryAddons extends React.Component {
+class QueryAddonGroups extends React.Component {
   static propTypes = {
-    requestAddons: pt.func,
+    requestAddonGroups: pt.func,
   }
 
   componentWillMount() {
-    this.props.requestAddons();
+    this.props.requestAddonGroups();
   }
 
   render() {
@@ -22,6 +22,6 @@ class QueryAddons extends React.Component {
 export default connect(
   null,
   dispatch => (bindActionCreators({
-    requestAddons,
+    requestAddonGroups,
   }, dispatch)),
-)(QueryAddons);
+)(QueryAddonGroups);

@@ -24,21 +24,17 @@ const style = {
 
 class AddonGroupsList extends React.Component {
   static propTypes = {
-    addonGroupsList: pt.object.isRequired,
-    fetchAddonGroups: pt.func.isRequired,
+    addonGroups: pt.array,
+    request: pt.object,
   };
 
-  static renderRows(addonGroups) {
+  renderRows() {
+    const { addonGroups } = this.props;
+
     return addonGroups.map((addonGroup, index) =>
       <TableRow key={index}>
         <TableRowColumn>
-          <Link to={`/addon_groups/${addonGroup.id}/`}>{addonGroup.channel_name}</Link>
-        </TableRowColumn>
-        <TableRowColumn>
           <Link to={`/addon_groups/${addonGroup.id}/`}>{addonGroup.browser_version}</Link>
-        </TableRowColumn>
-        <TableRowColumn>
-          <Link to={`/addon_groups/${addonGroup.id}/`}>{addonGroup.no_update_version}</Link>
         </TableRowColumn>
         <TableRowColumn className="align-right">
           <RaisedButton
@@ -51,12 +47,8 @@ class AddonGroupsList extends React.Component {
     );
   }
 
-  componentWillMount() {
-    this.props.fetchAddonGroups();
-  }
-
   render() {
-    const { addonGroups, error, loading } = this.props.addonGroupsList;
+    const { loading, error } = this.props.request;
 
     if (loading) {
       return (
@@ -88,14 +80,12 @@ class AddonGroupsList extends React.Component {
         <Table selectable={false}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
-              <TableHeaderColumn>Channel Name</TableHeaderColumn>
               <TableHeaderColumn>Browser Version</TableHeaderColumn>
-              <TableHeaderColumn>No-Update Version</TableHeaderColumn>
               <TableHeaderColumn />
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false} showRowHover>
-            {AddonGroupsList.renderRows(addonGroups)}
+            {this.renderRows()}
           </TableBody>
         </Table>
       </div>

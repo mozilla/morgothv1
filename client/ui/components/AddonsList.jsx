@@ -7,7 +7,6 @@ import {
 } from 'material-ui/Table';
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 
-import QueryAddons from './data/QueryAddons';
 import FetchErrorList from './stateless/FetchErrorList';
 import LoadingIndicator from './stateless/LoadingIndicator';
 import containAddonsList from '../containers/AddonsListContainer';
@@ -72,7 +71,6 @@ class AddonsList extends React.Component {
   }
 
   render() {
-    const { addons } = this.props;
     const { loading, error } = this.props.request;
 
     if (loading) {
@@ -89,10 +87,6 @@ class AddonsList extends React.Component {
           <FetchErrorList errors={error} />
         </div>
       );
-    }
-
-    if (!addons.length) {
-      return <QueryAddons />;
     }
 
     return (

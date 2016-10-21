@@ -11,6 +11,7 @@ import SelectField from 'material-ui/SelectField';
 import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
 import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
 
+import QueryAddonGroup from './data/QueryAddonGroup';
 import ErrorSnackbar from './stateless/ErrorSnackbar';
 import FetchErrorList from './stateless/FetchErrorList';
 import LoadingIndicator from './stateless/LoadingIndicator';
@@ -39,8 +40,6 @@ class AddonSelectField extends Component {
   static propTypes = {
     addons: pt.array.isRequired,
     floatingLabelText: pt.string.isRequired,
-    initialize: pt.func.isRequired,
-    initialValues: pt.object,
     input: pt.object.isRequired,
     name: pt.string.isRequired,
   };
@@ -53,14 +52,6 @@ class AddonSelectField extends Component {
     this.handleRequestDelete = this.handleRequestDelete.bind(this);
     this.renderAddonChips = this.renderAddonChips.bind(this);
     this.renderAddonItems = this.renderAddonItems.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { initialize, initialValues } = this.props;
-
-    if (initialValues !== nextProps.initialValues) {
-      initialize('addonGroup', nextProps.initialValues, false);
-    }
   }
 
   handleChange(event, index, addonId) {
@@ -138,43 +129,40 @@ class AddonSelectField extends Component {
 
 class AddonGroupForm extends React.Component {
   static propTypes = {
-    activeAddonGroup: pt.object.isRequired,
-    addonsList: pt.object.isRequired,
-    createAddonGroup: pt.object.isRequired,
-    fetchAddonGroup: pt.func.isRequired,
-    fetchAddons: pt.func.isRequired,
+    addonGroup: pt.object,
+    addons: pt.array,
+    fetchRequest: pt.object,
     handleSubmit: pt.func.isRequired,
-    pk: pt.any,
-    resetAll: pt.func.isRequired,
-    save: pt.func.isRequired,
-    saveAndContinue: pt.func.isRequired,
+    initialize: pt.func.isRequired,
+    initialValues: pt.object,
+    pk: pt.string,
+    saveAddonGroup: pt.func.isRequired,
+    saveRequest: pt.object,
     syncAddonGroup: pt.func.isRequired,
-    updateAddonGroup: pt.object.isRequired,
   }
 
   componentWillMount() {
-    const { fetchAddonGroup, fetchAddons, pk } = this.props;
-
-    fetchAddons();
-
-    if (pk) {
-      fetchAddonGroup();
-    }
+    const { initialize, initialValues } = this.props;
+    initialize('addonGroup', initialValues, false);
   }
 
-  componentWillUnmount() {
-    this.props.resetAll();
+  componentWillReceiveProps(nextProps) {
+    const { initialize, initialValues } = this.props;
+
+    if (initialValues !== nextProps.initialValues) {
+      initialize('addonGroup', nextProps.initialValues, false);
+    }
   }
 
   render() {
     const {
-      activeAddonGroup, addonsList, createAddonGroup, handleSubmit, pk, save, saveAndContinue,
-      syncAddonGroup, updateAddonGroup,
+      addonGroup, addons, fetchRequest, handleSubmit, saveAddonGroup, saveRequest, pk,
+      syncAddonGroup,
     } = this.props;
-    const isSaving = createAddonGroup.loading || updateAddonGroup.loading;
-    const saveError = createAddonGroup.error || updateAddonGroup.error;
+    const isSaving = saveRequest.loading;
+    const saveError = saveRequest.error;
 
-    if (activeAddonGroup.loading) {
+    if (fetchRequest.loading) {
       return (
         <div className="wrapper align-center">
           <LoadingIndicator />
@@ -182,12 +170,16 @@ class AddonGroupForm extends React.Component {
       );
     }
 
-    if (activeAddonGroup.error) {
+    if (fetchRequest.error) {
       return (
         <div className="wrapper align-center">
-          <FetchErrorList errors={activeAddonGroup.error} />
+          <FetchErrorList errors={fetchRequest.error} />
         </div>
       );
+    }
+
+    if (!addonGroup) {
+      return <QueryAddonGroup pk={pk} />;
     }
 
     return (
@@ -217,14 +209,6 @@ class AddonGroupForm extends React.Component {
         <div className="wrapper">
           <div>
             <Field
-              name="channel_name"
-              floatingLabelText="Channel Name"
-              disabled={isSaving}
-              component={TextField}
-            />
-          </div>
-          <div>
-            <Field
               name="browser_version"
               floatingLabelText="Browser Version"
               disabled={isSaving}
@@ -233,17 +217,9 @@ class AddonGroupForm extends React.Component {
           </div>
           <div>
             <Field
-              name="no_update_version"
-              floatingLabelText="No-Update Version"
-              disabled={isSaving}
-              component={TextField}
-            />
-          </div>
-          <div>
-            <Field
               name="addons"
               floatingLabelText="Addons"
-              addons={addonsList.addons}
+              addons={addons}
               component={AddonSelectField}
             />
           </div>
@@ -251,7 +227,7 @@ class AddonGroupForm extends React.Component {
         <Toolbar style={style.toolbar}>
           <ToolbarGroup lastChild>
             <RaisedButton
-              onClick={handleSubmit(saveAndContinue)}
+              onClick={handleSubmit(values => saveAddonGroup(values, true))}
               label="Save & Continue"
               disabled={isSaving}
             />
@@ -259,7 +235,7 @@ class AddonGroupForm extends React.Component {
           <ToolbarSeparator />
           <ToolbarGroup lastChild>
             <RaisedButton
-              onClick={handleSubmit(save)}
+              onClick={handleSubmit(values => saveAddonGroup(values, false))}
               label="Save"
               disabled={isSaving}
               primary

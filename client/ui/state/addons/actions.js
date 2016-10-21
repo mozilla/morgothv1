@@ -46,14 +46,14 @@ export function requestAddon(pk) {
     const requestId = `addon-${pk}`;
     const request = getRequest(getState(), requestId);
 
+    if (request.loading) {
+      return true;
+    }
+
     dispatch({
       type: ADDON_REQUEST,
       requestId,
     });
-
-    if (request.loading) {
-      return true;
-    }
 
     return apiFetch(`addon/${pk}/`, { method: 'GET' })
       .then(addon => requestAddonSuccess(dispatch, requestId, addon))
@@ -88,14 +88,14 @@ export function requestAddons() {
     const requestId = 'addons';
     const request = getRequest(getState(), requestId);
 
+    if (request.loading) {
+      return true;
+    }
+
     dispatch({
       type: ADDONS_REQUEST,
       requestId,
     });
-
-    if (request.loading) {
-      return true;
-    }
 
     return apiFetch('addon/', { method: 'GET' })
       .then(addons => requestAddonsSuccess(dispatch, requestId, addons))
@@ -130,8 +130,13 @@ function createAddonFailure(dispatch, requestId, error) {
 }
 
 export function createAddon(addonData, saveAndContinue) {
-  return dispatch => {
+  return (dispatch, getState) => {
     const requestId = 'create';
+    const request = getRequest(getState(), requestId);
+
+    if (request.loading) {
+      return true;
+    }
 
     dispatch({
       type: ADDON_CREATE,
@@ -169,8 +174,13 @@ function updateAddonFailure(dispatch, requestId, error) {
 }
 
 export function updateAddon(pk, addonData, saveAndContinue) {
-  return dispatch => {
+  return (dispatch, getState) => {
     const requestId = `update-${pk}`;
+    const request = getRequest(getState(), requestId);
+
+    if (request.loading) {
+      return true;
+    }
 
     dispatch({
       type: ADDON_UPDATE,

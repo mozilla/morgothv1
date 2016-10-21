@@ -1,20 +1,13 @@
 import { connect } from 'react-redux';
 
-import { fetchAddonGroups } from '../actions/addon-groups';
+import { getAddonGroupsList, getRequest } from '../state/addonGroups/selectors';
 
 
 function mapStateToProps(state) {
   return {
-    addonGroupsList: state.addonGroups.list,
+    addonGroups: getAddonGroupsList(state),
+    request: getRequest(state, 'addon-groups'),
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    fetchAddonGroups: () => {
-      dispatch(fetchAddonGroups());
-    },
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps);
+export default connect(mapStateToProps);

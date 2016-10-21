@@ -3,13 +3,13 @@ import { DEFAULT_REQUEST } from '../constants';
 
 export function getAddonsList(state) {
   const addons = state.addons.objects;
-  const addonList = [];
+  const addonsList = [];
 
   Object.keys(addons).forEach(id => {
-    addonList.push(addons[id]);
+    addonsList.push(addons[id]);
   });
 
-  return addonList;
+  return addonsList;
 }
 
 export function getAddon(state, id) {
