@@ -9,21 +9,17 @@ import RaisedButton from 'material-ui/RaisedButton';
 import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
 import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
 
-import QueryAddon from './data/QueryAddon';
-import ErrorSnackbar from './stateless/ErrorSnackbar';
-import FetchErrorList from './stateless/FetchErrorList';
-import LoadingIndicator from './stateless/LoadingIndicator';
-import containAddonDetails from '../containers/AddonDetailsContainer';
-import goTo from '../utils/goTo';
+import QueryAddon from '../data/QueryAddon';
+import ErrorSnackbar from '../error/ErrorSnackbar';
+import FetchErrorList from '../error/FetchErrorList';
+import LoadingIndicator from '../indicators/LoadingIndicator';
+import containAddonDetails from '../../containers/AddonDetailsContainer';
+import goTo from '../../utils/goTo';
 
 
 const style = {
   toolbar: {
     justifyContent: 'flex-end',
-  },
-  refresh: {
-    display: 'inline-block',
-    position: 'relative',
   },
 };
 

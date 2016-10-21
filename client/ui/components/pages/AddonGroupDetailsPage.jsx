@@ -2,7 +2,7 @@ import React, { PropTypes as pt } from 'react';
 
 import Paper from 'material-ui/Paper';
 
-import AddonGroupForm from '../AddonGroupForm';
+import AddonGroupForm from '../forms/AddonGroupForm';
 import QueryAddons from '../data/QueryAddons';
 
 

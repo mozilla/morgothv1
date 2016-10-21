@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import Page from './components/Page';
+import App from './components/App';
 import AddonDetailsPage from './components/pages/AddonDetailsPage';
 import AddonGroupDetailsPage from './components/pages/AddonGroupDetailsPage';
 import AddonsListPage from './components/pages/AddonsListPage';
@@ -11,7 +11,7 @@ import NotFoundPage from './components/pages/NotFoundPage';
 
 
 export default (
-  <Route path="/" title="Morgoth" component={Page}>
+  <Route path="/" title="Morgoth" component={App}>
     <IndexRoute component={HomePage} />
     <Route path="/addons/" title="Addons">
       <IndexRoute component={AddonsListPage} />
