@@ -61,17 +61,20 @@ export function requestAddon(pk) {
   };
 }
 
-function requestAddonsSuccess(dispatch, requestId, addons) {
-  dispatch({
-    type: ADDONS_REQUEST_SUCCESS,
-    requestId,
-  });
-
-  addons.forEach(addon => {
+function requestAddonsSuccess(dispatch, requestId, data, limit, offset) {
+  data.results.forEach(addon => {
     dispatch({
       type: ADDON_RECEIVED,
       addon,
     });
+  });
+
+  dispatch({
+    type: ADDONS_REQUEST_SUCCESS,
+    requestId,
+    data,
+    limit,
+    offset,
   });
 }
 
@@ -83,7 +86,7 @@ function requestAddonsFailure(dispatch, requestId, error) {
   });
 }
 
-export function requestAddons() {
+export function requestAddons(limit = 20, offset = 0) {
   return (dispatch, getState) => {
     const requestId = 'addons';
     const request = getRequest(getState(), requestId);
@@ -97,8 +100,8 @@ export function requestAddons() {
       requestId,
     });
 
-    return apiFetch('addon/', { method: 'GET' })
-      .then(addons => requestAddonsSuccess(dispatch, requestId, addons))
+    return apiFetch(`addon/?limit=${limit}&offset=${offset}`, { method: 'GET' })
+      .then(data => requestAddonsSuccess(dispatch, requestId, data, limit, offset))
       .catch(error => requestAddonsFailure(dispatch, requestId, error));
   };
 }

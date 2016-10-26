@@ -72,3 +72,18 @@ body {
     padding: 30px 60px;
   }
 }
+
+.addon-group-list {
+  a,
+  a:visited {
+    color: #000;
+    text-decoration: none;
+  }
+
+  .version {
+    a,
+    a:visited {
+      font-size: 32px;
+    }
+  }
+}

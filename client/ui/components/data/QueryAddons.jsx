@@ -7,11 +7,21 @@ import { requestAddons } from '../../state/addons/actions';
 
 class QueryAddons extends React.Component {
   static propTypes = {
+    limit: pt.number,
+    offset: pt.number,
     requestAddons: pt.func,
   }
 
   componentWillMount() {
-    this.props.requestAddons();
+    const { limit, offset } = this.props;
+    this.props.requestAddons(limit, offset);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { limit, offset } = this.props;
+    if (limit !== nextProps.limit || offset !== nextProps.offset) {
+      this.props.requestAddons(nextProps.limit, nextProps.offset);
+    }
   }
 
   render() {

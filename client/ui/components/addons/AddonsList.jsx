@@ -20,11 +20,17 @@ const style = {
   toolbar: {
     justifyContent: 'flex-end',
   },
+  group: {
+    flex: '1',
+  },
 };
 
 class AddonsList extends React.Component {
   static propTypes = {
     addons: pt.array,
+    count: pt.number,
+    page: pt.number,
+    pageSize: pt.number,
     request: pt.object,
   };
 
@@ -45,6 +51,42 @@ class AddonsList extends React.Component {
           />
         </TableRowColumn>
       </TableRow>
+    );
+  }
+
+  renderPagination() {
+    const { count, page, pageSize } = this.props;
+
+    if (page * pageSize >= count) {
+      return null;
+    }
+
+    return (
+      <Toolbar style={style.toolbar}>
+        {(
+          page ?
+            <ToolbarGroup style={style.group} firstChild>
+              <RaisedButton
+                label="Previous"
+                onClick={() => goTo(`/addons/?page=${page - 1}`)}
+                primary
+              />
+            </ToolbarGroup> :
+            null
+        )}
+        {(
+          page < (count / pageSize) - 1 ?
+            <ToolbarGroup className="align-right" lastChild>
+              <RaisedButton
+                className="align-right"
+                label="Next"
+                onClick={() => goTo(`/addons/?page=${page + 1}`)}
+                primary
+              />
+            </ToolbarGroup> :
+            null
+        )}
+      </Toolbar>
     );
   }
 
@@ -112,6 +154,7 @@ class AddonsList extends React.Component {
             {this.renderRows()}
           </TableBody>
         </Table>
+        {this.renderPagination()}
       </div>
     );
   }

@@ -4,6 +4,8 @@ from morgoth.addons.models import Addon, AddonGroup
 
 
 class AddonSerializer(serializers.ModelSerializer):
+    version = serializers.CharField()
+
     class Meta:
         model = Addon
         fields = (
@@ -21,8 +23,8 @@ class AddonSerializer(serializers.ModelSerializer):
 
 
 class AddonGroupSerializer(serializers.ModelSerializer):
-    addons = serializers.PrimaryKeyRelatedField(many=True, queryset=Addon.objects.all(),
-                                                required=False)
+    addons = AddonSerializer(many=True)
+    browser_version = serializers.SerializerMethodField()
 
     class Meta:
         model = AddonGroup
@@ -39,3 +41,6 @@ class AddonGroupSerializer(serializers.ModelSerializer):
             'qa_addons',
             'shipped_addons',
         )
+
+    def get_browser_version(self, obj):
+        return str(obj.browser_version)
