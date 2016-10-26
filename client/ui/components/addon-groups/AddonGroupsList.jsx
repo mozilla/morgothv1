@@ -20,11 +20,17 @@ const style = {
   toolbar: {
     justifyContent: 'flex-end',
   },
+  group: {
+    flex: '1',
+  },
 };
 
 class AddonGroupsList extends React.Component {
   static propTypes = {
     addonGroups: pt.array,
+    count: pt.number,
+    page: pt.number,
+    pageSize: pt.number,
     request: pt.object,
   };
 
@@ -33,9 +39,15 @@ class AddonGroupsList extends React.Component {
 
     return addonGroups.map((addonGroup, index) => (
       <TableRow key={index}>
-        <TableRowColumn>
+        <TableRowColumn className="version">
           <Link to={`/addon_groups/${addonGroup.id}/`}>{addonGroup.browser_version}</Link>
         </TableRowColumn>
+        <TableRowColumn />
+        <TableRowColumn>
+          {addonGroup.addons.map(addon => <div key={addon.id}>{addon.name}</div>)}
+        </TableRowColumn>
+        <TableRowColumn />
+        <TableRowColumn />
         <TableRowColumn className="align-right">
           <RaisedButton
             onClick={() => goTo(`/addon_groups/${addonGroup.id}/`)}
@@ -45,6 +57,42 @@ class AddonGroupsList extends React.Component {
         </TableRowColumn>
       </TableRow>
     ));
+  }
+
+  renderPagination() {
+    const { count, page, pageSize } = this.props;
+
+    if (page * pageSize >= count) {
+      return null;
+    }
+
+    return (
+      <Toolbar style={style.toolbar}>
+        {(
+          page ?
+            <ToolbarGroup style={style.group} firstChild>
+              <RaisedButton
+                label="Previous"
+                onClick={() => goTo(`/addon_groups/?page=${page - 1}`)}
+                primary
+              />
+            </ToolbarGroup> :
+            null
+        )}
+        {(
+          page < (count / pageSize) - 1 ?
+            <ToolbarGroup className="align-right" lastChild>
+              <RaisedButton
+                className="align-right"
+                label="Next"
+                onClick={() => goTo(`/addon_groups/?page=${page + 1}`)}
+                primary
+              />
+            </ToolbarGroup> :
+            null
+        )}
+      </Toolbar>
+    );
   }
 
   render() {
@@ -77,10 +125,14 @@ class AddonGroupsList extends React.Component {
             />
           </ToolbarGroup>
         </Toolbar>
-        <Table selectable={false}>
+        <Table className="addon-group-list" selectable={false}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
               <TableHeaderColumn>Browser Version</TableHeaderColumn>
+              <TableHeaderColumn>Built-In Addons</TableHeaderColumn>
+              <TableHeaderColumn>Shipping</TableHeaderColumn>
+              <TableHeaderColumn>Current Balrog QA</TableHeaderColumn>
+              <TableHeaderColumn>Current Balrog Release</TableHeaderColumn>
               <TableHeaderColumn />
             </TableRow>
           </TableHeader>
@@ -88,6 +140,7 @@ class AddonGroupsList extends React.Component {
             {this.renderRows()}
           </TableBody>
         </Table>
+        {this.renderPagination()}
       </div>
     );
   }

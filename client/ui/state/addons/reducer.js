@@ -30,6 +30,30 @@ export function objects(state = {}, action) {
   }
 }
 
+export function pagination(state = {}, action) {
+  switch (action.type) {
+    case ADDONS_REQUEST_SUCCESS:
+      const ids = [...state.ids || []];
+
+      while (ids.length < action.data.count) {
+        ids.push(null);
+      }
+
+      for (let i = 0; i < action.data.results.length; i += 1) {
+        ids[i + action.offset] = action.data.results[i].id;
+      }
+
+      return {
+        ...state,
+        count: action.data.count,
+        ids,
+      };
+
+    default:
+      return state;
+  }
+}
+
 export function requests(state = {}, action) {
   switch (action.type) {
     case ADDON_CREATE:
@@ -75,5 +99,6 @@ export function requests(state = {}, action) {
 
 export default combineReducers({
   objects,
+  pagination,
   requests,
 });

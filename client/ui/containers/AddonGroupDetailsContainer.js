@@ -28,7 +28,10 @@ function mapStateToProps(state, { pk }) {
 
   // If there is an active addon group populate the form
   if (addonGroup) {
-    props.initialValues = addonGroup;
+    props.initialValues = {
+      ...addonGroup,
+      addons: addonGroup.addons.map(addon => addon.id),
+    };
   }
 
   return props;

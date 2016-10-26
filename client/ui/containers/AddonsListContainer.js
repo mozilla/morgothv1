@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 
-import { getAddonsList, getRequest } from '../state/addons/selectors';
+import { getPage, getRequest } from '../state/addons/selectors';
 
 
-function mapStateToProps(state) {
+function mapStateToProps(state, { page, pageSize }) {
   return {
-    addons: getAddonsList(state),
+    addons: getPage(state, page, pageSize),
     request: getRequest(state, 'addons'),
   };
 }

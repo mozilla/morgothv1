@@ -9,7 +9,7 @@ import QueryAddons from '../data/QueryAddons';
 function AddonGroupDetailsPage(props) {
   return (
     <Paper zDepth={2} className="page">
-      <QueryAddons />
+      <QueryAddons limit={20} offset={0} />
       <AddonGroupForm pk={props.params.pk} />
     </Paper>
   );

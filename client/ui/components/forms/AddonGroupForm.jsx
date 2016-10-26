@@ -44,7 +44,7 @@ class AddonGroupForm extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { initialize, initialValues } = this.props;
 
-    if (initialValues !== nextProps.initialValues) {
+    if (initialValues.id !== nextProps.initialValues.id) {
       initialize('addonGroup', nextProps.initialValues, false);
     }
   }
