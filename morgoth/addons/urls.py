@@ -9,7 +9,7 @@ from morgoth.addons.api.views import (
 
 # API Router
 router = DefaultRouter()
-router.register(r'addon', AddonViewSet)
+router.register(r'addon', AddonViewSet, base_name='addon')
 router.register(r'addon_group', AddonGroupViewSet)
 
 urlpatterns = [

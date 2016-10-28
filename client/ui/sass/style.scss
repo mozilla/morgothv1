@@ -86,4 +86,33 @@ body {
       font-size: 32px;
     }
   }
+
+  td {
+    &.addons {
+      vertical-align: top;
+
+      > div {
+        border-bottom: 1px solid #ccc;
+        padding: 5px 10px;
+
+        &:first-of-type {
+          margin-top: 5px;
+        }
+
+        &:last-of-type {
+          border: none;
+          margin-bottom: 5px;
+        }
+
+        &.outdated {
+          color: #c00;
+          text-decoration: line-through;
+        }
+
+        &.updated {
+          color: #090;
+        }
+      }
+    }
+  }
 }

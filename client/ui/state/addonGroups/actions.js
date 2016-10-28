@@ -81,6 +81,27 @@ function requestAddonGroupsSuccess(dispatch, requestId, data, limit, offset) {
       });
     });
 
+    addonGroup.built_in_addons.forEach(addon => {
+      dispatch({
+        type: ADDON_RECEIVED,
+        addon,
+      });
+    });
+
+    addonGroup.qa_addons.forEach(addon => {
+      dispatch({
+        type: ADDON_RECEIVED,
+        addon,
+      });
+    });
+
+    addonGroup.shipped_addons.forEach(addon => {
+      dispatch({
+        type: ADDON_RECEIVED,
+        addon,
+      });
+    });
+
     dispatch({
       type: ADDON_GROUP_RECEIVED,
       addonGroup,

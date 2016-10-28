@@ -1,4 +1,5 @@
 import React, { PropTypes as pt } from 'react';
+import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 
@@ -44,7 +45,7 @@ class AddonGroupForm extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { initialize, initialValues } = this.props;
 
-    if (initialValues.id !== nextProps.initialValues.id) {
+    if (initialValues && initialValues.id !== nextProps.initialValues.id) {
       initialize('addonGroup', nextProps.initialValues, false);
     }
   }
@@ -142,7 +143,13 @@ class AddonGroupForm extends React.Component {
   }
 }
 
-const ContainedAddonGroupForm = containAddonGroupDetails(AddonGroupForm);
+function mapStateToProps(state, { addonGroup }) {
+  return {
+    initialValues: addonGroup || null,
+  };
+}
+
+const ContainedAddonGroupForm = containAddonGroupDetails(connect(mapStateToProps)(AddonGroupForm));
 
 export default reduxForm({
   form: 'addonGroup',

@@ -28,6 +28,9 @@ export function objects(state = {}, action) {
         [action.addonGroup.id]: {
           ...action.addonGroup,
           addons: action.addonGroup.addons.map(addon => addon.id),
+          built_in_addons: action.addonGroup.built_in_addons.map(addon => addon.id),
+          qa_addons: action.addonGroup.qa_addons.map(addon => addon.id),
+          shipped_addons: action.addonGroup.shipped_addons.map(addon => addon.id),
         },
       };
 

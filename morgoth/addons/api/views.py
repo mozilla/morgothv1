@@ -11,11 +11,19 @@ from morgoth.base.utils import BalrogAPI
 
 
 class AddonViewSet(ModelViewSet):
-    queryset = Addon.objects.all()
     serializer_class = AddonSerializer
     permission_classes = [
         permissions.DjangoModelPermissionsOrAnonReadOnly,
     ]
+
+    def get_queryset(self):
+        queryset = Addon.objects.all()
+
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(name__startswith=search)
+
+        return queryset
 
     @detail_route(methods=['GET'])
     def groups(self, request, *args, **kwargs):

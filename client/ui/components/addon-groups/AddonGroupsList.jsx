@@ -10,6 +10,7 @@ import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 import FetchErrorList from './../error/FetchErrorList';
 import LoadingIndicator from '../indicators/LoadingIndicator';
 import containAddonGroupsList from '../../containers/AddonGroupsListContainer';
+import { compareVersions } from '../../utils';
 import goTo from '../../utils/goTo';
 
 
@@ -34,6 +35,26 @@ class AddonGroupsList extends React.Component {
     request: pt.object,
   };
 
+  static renderAddonsList(addons, compareAddons) {
+    return addons.map(addon => {
+      const compareAddon = compareAddons.find(a => a.name === addon.name) || addon;
+      const compareVersion = compareVersions(addon.version, compareAddon.version);
+      let className = '';
+
+      if (compareVersion > 0) {
+        className = 'updated';
+      } else if (compareVersion < 0) {
+        className = 'outdated';
+      }
+
+      return (
+        <div key={addon.id} className={className}>
+          {addon.name} <strong>v{addon.version}</strong>
+        </div>
+      );
+    });
+  }
+
   renderRows() {
     const { addonGroups } = this.props;
 
@@ -42,12 +63,18 @@ class AddonGroupsList extends React.Component {
         <TableRowColumn className="version">
           <Link to={`/addon_groups/${addonGroup.id}/`}>{addonGroup.browser_version}</Link>
         </TableRowColumn>
-        <TableRowColumn />
-        <TableRowColumn>
-          {addonGroup.addons.map(addon => <div key={addon.id}>{addon.name}</div>)}
+        <TableRowColumn className="addons">
+          {AddonGroupsList.renderAddonsList(addonGroup.built_in_addons, addonGroup.addons)}
         </TableRowColumn>
-        <TableRowColumn />
-        <TableRowColumn />
+        <TableRowColumn className="addons">
+          {AddonGroupsList.renderAddonsList(addonGroup.addons, addonGroup.built_in_addons)}
+        </TableRowColumn>
+        <TableRowColumn className="addons">
+          {AddonGroupsList.renderAddonsList(addonGroup.qa_addons, addonGroup.addons)}
+        </TableRowColumn>
+        <TableRowColumn className="addons">
+          {AddonGroupsList.renderAddonsList(addonGroup.shipped_addons, addonGroup.addons)}
+        </TableRowColumn>
         <TableRowColumn className="align-right">
           <RaisedButton
             onClick={() => goTo(`/addon_groups/${addonGroup.id}/`)}

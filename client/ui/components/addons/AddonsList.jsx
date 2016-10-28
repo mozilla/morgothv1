@@ -34,26 +34,6 @@ class AddonsList extends React.Component {
     request: pt.object,
   };
 
-  static renderRows(addons) {
-    return addons.map((addon, index) => (
-      <TableRow key={index}>
-        <TableRowColumn>
-          <Link to={`/addons/${addon.id}/`}>{addon.name}</Link>
-        </TableRowColumn>
-        <TableRowColumn>
-          <Link to={`/addons/${addon.id}/`}>{addon.version}</Link>
-        </TableRowColumn>
-        <TableRowColumn className="align-right">
-          <RaisedButton
-            onClick={() => goTo(`/addons/${addon.id}/`)}
-            label="Edit"
-            style={style.button}
-          />
-        </TableRowColumn>
-      </TableRow>
-    ));
-  }
-
   renderPagination() {
     const { count, page, pageSize } = this.props;
 

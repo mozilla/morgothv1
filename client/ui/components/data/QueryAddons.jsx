@@ -10,17 +10,18 @@ class QueryAddons extends React.Component {
     limit: pt.number,
     offset: pt.number,
     requestAddons: pt.func,
+    search: pt.string,
   }
 
   componentWillMount() {
-    const { limit, offset } = this.props;
-    this.props.requestAddons(limit, offset);
+    const { limit, offset, search } = this.props;
+    this.props.requestAddons(limit, offset, search);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { limit, offset } = this.props;
-    if (limit !== nextProps.limit || offset !== nextProps.offset) {
-      this.props.requestAddons(nextProps.limit, nextProps.offset);
+    const { limit, offset, search } = this.props;
+    if (limit !== nextProps.limit || offset !== nextProps.offset || search !== nextProps.search) {
+      this.props.requestAddons(nextProps.limit, nextProps.offset, nextProps.search);
     }
   }
 

@@ -2,7 +2,9 @@ import React, { PropTypes as pt } from 'react';
 
 import Chip from 'material-ui/Chip';
 import MenuItem from 'material-ui/MenuItem';
-import SelectField from 'material-ui/SelectField';
+import AutoComplete from 'material-ui/AutoComplete';
+
+import QueryAddons from '../../data/QueryAddons';
 
 
 const style = {
@@ -27,16 +29,30 @@ class AddonSelectField extends React.Component {
   constructor() {
     super();
 
+    this.state = {
+      dataSource: [],
+      searchText: '',
+    };
+
     // Bind `this` to event handlers and render functions
     this.handleChange = this.handleChange.bind(this);
+    this.handleUpdateInput = this.handleUpdateInput.bind(this);
     this.handleRequestDelete = this.handleRequestDelete.bind(this);
     this.renderAddonChips = this.renderAddonChips.bind(this);
     this.renderAddonItems = this.renderAddonItems.bind(this);
   }
 
-  handleChange(event, index, addonId) {
+  handleChange(text, index) {
     const { onChange, value } = this.props.input;
-    onChange([...value, addonId]);
+    const option = this.state.dataSource[index];
+    if (option && !value.includes(option.value)) {
+      onChange([...value, option.value]);
+    }
+    this.field.setState({ searchText: '' });
+  }
+
+  handleUpdateInput(value) {
+    this.setState({ searchText: value });
   }
 
   handleRequestDelete(addonId) {
@@ -62,6 +78,26 @@ class AddonSelectField extends React.Component {
     });
 
     return items;
+  }
+
+  componentWillMount() {
+    const { addons } = this.props;
+    this.setState({
+      dataSource: addons.map(
+        addon => ({ value: addon.id, text: `${addon.name} v${addon.version}` })
+      ),
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { addons } = this.props;
+    if (addons.length !== nextProps.addons.length) {
+      this.setState({
+        dataSource: addons.map(
+          addon => ({ value: addon.id, text: `${addon.name} v${addon.version}` })
+        ),
+      });
+    }
   }
 
   renderAddonChips() {
@@ -90,17 +126,22 @@ class AddonSelectField extends React.Component {
   }
 
   render() {
-    const { name, floatingLabelText } = this.props;
+    const { addons, name, floatingLabelText } = this.props;
+    const { dataSource, searchText } = this.state;
 
     return (
       <div>
-        <SelectField
+        <QueryAddons limit={100} offset={0} search={this.state.searchText} />
+        <AutoComplete
           name={name}
+          dataSource={dataSource}
           floatingLabelText={floatingLabelText}
-          onChange={this.handleChange}
-        >
-          {this.renderAddonItems()}
-        </SelectField>
+          onUpdateInput={this.handleUpdateInput}
+          onNewRequest={this.handleChange}
+          filter={(text, key) => text.length && key.startsWith(text)}
+          ref={ref => { this.field = ref; }}
+          openOnFocus
+        />
         <div style={style.addonChips}>
           {this.renderAddonChips()}
         </div>

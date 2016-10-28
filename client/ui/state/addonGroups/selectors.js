@@ -15,6 +15,9 @@ export function getAddonGroup(state, id) {
     return {
       ...addonGroup,
       addons: addonGroup.addons.map(addonId => getAddon(state, addonId)),
+      built_in_addons: addonGroup.built_in_addons.map(addonId => getAddon(state, addonId)),
+      qa_addons: addonGroup.qa_addons.map(addonId => getAddon(state, addonId)),
+      shipped_addons: addonGroup.shipped_addons.map(addonId => getAddon(state, addonId)),
     };
   }
 

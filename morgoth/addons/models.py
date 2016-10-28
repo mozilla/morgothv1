@@ -93,7 +93,7 @@ class VersionNumberField(models.Field):
 
 class Addon(DirtyFieldsMixin, models.Model):
     name = models.CharField(max_length=100)
-    version = models.CharField(max_length=32)
+    version = VersionNumberField()
     ftp_url = models.URLField(blank=True, null=True)
     xpi_hash = models.CharField(max_length=128, null=True)
     xpi_filesize = models.IntegerField(null=True)

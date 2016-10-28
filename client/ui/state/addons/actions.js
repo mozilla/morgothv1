@@ -86,9 +86,9 @@ function requestAddonsFailure(dispatch, requestId, error) {
   });
 }
 
-export function requestAddons(limit = 20, offset = 0) {
+export function requestAddons(limit = 20, offset = 0, search = '') {
   return (dispatch, getState) => {
-    const requestId = 'addons';
+    const requestId = `addons-${limit}-${offset}-${search}`;
     const request = getRequest(getState(), requestId);
 
     if (request.loading) {
@@ -100,7 +100,7 @@ export function requestAddons(limit = 20, offset = 0) {
       requestId,
     });
 
-    return apiFetch(`addon/?limit=${limit}&offset=${offset}`, { method: 'GET' })
+    return apiFetch(`addon/?limit=${limit}&offset=${offset}&search=${search}`, { method: 'GET' })
       .then(data => requestAddonsSuccess(dispatch, requestId, data, limit, offset))
       .catch(error => requestAddonsFailure(dispatch, requestId, error));
   };
