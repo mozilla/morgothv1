@@ -146,6 +146,12 @@ class AddonGroupsList extends React.Component {
         <Toolbar style={style.toolbar}>
           <ToolbarGroup className="align-right" lastChild>
             <RaisedButton
+              label="Sync QA Channel"
+            />
+            <RaisedButton
+              label="Sync Release Channel"
+            />
+            <RaisedButton
               label="Create New Addon Group"
               onClick={() => goTo('/addon_groups/new/')}
               primary

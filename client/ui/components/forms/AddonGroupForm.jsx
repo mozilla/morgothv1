@@ -89,14 +89,7 @@ class AddonGroupForm extends React.Component {
               icon={<NavigationChevronLeft />}
               disabled={isSaving}
             />
-          </ToolbarGroup>
-          <ToolbarGroup lastChild>
-            <RaisedButton
-              onClick={syncAddonGroup}
-              label="Sync"
-              disabled={!pk}
-            />
-          </ToolbarGroup>
+          </ToolbarGroup>s
         </Toolbar>
         {
           isSaving ?
@@ -144,8 +137,17 @@ class AddonGroupForm extends React.Component {
 }
 
 function mapStateToProps(state, { addonGroup }) {
+  if (addonGroup) {
+    return {
+      initialValues: {
+        ...addonGroup,
+        addons: addonGroup.addons.map(addon => addon.id),
+      },
+    };
+  }
+
   return {
-    initialValues: addonGroup || null,
+    initialValues: {},
   };
 }
 
