@@ -34,15 +34,23 @@ class AddonGroupViewSet(ModelViewSet):
     @list_route(methods=['POST'])
     def update_built_in(self, request, *args, **kwargs):
         browser_version = request.data.get('browser_version')
+        if not browser_version:
+            return Response({'browser_version': 'A browser version is required.'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
         group, _ = AddonGroup.objects.get_or_create(browser_version=browser_version)
+
+        addons = request.data.get('addons')
+        if not isinstance(addons, list):
+            return Response({'addons': 'A list of addon IDs is required.'},
+                            status=status.HTTP_400_BAD_REQUEST)
 
         group.built_in_addons.clear()
 
-        if 'addons' in request.data:
-            for addon in request.data.get('addons'):
-                addon, _ = Addon.objects.get_or_create(name=addon.get('name'),
-                                                       version=addon.get('version'))
-                group.built_in_addons.add(addon)
+        for addon in request.data.get('addons'):
+            addon, _ = Addon.objects.get_or_create(name=addon.get('name'),
+                                                   version=addon.get('version'))
+            group.built_in_addons.add(addon)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 

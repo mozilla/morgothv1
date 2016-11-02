@@ -3,13 +3,7 @@ import { DEFAULT_REQUEST } from '../constants';
 
 export function getAddonGroupsList(state) {
   const addonGroups = state.addonGroups.objects;
-  const addonGroupsList = [];
-
-  Object.keys(addonGroups).forEach(id => {
-    addonGroupsList.push(addonGroups[id]);
-  });
-
-  return addonGroupsList;
+  return Object.keys(addonGroups).map(id => addonGroups[id]);
 }
 
 export function getAddonGroup(state, id) {

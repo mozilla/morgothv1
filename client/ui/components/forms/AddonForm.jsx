@@ -1,5 +1,5 @@
 import React, { PropTypes as pt } from 'react';
-
+import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 
@@ -69,7 +69,7 @@ class AddonForm extends React.Component {
       );
     }
 
-    if (!addon) {
+    if (pk && !addon) {
       return <QueryAddon pk={pk} />;
     }
 
@@ -139,7 +139,13 @@ class AddonForm extends React.Component {
   }
 }
 
-const ContainedAddonForm = containAddonDetails(AddonForm);
+function mapStateToProps(state, { addon }) {
+  return {
+    initialValues: addon || null,
+  };
+}
+
+const ContainedAddonForm = containAddonDetails(connect(mapStateToProps)(AddonForm));
 
 export default reduxForm({
   form: 'addon',

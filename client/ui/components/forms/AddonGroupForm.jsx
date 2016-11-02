@@ -73,7 +73,7 @@ class AddonGroupForm extends React.Component {
       );
     }
 
-    if (!addonGroup) {
+    if (pk && !addonGroup) {
       return <QueryAddonGroup pk={pk} />;
     }
 

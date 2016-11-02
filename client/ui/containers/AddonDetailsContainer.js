@@ -23,11 +23,6 @@ function mapStateToProps(state, { pk }) {
     saveRequest,
   };
 
-  // If there is an active addon populate the form
-  if (addon) {
-    props.initialValues = addon;
-  }
-
   return props;
 }
 
