@@ -5,7 +5,7 @@ import { indigo500, indigo700, grey400, orange800 } from 'material-ui/styles/col
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import Breadcrumbs from './Breadcrumbs';
+import Breadcrumbs from './layout/Breadcrumbs';
 
 
 const muiTheme = getMuiTheme({
@@ -17,7 +17,7 @@ const muiTheme = getMuiTheme({
   },
 });
 
-function Page({ routes, children }) {
+function App({ routes, children }) {
   return (
     <MuiThemeProvider muiTheme={muiTheme}>
       <div>
@@ -34,9 +34,9 @@ function Page({ routes, children }) {
   );
 }
 
-Page.propTypes = {
+App.propTypes = {
   routes: pt.array.isRequired,
   children: pt.any,
 };
 
-export default Page;
+export default App;

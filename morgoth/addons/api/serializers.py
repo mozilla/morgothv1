@@ -30,4 +30,12 @@ class AddonGroupSerializer(serializers.ModelSerializer):
             'id',
             'browser_version',
             'addons',
+            'built_in_addons',
+            'qa_addons',
+            'shipped_addons',
+        )
+        read_only_fields = (
+            'built_in_addons',
+            'qa_addons',
+            'shipped_addons',
         )

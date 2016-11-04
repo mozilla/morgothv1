@@ -1,21 +1,27 @@
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { initialize } from 'redux-form';
 
-import {
-  createAddon, fetchAddon, resetAddon, resetCreateAddon, resetUpdateAddon, updateAddon,
-} from '../actions/addons';
+import { createAddon, updateAddon } from '../state/addons/actions';
+import { getAddon, getRequest } from '../state/addons/selectors';
 
 
-function mapStateToProps({ addons }) {
-  const props = {
-    activeAddon: addons.active,
-    createAddon: addons.create,
-    updateAddon: addons.update,
-  };
+function mapStateToProps(state, { pk }) {
+  let saveRequest;
 
-  // If there is an active addon populate the form
-  if (addons.active.addon) {
-    props.initialValues = addons.active.addon;
+  if (pk) {
+    saveRequest = getRequest(state, `update-${pk}`);
+  } else {
+    saveRequest = getRequest(state, 'create');
   }
+
+  const addon = getAddon(state, pk);
+
+  const props = {
+    addon,
+    fetchRequest: getRequest(state, `addon-${pk}`),
+    saveRequest,
+  };
 
   return props;
 }
@@ -23,25 +29,15 @@ function mapStateToProps({ addons }) {
 function mapDispatchToProps(dispatch, { pk }) {
   function saveAddon(data, saveAndContinue) {
     if (pk) {
-      return dispatch(updateAddon(pk, data, saveAndContinue));
+      return updateAddon(pk, data, saveAndContinue);
     }
-    return dispatch(createAddon(data, saveAndContinue));
+    return createAddon(data, saveAndContinue);
   }
 
-  return {
-    fetchAddon: () => {
-      if (pk) {
-        dispatch(fetchAddon(pk));
-      }
-    },
-    resetAll: () => {
-      dispatch(resetAddon());
-      dispatch(resetCreateAddon());
-      dispatch(resetUpdateAddon());
-    },
-    save: data => saveAddon(data),
-    saveAndContinue: data => saveAddon(data, true),
-  };
+  return bindActionCreators({
+    initialize,
+    saveAddon,
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps);

@@ -7,10 +7,10 @@ import {
 } from 'material-ui/Table';
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 
-import FetchErrorList from './stateless/FetchErrorList';
-import LoadingIndicator from './stateless/LoadingIndicator';
-import containAddonsList from '../containers/AddonsListContainer';
-import goTo from '../utils/goTo';
+import FetchErrorList from './../error/FetchErrorList';
+import LoadingIndicator from '../indicators/LoadingIndicator';
+import containAddonGroupsList from '../../containers/AddonGroupsListContainer';
+import goTo from '../../utils/goTo';
 
 
 const style = {
@@ -22,24 +22,23 @@ const style = {
   },
 };
 
-class AddonsList extends React.Component {
+class AddonGroupsList extends React.Component {
   static propTypes = {
-    addonsList: pt.object.isRequired,
-    fetchAddons: pt.func.isRequired,
+    addonGroups: pt.array,
+    request: pt.object,
   };
 
-  static renderRows(addons) {
-    return addons.map((addon, index) =>
+  renderRows() {
+    const { addonGroups } = this.props;
+
+    return addonGroups.map((addonGroup, index) =>
       <TableRow key={index}>
         <TableRowColumn>
-          <Link to={`/addons/${addon.id}/`}>{addon.name}</Link>
-        </TableRowColumn>
-        <TableRowColumn>
-          <Link to={`/addons/${addon.id}/`}>{addon.version}</Link>
+          <Link to={`/addon_groups/${addonGroup.id}/`}>{addonGroup.browser_version}</Link>
         </TableRowColumn>
         <TableRowColumn className="align-right">
           <RaisedButton
-            onClick={() => goTo(`/addons/${addon.id}/`)}
+            onClick={() => goTo(`/addon_groups/${addonGroup.id}/`)}
             label="Edit"
             style={style.button}
           />
@@ -48,12 +47,8 @@ class AddonsList extends React.Component {
     );
   }
 
-  componentWillMount() {
-    this.props.fetchAddons();
-  }
-
   render() {
-    const { addons, error, loading } = this.props.addonsList;
+    const { loading, error } = this.props.request;
 
     if (loading) {
       return (
@@ -76,8 +71,8 @@ class AddonsList extends React.Component {
         <Toolbar style={style.toolbar}>
           <ToolbarGroup className="align-right" lastChild>
             <RaisedButton
-              label="Create New Addon"
-              onClick={() => goTo('/addons/new/')}
+              label="Create New Addon Group"
+              onClick={() => goTo('/addon_groups/new/')}
               primary
             />
           </ToolbarGroup>
@@ -85,13 +80,12 @@ class AddonsList extends React.Component {
         <Table selectable={false}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
-              <TableHeaderColumn>Name</TableHeaderColumn>
-              <TableHeaderColumn>Version</TableHeaderColumn>
+              <TableHeaderColumn>Browser Version</TableHeaderColumn>
               <TableHeaderColumn />
             </TableRow>
           </TableHeader>
           <TableBody displayRowCheckbox={false} showRowHover>
-            {AddonsList.renderRows(addons)}
+            {this.renderRows()}
           </TableBody>
         </Table>
       </div>
@@ -99,4 +93,4 @@ class AddonsList extends React.Component {
   }
 }
 
-export default containAddonsList(AddonsList);
+export default containAddonGroupsList(AddonGroupsList);

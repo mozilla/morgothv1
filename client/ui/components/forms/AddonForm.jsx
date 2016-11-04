@@ -1,5 +1,5 @@
 import React, { PropTypes as pt } from 'react';
-
+import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 
@@ -9,55 +9,51 @@ import RaisedButton from 'material-ui/RaisedButton';
 import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
 import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
 
-import ErrorSnackbar from './stateless/ErrorSnackbar';
-import FetchErrorList from './stateless/FetchErrorList';
-import LoadingIndicator from './stateless/LoadingIndicator';
-import containAddonDetails from '../containers/AddonDetailsContainer';
-import goTo from '../utils/goTo';
+import QueryAddon from '../data/QueryAddon';
+import ErrorSnackbar from '../error/ErrorSnackbar';
+import FetchErrorList from '../error/FetchErrorList';
+import LoadingIndicator from '../indicators/LoadingIndicator';
+import containAddonDetails from '../../containers/AddonDetailsContainer';
+import goTo from '../../utils/goTo';
 
 
 const style = {
   toolbar: {
     justifyContent: 'flex-end',
   },
-  refresh: {
-    display: 'inline-block',
-    position: 'relative',
-  },
 };
 
 class AddonForm extends React.Component {
   static propTypes = {
-    activeAddon: pt.object.isRequired,
-    createAddon: pt.object.isRequired,
-    fetchAddon: pt.func.isRequired,
+    addon: pt.object,
+    fetchRequest: pt.object,
     handleSubmit: pt.func.isRequired,
-    pk: pt.any,
-    resetAll: pt.func.isRequired,
-    save: pt.func.isRequired,
-    saveAndContinue: pt.func.isRequired,
-    updateAddon: pt.object.isRequired,
+    initialize: pt.func.isRequired,
+    initialValues: pt.object,
+    pk: pt.string,
+    saveAddon: pt.func.isRequired,
+    saveRequest: pt.object,
   }
 
   componentWillMount() {
-    const { fetchAddon, pk } = this.props;
-    if (pk) {
-      fetchAddon();
+    const { initialize, initialValues } = this.props;
+    initialize('addon', initialValues, false);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { initialize, initialValues } = this.props;
+
+    if (initialValues !== nextProps.initialValues) {
+      initialize('addon', nextProps.initialValues, false);
     }
   }
 
-  componentWillUnmount() {
-    this.props.resetAll();
-  }
-
   render() {
-    const {
-      activeAddon, createAddon, handleSubmit, save, saveAndContinue, updateAddon,
-    } = this.props;
-    const isSaving = createAddon.loading || updateAddon.loading;
-    const saveError = createAddon.error || updateAddon.error;
+    const { addon, fetchRequest, handleSubmit, pk, saveAddon, saveRequest } = this.props;
+    const isSaving = saveRequest.loading;
+    const saveError = saveRequest.error;
 
-    if (activeAddon.loading) {
+    if (fetchRequest.loading) {
       return (
         <div className="wrapper align-center">
           <LoadingIndicator />
@@ -65,12 +61,16 @@ class AddonForm extends React.Component {
       );
     }
 
-    if (activeAddon.error) {
+    if (fetchRequest.error) {
       return (
         <div className="wrapper align-center">
-          <FetchErrorList errors={activeAddon.error} />
+          <FetchErrorList errors={fetchRequest.error} />
         </div>
       );
+    }
+
+    if (pk && !addon) {
+      return <QueryAddon pk={pk} />;
     }
 
     return (
@@ -119,7 +119,7 @@ class AddonForm extends React.Component {
         <Toolbar style={style.toolbar}>
           <ToolbarGroup lastChild>
             <RaisedButton
-              onClick={handleSubmit(saveAndContinue)}
+              onClick={handleSubmit(values => saveAddon(values, true))}
               label="Save & Continue"
               disabled={isSaving}
             />
@@ -127,7 +127,7 @@ class AddonForm extends React.Component {
           <ToolbarSeparator />
           <ToolbarGroup lastChild>
             <RaisedButton
-              onClick={handleSubmit(save)}
+              onClick={handleSubmit(values => saveAddon(values, false))}
               label="Save"
               disabled={isSaving}
               primary
@@ -139,7 +139,13 @@ class AddonForm extends React.Component {
   }
 }
 
-const ContainedAddonForm = containAddonDetails(AddonForm);
+function mapStateToProps(state, { addon }) {
+  return {
+    initialValues: addon || null,
+  };
+}
+
+const ContainedAddonForm = containAddonDetails(connect(mapStateToProps)(AddonForm));
 
 export default reduxForm({
   form: 'addon',

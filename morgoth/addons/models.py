@@ -28,6 +28,9 @@ class Addon(DirtyFieldsMixin, models.Model):
     xpi_hash = models.CharField(max_length=128, null=True)
     xpi_filesize = models.IntegerField(null=True)
 
+    class Meta:
+        unique_together = ('name', 'version',)
+
     def save(self, *args, **kwargs):
         if self.is_dirty():
             dirty_fields = self.get_dirty_fields()
@@ -69,6 +72,9 @@ class Addon(DirtyFieldsMixin, models.Model):
 class AddonGroup(models.Model):
     browser_version = models.CharField(max_length=32, unique=True)
     addons = models.ManyToManyField(Addon, related_name='groups')
+    built_in_addons = models.ManyToManyField(Addon, related_name='built_in_groups')
+    qa_addons = models.ManyToManyField(Addon, related_name='qa_groups')
+    shipped_addons = models.ManyToManyField(Addon, related_name='shipped_groups')
 
     @property
     def name(self):
@@ -90,3 +96,17 @@ class AddonGroup(models.Model):
             data['addons'][a.name] = a.release_data
 
         return data
+
+    @property
+    def qa_synced(self):
+        """A boolean that indicates if the QA channel on Balrog is in sync with Morgoth."""
+        qa_addons_list = list(self.qa_addons.order_by('id'))
+        built_in_addons_list = list(self.addons.order_by('id'))
+        return qa_addons_list == built_in_addons_list
+
+    @property
+    def shipped_synced(self):
+        """A boolean that indicates if the release channel on Balrog is in sync with Morgoth."""
+        shipped_addons_list = list(self.shipped_addons.order_by('id'))
+        built_in_addons_list = list(self.addons.order_by('id'))
+        return shipped_addons_list == built_in_addons_list

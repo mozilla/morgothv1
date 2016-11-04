@@ -167,3 +167,83 @@ class TestAddonGroupAPI(object):
 
         assert res.status_code == 400
         assert group.addons.count() == 1
+
+    def test_update_built_in_addons_no_browser_version(self, api_client):
+        addon = AddonFactory()
+
+        res = api_client.post('/api/v1/addon_group/update_built_in/', {
+            'addons': [addon.id]
+        })
+
+        assert res.status_code == 400
+
+    def test_update_built_in_addons_invalid_addons(self, api_client):
+        group = AddonGroupFactory()
+        addon = AddonFactory()
+        group.built_in_addons.add(addon)
+
+        res = api_client.post('/api/v1/addon_group/update_built_in/', {
+            'browser_version': group.browser_version,
+        })
+
+        assert res.status_code == 400
+        assert group.built_in_addons.count() == 1
+
+        res = api_client.post('/api/v1/addon_group/update_built_in/', {
+            'browser_version': group.browser_version,
+            'addons': addon.id
+        })
+
+        assert res.status_code == 400
+        assert group.built_in_addons.count() == 1
+
+    def test_update_built_in_addons_existing_addon(self, api_client):
+        group = AddonGroupFactory()
+        addon = AddonFactory()
+
+        res = api_client.post('/api/v1/addon_group/update_built_in/', {
+            'browser_version': group.browser_version,
+            'addons': [
+                {
+                    'name': addon.name,
+                    'version': addon.version,
+                }
+            ]
+        })
+
+        assert res.status_code == 204
+        assert group.built_in_addons.count() == 1
+        assert Addon.objects.count() == 1
+
+    def test_update_built_in_addons_new_addon(self, api_client):
+        group = AddonGroupFactory()
+
+        res = api_client.post('/api/v1/addon_group/update_built_in/', {
+            'browser_version': group.browser_version,
+            'addons': [
+                {
+                    'name': 'something@mozilla.org',
+                    'version': '1.2',
+                }
+            ]
+        })
+
+        assert res.status_code == 204
+        assert group.built_in_addons.count() == 1
+        assert Addon.objects.count() == 1
+
+    def test_update_built_in_addons_new_group(self, api_client):
+        addon = AddonFactory()
+
+        res = api_client.post('/api/v1/addon_group/update_built_in/', {
+            'browser_version': '1.0.0',
+            'addons': [
+                {
+                    'name': addon.name,
+                    'version': addon.version,
+                }
+            ]
+        })
+
+        assert res.status_code == 204
+        assert AddonGroup.objects.count() == 1

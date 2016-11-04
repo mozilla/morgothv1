@@ -24,7 +24,7 @@ class NoMatch extends React.Component {
         <p>Are you lost?</p>
         <p>
           <RaisedButton
-            onClick={this.handleClick}
+            onClick={NoMatch.handleClick}
             label="Go back home"
             icon={<ActionHome />}
             primary

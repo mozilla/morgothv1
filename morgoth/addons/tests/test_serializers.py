@@ -32,5 +32,8 @@ class TestAddonGroupSerializer(object):
         assert serializer.data == {
             'id': group.id,
             'browser_version': '%s' % group.browser_version,
-            'addons': [addon.id]
+            'addons': [addon.id],
+            'built_in_addons': [],
+            'qa_addons': [],
+            'shipped_addons': [],
         }

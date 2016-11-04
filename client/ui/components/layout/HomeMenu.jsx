@@ -3,7 +3,7 @@ import React, { PropTypes as pt } from 'react';
 import Avatar from 'material-ui/Avatar';
 import NavigationChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 import { List, ListItem } from 'material-ui/List';
-import goTo from '../utils/goTo';
+import goTo from '../../utils/goTo';
 
 
 function MenuItem({ text, linkTo, icon }) {
