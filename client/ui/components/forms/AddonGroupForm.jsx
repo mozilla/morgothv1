@@ -33,7 +33,7 @@ class AddonGroupForm extends React.Component {
     pk: pt.string,
     saveAddonGroup: pt.func.isRequired,
     saveRequest: pt.object,
-    syncAddonGroup: pt.func.isRequired,
+    syncAddonGroups: pt.func.isRequired,
   }
 
   componentWillMount() {
@@ -52,7 +52,7 @@ class AddonGroupForm extends React.Component {
   render() {
     const {
       addonGroup, addons, fetchRequest, handleSubmit, saveAddonGroup, saveRequest, pk,
-      syncAddonGroup,
+      syncAddonGroups,
     } = this.props;
     const isSaving = saveRequest.loading;
     const saveError = saveRequest.error;
@@ -91,7 +91,7 @@ class AddonGroupForm extends React.Component {
           </ToolbarGroup>
           <ToolbarGroup lastChild>
             <RaisedButton
-              onClick={syncAddonGroup}
+              onClick={syncAddonGroups}
               label="Sync"
               disabled={!pk}
             />

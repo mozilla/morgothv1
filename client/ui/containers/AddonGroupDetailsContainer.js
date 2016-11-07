@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { initialize } from 'redux-form';
 
 import { getAddonsList } from '../state/addons/selectors';
-import { createAddonGroup, syncAddonGroup, updateAddonGroup } from '../state/addonGroups/actions';
+import { createAddonGroup, syncAddonGroups, updateAddonGroup } from '../state/addonGroups/actions';
 import { getAddonGroup, getRequest } from '../state/addonGroups/selectors';
 
 
@@ -45,7 +45,7 @@ function mapDispatchToProps(dispatch, { pk }) {
   return bindActionCreators({
     initialize,
     saveAddonGroup,
-    syncAddonGroup,
+    syncAddonGroups,
   }, dispatch);
 }
 
