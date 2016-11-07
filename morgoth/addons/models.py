@@ -77,14 +77,14 @@ class VersionNumberField(models.Field):
             return VersionNumber.from_integer(value)
 
     def get_prep_value(self, value):
-        if isinstance(value, VersionNumber):
-            return int(value)
+        if value is None:
+            return None
         elif isinstance(value, tuple):
             return int(VersionNumber(*value))
         elif isinstance(value, str):
             return int(VersionNumber.from_string(value))
-        elif isinstance(value, int):
-            return value
+        else:
+            return int(value)
 
     def value_to_string(self, obj):
         value = self.value_from_object(obj)

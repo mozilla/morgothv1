@@ -9,14 +9,19 @@ class TestAddonAPI(object):
     def test_it_works(self, api_client):
         res = api_client.get('/api/v1/addon/')
         assert res.status_code == 200
-        assert res.data == []
+        assert res.data == {
+            'count': 0,
+            'next': None,
+            'previous': None,
+            'results': []
+        }
 
     def test_it_serves_addons(self, api_client):
         addon = AddonFactory()
 
         res = api_client.get('/api/v1/addon/')
         assert res.status_code == 200
-        assert res.data[0]['name'] == addon.name
+        assert res.data.get('results')[0]['name'] == addon.name
 
     def test_it_can_create_addons(self, api_client):
         res = api_client.post('/api/v1/addon/', {
@@ -65,7 +70,12 @@ class TestAddonGroupAPI(object):
     def test_it_works(self, api_client):
         res = api_client.get('/api/v1/addon_group/')
         assert res.status_code == 200
-        assert res.data == []
+        assert res.data == {
+            'count': 0,
+            'next': None,
+            'previous': None,
+            'results': []
+        }
 
     def test_it_serves_groups(self, api_client):
         group = AddonGroupFactory()
@@ -74,7 +84,7 @@ class TestAddonGroupAPI(object):
 
         res = api_client.get('/api/v1/addon_group/')
         assert res.status_code == 200
-        assert res.data[0]['addons'][0] == addon.id
+        assert res.data['results'][0]['addons'][0]['id'] == addon.id
 
     def test_it_can_create_groups(self, api_client):
         res = api_client.post('/api/v1/addon_group/', {
@@ -89,12 +99,12 @@ class TestAddonGroupAPI(object):
         group = AddonGroupFactory(browser_version='1.0')
 
         res = api_client.patch('/api/v1/addon_group/%s/' % group.id, {
-            'browser_version': '2.0a'
+            'browser_version': '2.0'
         })
         assert res.status_code == 200
 
         group = AddonGroup.objects.first()
-        assert group.browser_version == '2.0a'
+        assert str(group.browser_version) == '2.0.0'
 
     def test_it_can_delete_groups(self, api_client):
         group = AddonGroupFactory()
