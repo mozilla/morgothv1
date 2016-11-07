@@ -1,4 +1,5 @@
 import hashlib
+import math
 import os
 
 from urllib import request
@@ -19,6 +20,75 @@ PLATFORMS = (
     'WINNT_x86_64-msvc',
     'WINNT_x86_64-msvc-x64',
 )
+
+
+class VersionNumber(object):
+    def __init__(self, major=0, minor=0, build=0):
+        self.major = int(major)
+        self.minor = int(minor)
+        self.build = int(build)
+
+        if any([i < 0 or i > 999 for i in self.version]):
+            raise ValueError('Version number components must between 0 and 999, inclusive')
+
+    def __int__(self):
+        major, minor, build = self.version
+        return (major * 1000000) + (minor * 1000) + build
+
+    def __str__(self):
+        return '.'.join([str(v) for v in self.version])
+
+    def __repr__(self):
+        return '<VersionNumber: {}>'.format(self)
+
+    @property
+    def version(self):
+        return self.major, self.minor, self.build
+
+    @classmethod
+    def from_integer(cls, value):
+        major = math.floor(value / 1000000)
+        minor = math.floor(value / 1000) - (major * 1000)
+        build = value - (minor * 1000) - (major * 1000000)
+        return cls(major, minor, build)
+
+    @classmethod
+    def from_string(cls, value):
+        return cls(*value.split('.'))
+
+
+class VersionNumberField(models.Field):
+    def get_internal_type(self):
+        return 'IntegerField'
+
+    def from_db_value(self, value, *args, **kwargs):
+        return self.to_python(value)
+
+    def to_python(self, value):
+        if value is None:
+            return None
+        elif isinstance(value, VersionNumber):
+            return value
+        elif isinstance(value, tuple):
+            return VersionNumber(*value)
+        elif isinstance(value, str):
+            return VersionNumber.from_string(value)
+        else:
+            return VersionNumber.from_integer(value)
+
+    def get_prep_value(self, value):
+        if value is None:
+            return None
+        elif isinstance(value, tuple):
+            return int(VersionNumber(*value))
+        elif isinstance(value, str):
+            return int(VersionNumber.from_string(value))
+        else:
+            return int(value)
+
+    def value_to_string(self, obj):
+        value = self.value_from_object(obj)
+        return self.get_prep_value(value)
 
 
 class Addon(DirtyFieldsMixin, models.Model):
@@ -70,11 +140,14 @@ class Addon(DirtyFieldsMixin, models.Model):
 
 
 class AddonGroup(models.Model):
-    browser_version = models.CharField(max_length=32, unique=True)
+    browser_version = VersionNumberField(unique=True)
     addons = models.ManyToManyField(Addon, related_name='groups')
     built_in_addons = models.ManyToManyField(Addon, related_name='built_in_groups')
     qa_addons = models.ManyToManyField(Addon, related_name='qa_groups')
     shipped_addons = models.ManyToManyField(Addon, related_name='shipped_groups')
+
+    class Meta:
+        ordering = ('-browser_version',)
 
     @property
     def name(self):

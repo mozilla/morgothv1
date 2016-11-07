@@ -3,7 +3,17 @@ from rest_framework import serializers
 from morgoth.addons.models import Addon, AddonGroup
 
 
+class VersionField(serializers.Field):
+    def to_representation(self, value):
+        return str(value)
+
+    def to_internal_value(self, value):
+        return value
+
+
 class AddonSerializer(serializers.ModelSerializer):
+    version = serializers.CharField()
+
     class Meta:
         model = Addon
         fields = (
@@ -21,8 +31,8 @@ class AddonSerializer(serializers.ModelSerializer):
 
 
 class AddonGroupSerializer(serializers.ModelSerializer):
-    addons = serializers.PrimaryKeyRelatedField(many=True, queryset=Addon.objects.all(),
-                                                required=False)
+    addons = AddonSerializer(many=True, required=False)
+    browser_version = VersionField()
 
     class Meta:
         model = AddonGroup

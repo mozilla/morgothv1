@@ -25,7 +25,34 @@ export function objects(state = {}, action) {
     case ADDON_GROUP_RECEIVED:
       return {
         ...state,
-        [action.addonGroup.id]: action.addonGroup,
+        [action.addonGroup.id]: {
+          ...action.addonGroup,
+          addons: action.addonGroup.addons.map(addon => addon.id),
+        },
+      };
+
+    default:
+      return state;
+  }
+}
+
+export function pagination(state = {}, action) {
+  switch (action.type) {
+    case ADDON_GROUPS_REQUEST_SUCCESS:
+      const ids = [...state.ids || []];
+
+      while (ids.length < action.data.count) {
+        ids.push(null);
+      }
+
+      for (let i = 0; i < action.data.results.length; i += 1) {
+        ids[i + action.offset] = action.data.results[i].id;
+      }
+
+      return {
+        ...state,
+        count: action.data.count,
+        ids,
       };
 
     default:
@@ -81,5 +108,6 @@ export function requests(state = {}, action) {
 
 export default combineReducers({
   objects,
+  pagination,
   requests,
 });

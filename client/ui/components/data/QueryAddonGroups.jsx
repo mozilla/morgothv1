@@ -7,11 +7,21 @@ import { requestAddonGroups } from '../../state/addonGroups/actions';
 
 class QueryAddonGroups extends React.Component {
   static propTypes = {
+    limit: pt.number,
+    offset: pt.number,
     requestAddonGroups: pt.func,
   }
 
   componentWillMount() {
-    this.props.requestAddonGroups();
+    const { limit, offset } = this.props;
+    this.props.requestAddonGroups(limit, offset);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { limit, offset } = this.props;
+    if (limit !== nextProps.limit || offset !== nextProps.offset) {
+      this.props.requestAddonGroups(nextProps.limit, nextProps.offset);
+    }
   }
 
   render() {
