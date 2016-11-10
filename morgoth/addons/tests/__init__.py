@@ -6,7 +6,7 @@ from unittest.mock import patch
 from factory import fuzzy
 
 from morgoth.addons.models import Addon, AddonGroup
-from morgoth.base.tests import FuzzyUnicode
+from morgoth.base.tests import FuzzyUnicode, FuzzyVersionNumber
 
 
 FAKE_XPI_HASH = ('c383ffa8d660821158c1313690e7676eaeb917ac12de0bde06e3059920d106e8'
@@ -24,7 +24,7 @@ def mock_urlretrieve(*args, **kwargs):
 
 class AddonFactory(factory.DjangoModelFactory):
     name = FuzzyUnicode()
-    version = fuzzy.FuzzyDecimal(0.1, 99.9, 1)
+    version = FuzzyVersionNumber()
     ftp_url = factory.Faker('url')
 
     class Meta:
@@ -41,7 +41,7 @@ class AddonFactory(factory.DjangoModelFactory):
 
 
 class AddonGroupFactory(factory.DjangoModelFactory):
-    browser_version = fuzzy.FuzzyDecimal(0.1, 99.9, 1)
+    browser_version = FuzzyVersionNumber()
 
     class Meta:
         model = AddonGroup

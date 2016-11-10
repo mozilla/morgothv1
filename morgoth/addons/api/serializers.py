@@ -32,9 +32,9 @@ class AddonSerializer(serializers.ModelSerializer):
 
 class AddonGroupSerializer(serializers.ModelSerializer):
     addons = AddonSerializer(many=True, required=False)
-    built_in_addons = AddonSerializer(many=True)
-    qa_addons = AddonSerializer(many=True)
-    shipped_addons = AddonSerializer(many=True)
+    built_in_addons = AddonSerializer(many=True, required=False)
+    qa_addons = AddonSerializer(many=True, required=False)
+    shipped_addons = AddonSerializer(many=True, required=False)
     browser_version = VersionField()
 
     class Meta:

@@ -1,8 +1,11 @@
 from django.contrib.auth.models import User
 
 import factory
+import random
 
 from factory import fuzzy
+
+from morgoth.addons.models import VersionNumber
 
 
 class Whatever(object):
@@ -23,6 +26,14 @@ class FuzzyUnicode(fuzzy.FuzzyText):
     def __init__(self, prefix=u'', **kwargs):
         prefix = '%sđ' % prefix
         super(FuzzyUnicode, self).__init__(prefix=prefix, **kwargs)
+
+
+class FuzzyVersionNumber(factory.fuzzy.BaseFuzzyAttribute):
+    """Random version number."""
+
+    def fuzz(self):
+        return str(VersionNumber(major=random.randint(1, 99), minor=random.randint(0, 99),
+                                 build=random.randint(0, 99)))
 
 
 class UserFactory(factory.DjangoModelFactory):
