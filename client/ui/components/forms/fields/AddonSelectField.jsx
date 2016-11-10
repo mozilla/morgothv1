@@ -42,6 +42,26 @@ class AddonSelectField extends React.Component {
     this.renderAddonItems = this.renderAddonItems.bind(this);
   }
 
+  componentWillMount() {
+    const { addons } = this.props;
+    this.setState({
+      dataSource: addons.map(
+        addon => ({ value: addon.id, text: `${addon.name} v${addon.version}` })
+      ),
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { addons } = this.props;
+    if (addons.length !== nextProps.addons.length) {
+      this.setState({
+        dataSource: addons.map(
+          addon => ({ value: addon.id, text: `${addon.name} v${addon.version}` })
+        ),
+      });
+    }
+  }
+
   handleChange(text, index) {
     const { onChange, value } = this.props.input;
     const option = this.state.dataSource[index];
@@ -80,26 +100,6 @@ class AddonSelectField extends React.Component {
     return items;
   }
 
-  componentWillMount() {
-    const { addons } = this.props;
-    this.setState({
-      dataSource: addons.map(
-        addon => ({ value: addon.id, text: `${addon.name} v${addon.version}` })
-      ),
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { addons } = this.props;
-    if (addons.length !== nextProps.addons.length) {
-      this.setState({
-        dataSource: addons.map(
-          addon => ({ value: addon.id, text: `${addon.name} v${addon.version}` })
-        ),
-      });
-    }
-  }
-
   renderAddonChips() {
     const { addons, input } = this.props;
     const items = [];
@@ -126,12 +126,12 @@ class AddonSelectField extends React.Component {
   }
 
   render() {
-    const { addons, name, floatingLabelText } = this.props;
+    const { name, floatingLabelText } = this.props;
     const { dataSource, searchText } = this.state;
 
     return (
       <div>
-        <QueryAddons limit={100} offset={0} search={this.state.searchText} />
+        <QueryAddons limit={100} offset={0} search={searchText} />
         <AutoComplete
           name={name}
           dataSource={dataSource}

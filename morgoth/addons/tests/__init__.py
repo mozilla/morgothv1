@@ -3,8 +3,6 @@ import factory
 from tempfile import NamedTemporaryFile
 from unittest.mock import patch
 
-from factory import fuzzy
-
 from morgoth.addons.models import Addon, AddonGroup
 from morgoth.base.tests import FuzzyUnicode, FuzzyVersionNumber
 

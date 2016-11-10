@@ -34,7 +34,6 @@ class AddonGroupForm extends React.Component {
     pk: pt.string,
     saveAddonGroup: pt.func.isRequired,
     saveRequest: pt.object,
-    syncAddonGroup: pt.func.isRequired,
   }
 
   componentWillMount() {
@@ -53,7 +52,6 @@ class AddonGroupForm extends React.Component {
   render() {
     const {
       addonGroup, addons, fetchRequest, handleSubmit, saveAddonGroup, saveRequest, pk,
-      syncAddonGroup,
     } = this.props;
     const isSaving = saveRequest.loading;
     const saveError = saveRequest.error;
