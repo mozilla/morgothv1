@@ -229,7 +229,7 @@ export function syncAddonGroups(pk) {
       requestId,
     });
 
-    return apiFetch(`addon_group/sync/`, { method: 'POST' })
+    return apiFetch('addon_group/sync/', { method: 'POST' })
       .then(() => syncAddonGroupSuccess(dispatch, requestId))
       .catch(error => syncAddonGroupFailure(dispatch, requestId, error));
   };

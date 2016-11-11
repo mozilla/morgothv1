@@ -269,6 +269,4 @@ class TestAddonGroupAPI(object):
         import json
         blob = json.loads(release['data']['blob'])
 
-        assert release['data']['name'] == group.name
-        assert rule['data']['mapping'] == group.name
-        assert list(blob['addons'].keys())[0] == group.addons.get(pk=1).name
+        assert list(blob['addons'].keys())[0] == group.addons.get().name
