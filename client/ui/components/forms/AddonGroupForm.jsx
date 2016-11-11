@@ -44,7 +44,8 @@ class AddonGroupForm extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { initialize, initialValues } = this.props;
 
-    if (initialValues && initialValues.id !== nextProps.initialValues.id) {
+    if (initialValues
+        && initialValues.browser_version !== nextProps.initialValues.browser_version) {
       initialize('addonGroup', nextProps.initialValues, false);
     }
   }
@@ -87,7 +88,7 @@ class AddonGroupForm extends React.Component {
               icon={<NavigationChevronLeft />}
               disabled={isSaving}
             />
-          </ToolbarGroup>s
+          </ToolbarGroup>
         </Toolbar>
         {
           isSaving ?
@@ -104,7 +105,7 @@ class AddonGroupForm extends React.Component {
           </div>
           <div>
             <Field
-              name="addons"
+              name="addon_ids"
               floatingLabelText="Addons"
               addons={addons}
               component={AddonSelectField}
@@ -138,8 +139,8 @@ function mapStateToProps(state, { addonGroup }) {
   if (addonGroup) {
     return {
       initialValues: {
-        ...addonGroup,
-        addons: addonGroup.addons.map(addon => addon.id),
+        browser_version: addonGroup.browser_version,
+        addon_ids: addonGroup.addons.map(addon => addon.id),
       },
     };
   }

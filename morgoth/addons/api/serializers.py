@@ -31,10 +31,11 @@ class AddonSerializer(serializers.ModelSerializer):
 
 
 class AddonGroupSerializer(serializers.ModelSerializer):
-    addons = AddonSerializer(many=True, required=False)
-    built_in_addons = AddonSerializer(many=True, required=False)
-    qa_addons = AddonSerializer(many=True, required=False)
-    shipped_addons = AddonSerializer(many=True, required=False)
+    addons = AddonSerializer(many=True)
+    addon_ids = serializers.ListField(required=False, write_only=True)
+    built_in_addons = AddonSerializer(many=True)
+    qa_addons = AddonSerializer(many=True)
+    shipped_addons = AddonSerializer(many=True)
     browser_version = VersionField()
 
     class Meta:
@@ -43,12 +44,39 @@ class AddonGroupSerializer(serializers.ModelSerializer):
             'id',
             'browser_version',
             'addons',
+            'addon_ids',
             'built_in_addons',
             'qa_addons',
             'shipped_addons',
         )
         read_only_fields = (
+            'addons',
             'built_in_addons',
             'qa_addons',
             'shipped_addons',
         )
+
+    def get_addons(self, obj):
+        return AddonSerializer(obj.addons, many=True).data
+
+    def create(self, validated_data):
+        addon_ids = validated_data.pop('addon_ids', [])
+
+        group = AddonGroup.objects.create(**validated_data)
+
+        for addon_id in addon_ids:
+            group.addons.add(Addon.objects.get(id=addon_id))
+
+        return group
+
+    def update(self, instance, validated_data):
+        addon_ids = validated_data.pop('addon_ids', None)
+
+        AddonGroup.objects.filter(pk=instance.pk).update(**validated_data)
+
+        if addon_ids:
+            instance.addons.clear()
+            for addon_id in addon_ids:
+                instance.addons.add(Addon.objects.get(id=addon_id))
+
+        return instance
