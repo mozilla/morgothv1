@@ -31,11 +31,11 @@ class AddonSerializer(serializers.ModelSerializer):
 
 
 class AddonGroupSerializer(serializers.ModelSerializer):
-    addons = AddonSerializer(many=True)
+    addons = AddonSerializer(many=True, read_only=True)
     addon_ids = serializers.ListField(required=False, write_only=True)
-    built_in_addons = AddonSerializer(many=True)
-    qa_addons = AddonSerializer(many=True)
-    shipped_addons = AddonSerializer(many=True)
+    built_in_addons = AddonSerializer(many=True, read_only=True)
+    qa_addons = AddonSerializer(many=True, read_only=True)
+    shipped_addons = AddonSerializer(many=True, read_only=True)
     browser_version = VersionField()
 
     class Meta:
@@ -45,12 +45,6 @@ class AddonGroupSerializer(serializers.ModelSerializer):
             'browser_version',
             'addons',
             'addon_ids',
-            'built_in_addons',
-            'qa_addons',
-            'shipped_addons',
-        )
-        read_only_fields = (
-            'addons',
             'built_in_addons',
             'qa_addons',
             'shipped_addons',
