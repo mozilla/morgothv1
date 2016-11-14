@@ -42,20 +42,10 @@ export function objects(state = {}, action) {
 export function pagination(state = {}, action) {
   switch (action.type) {
     case ADDON_GROUPS_REQUEST_SUCCESS:
-      const ids = [...state.ids || []];
-
-      while (ids.length < action.data.count) {
-        ids.push(null);
-      }
-
-      for (let i = 0; i < action.data.results.length; i += 1) {
-        ids[i + action.offset] = action.data.results[i].id;
-      }
-
       return {
         ...state,
         count: action.data.count,
-        ids,
+        ids: action.data.results.map(item => item.id),
       };
 
     default:

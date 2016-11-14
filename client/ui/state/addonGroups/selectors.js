@@ -3,6 +3,17 @@ import { DEFAULT_REQUEST } from '../constants';
 import { getAddon } from '../addons/selectors';
 
 
+function mapAddons(state) {
+  let addonGroup = this;
+  for (const key of ['addons', 'build_in_addons', 'qa_addons', 'shipped_addons']) {
+    addonGroup = {
+      ...addonGroup,
+      [key]: this[key].map(addonId => getAddon(state, addonId)),
+    };
+  }
+  return addonGroup;
+}
+
 export function getAddonGroupsList(state) {
   const addonGroups = state.addonGroups.objects;
   return Object.keys(addonGroups).map(id => addonGroups[id]);
@@ -13,11 +24,7 @@ export function getAddonGroup(state, id) {
 
   if (addonGroup) {
     return {
-      ...addonGroup,
-      addons: addonGroup.addons.map(addonId => getAddon(state, addonId)),
-      built_in_addons: addonGroup.built_in_addons.map(addonId => getAddon(state, addonId)),
-      qa_addons: addonGroup.qa_addons.map(addonId => getAddon(state, addonId)),
-      shipped_addons: addonGroup.shipped_addons.map(addonId => getAddon(state, addonId)),
+      ...addonGroup::mapAddons(state),
     };
   }
 
@@ -34,14 +41,7 @@ export function getCount(state) {
   return state.addonGroups.pagination.count;
 }
 
-export function getPage(state, page, pageSize) {
-  const ids = [...state.addonGroups.pagination.ids || []];
-
-  if (ids) {
-    const start = page * pageSize;
-    const end = start + pageSize;
-    return ids.slice(start, end).map(id => getAddonGroup(state, id));
-  }
-
-  return [];
+export function getPage(state) {
+  const ids = state.addonGroups.pagination.ids || [];
+  return ids.map(id => getAddonGroup(state, id));
 }

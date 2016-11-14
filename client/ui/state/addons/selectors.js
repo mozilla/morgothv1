@@ -26,14 +26,7 @@ export function getCount(state) {
   return state.addons.pagination.count;
 }
 
-export function getPage(state, page, pageSize) {
-  const { ids } = state.addons.pagination;
-
-  if (ids) {
-    const start = page * pageSize;
-    const end = start + pageSize;
-    return ids.slice(start, end).map(id => getAddon(state, id));
-  }
-
-  return [];
+export function getPage(state) {
+  const ids = state.addons.pagination.ids || [];
+  return ids.map(id => getAddon(state, id));
 }

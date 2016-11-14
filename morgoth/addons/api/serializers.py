@@ -1,3 +1,5 @@
+from django.db import transaction
+
 from rest_framework import serializers
 
 from morgoth.addons.models import Addon, AddonGroup
@@ -50,9 +52,7 @@ class AddonGroupSerializer(serializers.ModelSerializer):
             'shipped_addons',
         )
 
-    def get_addons(self, obj):
-        return AddonSerializer(obj.addons, many=True).data
-
+    @transaction.atomic
     def create(self, validated_data):
         addon_ids = validated_data.pop('addon_ids', [])
 
@@ -63,6 +63,7 @@ class AddonGroupSerializer(serializers.ModelSerializer):
 
         return group
 
+    @transaction.atomic
     def update(self, instance, validated_data):
         addon_ids = validated_data.pop('addon_ids', None)
 

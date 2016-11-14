@@ -39,10 +39,6 @@ class AddonGroupViewSet(ModelViewSet):
         permissions.DjangoModelPermissionsOrAnonReadOnly,
     ]
 
-    @list_route(methods=['GET'])
-    def ids(self, request, *args, **kwargs):
-        self.get_queryset()
-
     @list_route(methods=['POST'])
     def update_built_in(self, request, *args, **kwargs):
         browser_version = request.data.get('browser_version')
