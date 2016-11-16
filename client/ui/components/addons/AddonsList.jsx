@@ -29,7 +29,7 @@ class AddonsList extends React.Component {
   };
 
   static renderRows(addons) {
-    return addons.map((addon, index) =>
+    return addons.map((addon, index) => (
       <TableRow key={index}>
         <TableRowColumn>
           <Link to={`/addons/${addon.id}/`}>{addon.name}</Link>
@@ -45,13 +45,13 @@ class AddonsList extends React.Component {
           />
         </TableRowColumn>
       </TableRow>
-    );
+    ));
   }
 
   renderRows() {
     const { addons } = this.props;
 
-    return addons.map((addon, index) =>
+    return addons.map((addon, index) => (
       <TableRow key={index}>
         <TableRowColumn>
           <Link to={`/addons/${addon.id}/`}>{addon.name}</Link>
@@ -67,7 +67,7 @@ class AddonsList extends React.Component {
           />
         </TableRowColumn>
       </TableRow>
-    );
+    ));
   }
 
   render() {

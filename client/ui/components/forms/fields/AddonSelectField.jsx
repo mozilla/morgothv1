@@ -50,14 +50,14 @@ class AddonSelectField extends React.Component {
 
     addons.forEach(addon => {
       if (input.value.indexOf(addon.id) === -1) {
-        items.push(
+        items.push((
           <MenuItem
             key={addon.id}
             value={addon.id}
             primaryText={addon.name}
             secondaryText={`v${addon.version}`}
           />
-        );
+        ));
       }
     });
 
@@ -73,7 +73,7 @@ class AddonSelectField extends React.Component {
         const addon = addons.find(a => a.id === addonId);
 
         if (addon) {
-          items.push(
+          items.push((
             <Chip
               key={addonId}
               style={style.addonChip}
@@ -81,7 +81,7 @@ class AddonSelectField extends React.Component {
             >
               <strong>{addon.name}</strong> v{addon.version}
             </Chip>
-          );
+          ));
         }
       });
     }
