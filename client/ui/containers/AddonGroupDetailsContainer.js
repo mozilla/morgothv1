@@ -26,11 +26,6 @@ function mapStateToProps(state, { pk }) {
     syncRequest: getRequest(state, `sync-${pk}`),
   };
 
-  // If there is an active addon group populate the form
-  if (addonGroup) {
-    props.initialValues = addonGroup;
-  }
-
   return props;
 }
 

@@ -19,6 +19,7 @@ import {
   ADDON_GROUPS_REQUEST,
   ADDON_GROUPS_REQUEST_SUCCESS,
   ADDON_GROUPS_REQUEST_FAILURE,
+  ADDON_RECEIVED,
 } from '../action-types';
 
 import apiFetch from '../../utils/apiFetch';
@@ -28,6 +29,13 @@ function requestAddonGroupSuccess(dispatch, requestId, addonGroup) {
   dispatch({
     type: ADDON_GROUP_REQUEST_SUCCESS,
     requestId,
+  });
+
+  addonGroup.addons.forEach(addon => {
+    dispatch({
+      type: ADDON_RECEIVED,
+      addon,
+    });
   });
 
   dispatch({
@@ -64,17 +72,29 @@ export function requestAddonGroup(pk) {
   };
 }
 
-function requestAddonGroupsSuccess(dispatch, requestId, addonGroups) {
-  dispatch({
-    type: ADDON_GROUPS_REQUEST_SUCCESS,
-    requestId,
-  });
+function requestAddonGroupsSuccess(dispatch, requestId, data, limit, offset) {
+  data.results.forEach(addonGroup => {
+    for (const addonType of ['addons', 'build_in_addons', 'qa_addons', 'shipped_addons']) {
+      addonGroup[addonType].forEach(addon => {
+        dispatch({
+          type: ADDON_RECEIVED,
+          addon,
+        });
+      });
+    }
 
-  addonGroups.forEach(addonGroup => {
     dispatch({
       type: ADDON_GROUP_RECEIVED,
       addonGroup,
     });
+  });
+
+  dispatch({
+    type: ADDON_GROUPS_REQUEST_SUCCESS,
+    requestId,
+    data,
+    limit,
+    offset,
   });
 }
 
@@ -86,7 +106,7 @@ function requestAddonGroupsFailure(dispatch, requestId, error) {
   });
 }
 
-export function requestAddonGroups() {
+export function requestAddonGroups(limit = 20, offset = 0) {
   return (dispatch, getState) => {
     const requestId = 'addon-groups';
     const request = getRequest(getState(), requestId);
@@ -100,8 +120,8 @@ export function requestAddonGroups() {
       requestId,
     });
 
-    return apiFetch('addon_group/', { method: 'GET' })
-      .then(addonGroups => requestAddonGroupsSuccess(dispatch, requestId, addonGroups))
+    return apiFetch(`addon_group/?limit=${limit}&offset=${offset}`, { method: 'GET' })
+      .then(data => requestAddonGroupsSuccess(dispatch, requestId, data, limit, offset))
       .catch(error => requestAddonGroupsFailure(dispatch, requestId, error));
   };
 }

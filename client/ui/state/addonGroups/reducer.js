@@ -25,7 +25,27 @@ export function objects(state = {}, action) {
     case ADDON_GROUP_RECEIVED:
       return {
         ...state,
-        [action.addonGroup.id]: action.addonGroup,
+        [action.addonGroup.id]: {
+          ...action.addonGroup,
+          addons: action.addonGroup.addons.map(addon => addon.id),
+          built_in_addons: action.addonGroup.built_in_addons.map(addon => addon.id),
+          qa_addons: action.addonGroup.qa_addons.map(addon => addon.id),
+          shipped_addons: action.addonGroup.shipped_addons.map(addon => addon.id),
+        },
+      };
+
+    default:
+      return state;
+  }
+}
+
+export function pagination(state = {}, action) {
+  switch (action.type) {
+    case ADDON_GROUPS_REQUEST_SUCCESS:
+      return {
+        ...state,
+        count: action.data.count,
+        ids: action.data.results.map(item => item.id),
       };
 
     default:
@@ -81,5 +101,6 @@ export function requests(state = {}, action) {
 
 export default combineReducers({
   objects,
+  pagination,
   requests,
 });

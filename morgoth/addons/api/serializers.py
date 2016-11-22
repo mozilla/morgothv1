@@ -1,9 +1,21 @@
+from django.db import transaction
+
 from rest_framework import serializers
 
 from morgoth.addons.models import Addon, AddonGroup
 
 
+class VersionField(serializers.Field):
+    def to_representation(self, value):
+        return str(value)
+
+    def to_internal_value(self, value):
+        return value
+
+
 class AddonSerializer(serializers.ModelSerializer):
+    version = serializers.CharField()
+
     class Meta:
         model = Addon
         fields = (
@@ -21,8 +33,12 @@ class AddonSerializer(serializers.ModelSerializer):
 
 
 class AddonGroupSerializer(serializers.ModelSerializer):
-    addons = serializers.PrimaryKeyRelatedField(many=True, queryset=Addon.objects.all(),
-                                                required=False)
+    addons = AddonSerializer(many=True, read_only=True)
+    addon_ids = serializers.ListField(required=False, write_only=True)
+    built_in_addons = AddonSerializer(many=True, read_only=True)
+    qa_addons = AddonSerializer(many=True, read_only=True)
+    shipped_addons = AddonSerializer(many=True, read_only=True)
+    browser_version = VersionField()
 
     class Meta:
         model = AddonGroup
@@ -30,12 +46,32 @@ class AddonGroupSerializer(serializers.ModelSerializer):
             'id',
             'browser_version',
             'addons',
+            'addon_ids',
             'built_in_addons',
             'qa_addons',
             'shipped_addons',
         )
-        read_only_fields = (
-            'built_in_addons',
-            'qa_addons',
-            'shipped_addons',
-        )
+
+    @transaction.atomic
+    def create(self, validated_data):
+        addon_ids = validated_data.pop('addon_ids', [])
+
+        group = AddonGroup.objects.create(**validated_data)
+
+        for addon_id in addon_ids:
+            group.addons.add(Addon.objects.get(id=addon_id))
+
+        return group
+
+    @transaction.atomic
+    def update(self, instance, validated_data):
+        addon_ids = validated_data.pop('addon_ids', None)
+
+        AddonGroup.objects.filter(pk=instance.pk).update(**validated_data)
+
+        if addon_ids:
+            instance.addons.clear()
+            for addon_id in addon_ids:
+                instance.addons.add(Addon.objects.get(id=addon_id))
+
+        return instance

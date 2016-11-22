@@ -1,4 +1,5 @@
 import React, { PropTypes as pt } from 'react';
+import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 
@@ -33,7 +34,6 @@ class AddonGroupForm extends React.Component {
     pk: pt.string,
     saveAddonGroup: pt.func.isRequired,
     saveRequest: pt.object,
-    syncAddonGroup: pt.func.isRequired,
   }
 
   componentWillMount() {
@@ -44,7 +44,8 @@ class AddonGroupForm extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { initialize, initialValues } = this.props;
 
-    if (initialValues !== nextProps.initialValues) {
+    if (initialValues
+        && initialValues.browser_version !== nextProps.initialValues.browser_version) {
       initialize('addonGroup', nextProps.initialValues, false);
     }
   }
@@ -52,7 +53,6 @@ class AddonGroupForm extends React.Component {
   render() {
     const {
       addonGroup, addons, fetchRequest, handleSubmit, saveAddonGroup, saveRequest, pk,
-      syncAddonGroup,
     } = this.props;
     const isSaving = saveRequest.loading;
     const saveError = saveRequest.error;
@@ -89,13 +89,6 @@ class AddonGroupForm extends React.Component {
               disabled={isSaving}
             />
           </ToolbarGroup>
-          <ToolbarGroup lastChild>
-            <RaisedButton
-              onClick={syncAddonGroup}
-              label="Sync"
-              disabled={!pk}
-            />
-          </ToolbarGroup>
         </Toolbar>
         {
           isSaving ?
@@ -112,7 +105,7 @@ class AddonGroupForm extends React.Component {
           </div>
           <div>
             <Field
-              name="addons"
+              name="addon_ids"
               floatingLabelText="Addons"
               addons={addons}
               component={AddonSelectField}
@@ -142,7 +135,22 @@ class AddonGroupForm extends React.Component {
   }
 }
 
-const ContainedAddonGroupForm = containAddonGroupDetails(AddonGroupForm);
+function mapStateToProps(state, { addonGroup }) {
+  if (addonGroup) {
+    return {
+      initialValues: {
+        browser_version: addonGroup.browser_version,
+        addon_ids: addonGroup.addons.map(addon => addon.id),
+      },
+    };
+  }
+
+  return {
+    initialValues: {},
+  };
+}
+
+const ContainedAddonGroupForm = containAddonGroupDetails(connect(mapStateToProps)(AddonGroupForm));
 
 export default reduxForm({
   form: 'addonGroup',

@@ -30,6 +30,20 @@ export function objects(state = {}, action) {
   }
 }
 
+export function pagination(state = {}, action) {
+  switch (action.type) {
+    case ADDONS_REQUEST_SUCCESS:
+      return {
+        ...state,
+        count: action.data.count,
+        ids: action.data.results.map(item => item.id),
+      };
+
+    default:
+      return state;
+  }
+}
+
 export function requests(state = {}, action) {
   switch (action.type) {
     case ADDON_CREATE:
@@ -75,5 +89,6 @@ export function requests(state = {}, action) {
 
 export default combineReducers({
   objects,
+  pagination,
   requests,
 });

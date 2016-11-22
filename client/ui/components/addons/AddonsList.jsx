@@ -20,32 +20,54 @@ const style = {
   toolbar: {
     justifyContent: 'flex-end',
   },
+  group: {
+    flex: '1',
+  },
 };
 
 class AddonsList extends React.Component {
   static propTypes = {
     addons: pt.array,
+    count: pt.number,
+    page: pt.number,
+    pageSize: pt.number,
     request: pt.object,
   };
 
-  static renderRows(addons) {
-    return addons.map((addon, index) => (
-      <TableRow key={index}>
-        <TableRowColumn>
-          <Link to={`/addons/${addon.id}/`}>{addon.name}</Link>
-        </TableRowColumn>
-        <TableRowColumn>
-          <Link to={`/addons/${addon.id}/`}>{addon.version}</Link>
-        </TableRowColumn>
-        <TableRowColumn className="align-right">
-          <RaisedButton
-            onClick={() => goTo(`/addons/${addon.id}/`)}
-            label="Edit"
-            style={style.button}
-          />
-        </TableRowColumn>
-      </TableRow>
-    ));
+  renderPagination() {
+    const { count, page, pageSize } = this.props;
+
+    if (page * pageSize >= count) {
+      return null;
+    }
+
+    return (
+      <Toolbar style={style.toolbar}>
+        {(
+          page ?
+            <ToolbarGroup style={style.group} firstChild>
+              <RaisedButton
+                label="Previous"
+                onClick={() => goTo(`/addons/?page=${page - 1}`)}
+                primary
+              />
+            </ToolbarGroup> :
+            null
+        )}
+        {(
+          page < (count / pageSize) - 1 ?
+            <ToolbarGroup className="align-right" lastChild>
+              <RaisedButton
+                className="align-right"
+                label="Next"
+                onClick={() => goTo(`/addons/?page=${page + 1}`)}
+                primary
+              />
+            </ToolbarGroup> :
+            null
+        )}
+      </Toolbar>
+    );
   }
 
   renderRows() {
@@ -112,6 +134,7 @@ class AddonsList extends React.Component {
             {this.renderRows()}
           </TableBody>
         </Table>
+        {this.renderPagination()}
       </div>
     );
   }
