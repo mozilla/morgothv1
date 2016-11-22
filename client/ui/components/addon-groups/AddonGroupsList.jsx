@@ -31,7 +31,7 @@ class AddonGroupsList extends React.Component {
   renderRows() {
     const { addonGroups } = this.props;
 
-    return addonGroups.map((addonGroup, index) =>
+    return addonGroups.map((addonGroup, index) => (
       <TableRow key={index}>
         <TableRowColumn>
           <Link to={`/addon_groups/${addonGroup.id}/`}>{addonGroup.browser_version}</Link>
@@ -44,7 +44,7 @@ class AddonGroupsList extends React.Component {
           />
         </TableRowColumn>
       </TableRow>
-    );
+    ));
   }
 
   render() {
