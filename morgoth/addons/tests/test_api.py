@@ -247,3 +247,26 @@ class TestAddonGroupAPI(object):
 
         assert res.status_code == 204
         assert AddonGroup.objects.count() == 1
+
+    def test_sync(self, api_client):
+        group = AddonGroupFactory()
+        addon = AddonFactory()
+        group.addons.add(addon)
+
+        res = api_client.post('/api/v1/addon_group/sync/')
+
+        assert res.status_code == 200
+
+        # this API should not modify existing groups in Morgoth
+        assert AddonGroup.objects.count() == 1
+        assert group.addons.count() == 1
+
+        # FIXME mock BalrogAPI instead of depending on this result
+        release, rule = res.data
+
+        # the blob is an embedded JSON string, so this is not automatically
+        # converted into an object.
+        import json
+        blob = json.loads(release['data']['blob'])
+
+        assert list(blob['addons'].keys())[0] == group.addons.get().name

@@ -215,7 +215,7 @@ function syncAddonGroupFailure(dispatch, requestId, error) {
   });
 }
 
-export function syncAddonGroup(pk) {
+export function syncAddonGroups(pk) {
   return (dispatch, getState) => {
     const requestId = `sync-${pk}`;
     const request = getRequest(getState(), requestId);
@@ -229,7 +229,7 @@ export function syncAddonGroup(pk) {
       requestId,
     });
 
-    return apiFetch(`addon_group/${pk}/sync/`, { method: 'POST' })
+    return apiFetch('addon_group/sync/', { method: 'POST' })
       .then(() => syncAddonGroupSuccess(dispatch, requestId))
       .catch(error => syncAddonGroupFailure(dispatch, requestId, error));
   };
