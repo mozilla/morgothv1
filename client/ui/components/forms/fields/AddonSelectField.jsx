@@ -45,9 +45,9 @@ class AddonSelectField extends React.Component {
   componentWillMount() {
     const { addons } = this.props;
     this.setState({
-      dataSource: addons.map(
-        addon => ({ value: addon.id, text: `${addon.name} v${addon.version}` })
-      ),
+      dataSource: addons.map(addon => (
+        { value: addon.id, text: `${addon.name} v${addon.version}` }
+      )),
     });
   }
 
@@ -55,9 +55,9 @@ class AddonSelectField extends React.Component {
     const { addons } = this.props;
     if (addons.length !== nextProps.addons.length) {
       this.setState({
-        dataSource: addons.map(
-          addon => ({ value: addon.id, text: `${addon.name} v${addon.version}` })
-        ),
+        dataSource: addons.map(addon => (
+          { value: addon.id, text: `${addon.name} v${addon.version}` }
+        )),
       });
     }
   }
