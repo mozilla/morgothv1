@@ -22,6 +22,39 @@ PLATFORMS = (
 )
 
 
+def addons_diff(qs_a, qs_b):
+    removed = []
+    added = []
+    upgraded = []
+    downgraded = []
+
+    for b in qs_b.all():
+        try:
+            a = qs_a.get(name=b.name)
+        except Addon.DoesNotExist:
+            added.append(b.id)
+        else:
+            if int(a.version) < int(b.version):
+                downgraded.append(a.id)
+                upgraded.append(b.id)
+            elif int(a.version) > int(b.version):
+                downgraded.append(b.id)
+                upgraded.append(a.id)
+
+    for a in qs_a.all():
+        try:
+            qs_b.get(name=a.name)
+        except Addon.DoesNotExist:
+            removed.append(a.id)
+
+    return {
+        'added': added,
+        'removed': removed,
+        'upgraded': upgraded,
+        'downgraded': downgraded
+    }
+
+
 class VersionNumber(object):
     def __init__(self, major=0, minor=0, build=0):
         self.major = int(major)
@@ -174,12 +207,20 @@ class AddonGroup(models.Model):
     def qa_synced(self):
         """A boolean that indicates if the QA channel on Balrog is in sync with Morgoth."""
         qa_addons_list = list(self.qa_addons.order_by('id'))
-        built_in_addons_list = list(self.addons.order_by('id'))
-        return qa_addons_list == built_in_addons_list
+        addons_list = list(self.addons.order_by('id'))
+        return qa_addons_list == addons_list
 
     @property
     def shipped_synced(self):
         """A boolean that indicates if the release channel on Balrog is in sync with Morgoth."""
         shipped_addons_list = list(self.shipped_addons.order_by('id'))
-        built_in_addons_list = list(self.addons.order_by('id'))
-        return shipped_addons_list == built_in_addons_list
+        addons_list = list(self.addons.order_by('id'))
+        return shipped_addons_list == addons_list
+
+    @property
+    def qa_sync_diff(self):
+        return addons_diff(self.qa_addons, self.addons)
+
+    @property
+    def shipped_sync_diff(self):
+        return addons_diff(self.shipped_addons, self.addons)

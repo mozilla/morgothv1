@@ -39,6 +39,10 @@ class AddonGroupSerializer(serializers.ModelSerializer):
     qa_addons = AddonSerializer(many=True, read_only=True)
     shipped_addons = AddonSerializer(many=True, read_only=True)
     browser_version = VersionField()
+    qa_synced = serializers.BooleanField(read_only=True)
+    shipped_synced = serializers.BooleanField(read_only=True)
+    qa_sync_diff = serializers.JSONField(read_only=True)
+    shipped_sync_diff = serializers.JSONField(read_only=True)
 
     class Meta:
         model = AddonGroup
@@ -50,6 +54,10 @@ class AddonGroupSerializer(serializers.ModelSerializer):
             'built_in_addons',
             'qa_addons',
             'shipped_addons',
+            'qa_synced',
+            'shipped_synced',
+            'qa_sync_diff',
+            'shipped_sync_diff',
         )
 
     @transaction.atomic
