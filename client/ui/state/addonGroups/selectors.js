@@ -5,7 +5,7 @@ import { getAddon } from '../addons/selectors';
 
 function mapAddons(state) {
   let addonGroup = this;
-  for (const key of ['addons', 'build_in_addons', 'qa_addons', 'shipped_addons']) {
+  for (const key of ['addons', 'built_in_addons', 'qa_addons', 'shipped_addons']) {
     addonGroup = {
       ...addonGroup,
       [key]: this[key].map(addonId => getAddon(state, addonId)),
