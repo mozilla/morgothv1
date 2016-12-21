@@ -6,6 +6,7 @@ import AddonDetailsPage from './components/pages/AddonDetailsPage';
 import AddonGroupDetailsPage from './components/pages/AddonGroupDetailsPage';
 import AddonsListPage from './components/pages/AddonsListPage';
 import AddonGroupsListPage from './components/pages/AddonGroupsListPage';
+import AddonGroupsSyncPage from './components/pages/AddonGroupsSyncPage';
 import HomePage from './components/pages/HomePage';
 import NotFoundPage from './components/pages/NotFoundPage';
 
@@ -28,6 +29,18 @@ export default (
     </Route>
     <Route path="/addon_groups/" title="Addon Groups">
       <IndexRoute component={AddonGroupsListPage} />
+      <Route
+        path="/addon_groups/sync_qa/"
+        title="Sync QA Channel"
+        component={AddonGroupsSyncPage}
+        sync="qa"
+      />
+      <Route
+        path="/addon_groups/sync_release/"
+        title="Sync Release Channel"
+        component={AddonGroupsSyncPage}
+        sync="release"
+      />
       <Route
         path="/addon_groups/new/"
         title="New Addon Group"

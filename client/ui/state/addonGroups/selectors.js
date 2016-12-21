@@ -16,7 +16,7 @@ function mapAddons(state) {
 
 export function getAddonGroupsList(state) {
   const addonGroups = state.addonGroups.objects;
-  return Object.keys(addonGroups).map(id => addonGroups[id]);
+  return Object.keys(addonGroups).map(id => getAddonGroup(state, id));
 }
 
 export function getAddonGroup(state, id) {

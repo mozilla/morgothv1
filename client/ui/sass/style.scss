@@ -116,3 +116,20 @@ body {
     }
   }
 }
+
+.group-diff {
+  padding: 24px;
+
+  .diff {
+    display: flex;
+    font-family: monospace;
+    margin: 10px 0;
+    width: 100%;
+
+    > div {
+      border: 1px solid #ccc;
+      flex: 1;
+      padding: 10px;
+    }
+  }
+}
