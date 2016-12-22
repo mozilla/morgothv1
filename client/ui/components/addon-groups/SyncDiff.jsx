@@ -23,6 +23,31 @@ class SyncDiff extends React.Component {
     type: pt.string,
   };
 
+  mapAddons(addonGroup) {
+    const { type } = this.props;
+
+    return addon => {
+      const diff = (type === 'qa') ? addonGroup.qa_sync_diff : addonGroup.shipped_sync_diff;
+      let classes = '';
+
+      if (diff.added.includes(addon.id)) {
+        classes = 'added';
+      } else if (diff.removed.includes(addon.id)) {
+        classes = 'removed';
+      } else if (diff.upgraded.includes(addon.id)) {
+        classes = 'upgraded';
+      } else if (diff.downgraded.includes(addon.id)) {
+        classes = 'downgraded';
+      }
+
+      return (
+        <div className={`addon ${classes}`} key={addon.id}>
+          {addon.name} <span>v{addon.version}</span>
+        </div>
+      );
+    };
+  }
+
   renderGroups() {
     const { addonGroups, type } = this.props;
     const groups = [];
@@ -36,14 +61,10 @@ class SyncDiff extends React.Component {
             <strong>{addonGroup.browser_version}</strong>
             <div className="diff">
               <div className="diff-a">
-                {currAddons.map(addon => <div key={addon.id}>{addon.name} v{addon.version}</div>)}
+                {currAddons.map(this.mapAddons(addonGroup))}
               </div>
               <div className="diff-b">
-                {
-                  addonGroup.addons.map(addon => (
-                    <div key={addon.id}>{addon.name} v{addon.version}</div>
-                  ))
-                }
+                {addonGroup.addons.map(this.mapAddons(addonGroup))}
               </div>
             </div>
           </div>

@@ -131,5 +131,29 @@ body {
       flex: 1;
       padding: 10px;
     }
+
+    .addon {
+      padding: 4px 5px;
+
+      &.added {
+        background: #cfc;
+      }
+
+      &.removed {
+        background: #fcc;
+      }
+
+      &.upgraded {
+        > span {
+          background: #cfc;
+        }
+      }
+
+      &.downgraded {
+        > span {
+          background: #fcc;
+        }
+      }
+    }
   }
 }
