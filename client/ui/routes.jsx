@@ -39,7 +39,7 @@ export default (
         path="/addon_groups/sync_release/"
         title="Sync Release Channel"
         component={AddonGroupsSyncPage}
-        sync="release"
+        sync="shipped"
       />
       <Route
         path="/addon_groups/new/"

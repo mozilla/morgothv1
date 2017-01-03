@@ -122,18 +122,24 @@ body {
 
   .diff {
     display: flex;
-    font-family: monospace;
     margin: 10px 0;
     width: 100%;
 
     > div {
       border: 1px solid #ccc;
       flex: 1;
-      padding: 10px;
+    }
+
+    header {
+      background: #ccc;
+      font-size: 13px;
+      font-weight: bold;
+      padding: 8px;
     }
 
     .addon {
-      padding: 4px 5px;
+      font-family: monospace;
+      padding: 8px;
 
       &.added {
         background: #cfc;

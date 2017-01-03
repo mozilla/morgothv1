@@ -1,3 +1,4 @@
+import functools
 import hashlib
 import math
 import os
@@ -22,30 +23,31 @@ PLATFORMS = (
 )
 
 
-def addons_diff(qs_a, qs_b):
+def addons_diff(from_qs, to_qs):
     removed = []
     added = []
     upgraded = []
     downgraded = []
 
-    for b in qs_b.all():
-        try:
-            a = qs_a.get(name=b.name)
-        except Addon.DoesNotExist:
-            added.append(b.id)
-        else:
-            if int(a.version) < int(b.version):
-                downgraded.append(a.id)
-                upgraded.append(b.id)
-            elif int(a.version) > int(b.version):
-                downgraded.append(b.id)
-                upgraded.append(a.id)
+    from_addons = list(from_qs.all())
+    to_addons = list(to_qs.all())
 
-    for a in qs_a.all():
+    for to_addon in to_addons:
         try:
-            qs_b.get(name=a.name)
+            from_addon = from_qs.get(name=to_addon.name)
         except Addon.DoesNotExist:
-            removed.append(a.id)
+            added.append(to_addon.id)
+        else:
+            if from_addon.version < to_addon.version:
+                downgraded.append(from_addon.id)
+                upgraded.append(to_addon.id)
+            elif from_addon.version > to_addon.version:
+                downgraded.append(to_addon.id)
+                upgraded.append(from_addon.id)
+
+    for from_addon in from_addons:
+        if from_addon not in to_addons:
+            removed.append(from_addon.id)
 
     return {
         'added': added,
@@ -55,6 +57,7 @@ def addons_diff(qs_a, qs_b):
     }
 
 
+@functools.total_ordering
 class VersionNumber(object):
     def __init__(self, major=0, minor=0, build=0):
         self.major = int(major)
@@ -73,6 +76,12 @@ class VersionNumber(object):
 
     def __repr__(self):
         return '<VersionNumber: {}>'.format(self)
+
+    def __eq__(self, other):
+        return isinstance(other, VersionNumber) and int(self) == int(other)
+
+    def __lt__(self, other):
+        return isinstance(other, VersionNumber) and int(self) < int(other)
 
     @property
     def version(self):
