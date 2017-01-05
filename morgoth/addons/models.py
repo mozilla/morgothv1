@@ -78,10 +78,14 @@ class VersionNumber(object):
         return '<VersionNumber: {}>'.format(self)
 
     def __eq__(self, other):
-        return isinstance(other, VersionNumber) and int(self) == int(other)
+        if not isinstance(other, VersionNumber):
+            raise TypeError()
+        return int(self) == int(other)
 
     def __lt__(self, other):
-        return isinstance(other, VersionNumber) and int(self) < int(other)
+        if not isinstance(other, VersionNumber):
+            raise TypeError()
+        return int(self) < int(other)
 
     @property
     def version(self):

@@ -66,7 +66,11 @@ class SyncDiff extends React.Component {
             <div className="diff">
               <div className="diff-from">
                 <header>Current Addons</header>
-                {currAddons.map(this.mapAddons(addonGroup))}
+                {
+                  currAddons.map(addon => (
+                    <DiffAddon key={addon.id} diff={diff} addon={addon} />
+                  ))
+                }
               </div>
               <div className="diff-to">
                 <header>Addons To Be Synced</header>
@@ -98,7 +102,7 @@ class SyncDiff extends React.Component {
     }
 
     const groups = this.renderGroups();
-    const synced = this.groups.length === 0;
+    const synced = groups.length === 0;
 
     return (
       <div>
