@@ -74,7 +74,7 @@ export function requestAddonGroup(pk) {
 
 function requestAddonGroupsSuccess(dispatch, requestId, data, limit, offset) {
   data.results.forEach(addonGroup => {
-    for (const addonType of ['addons', 'build_in_addons', 'qa_addons', 'shipped_addons']) {
+    for (const addonType of ['addons', 'built_in_addons', 'qa_addons', 'shipped_addons']) {
       addonGroup[addonType].forEach(addon => {
         dispatch({
           type: ADDON_RECEIVED,

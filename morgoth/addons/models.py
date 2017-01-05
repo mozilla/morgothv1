@@ -1,3 +1,4 @@
+import functools
 import hashlib
 import math
 import os
@@ -22,6 +23,41 @@ PLATFORMS = (
 )
 
 
+def addons_diff(from_qs, to_qs):
+    removed = []
+    added = []
+    upgraded = []
+    downgraded = []
+
+    from_addons = list(from_qs.all())
+    to_addons = list(to_qs.all())
+
+    for to_addon in to_addons:
+        try:
+            from_addon = from_qs.get(name=to_addon.name)
+        except Addon.DoesNotExist:
+            added.append(to_addon.id)
+        else:
+            if from_addon.version < to_addon.version:
+                downgraded.append(from_addon.id)
+                upgraded.append(to_addon.id)
+            elif from_addon.version > to_addon.version:
+                downgraded.append(to_addon.id)
+                upgraded.append(from_addon.id)
+
+    for from_addon in from_addons:
+        if from_addon not in to_addons:
+            removed.append(from_addon.id)
+
+    return {
+        'added': added,
+        'removed': removed,
+        'upgraded': upgraded,
+        'downgraded': downgraded
+    }
+
+
+@functools.total_ordering
 class VersionNumber(object):
     def __init__(self, major=0, minor=0, build=0):
         self.major = int(major)
@@ -40,6 +76,16 @@ class VersionNumber(object):
 
     def __repr__(self):
         return '<VersionNumber: {}>'.format(self)
+
+    def __eq__(self, other):
+        if not isinstance(other, VersionNumber):
+            raise TypeError()
+        return int(self) == int(other)
+
+    def __lt__(self, other):
+        if not isinstance(other, VersionNumber):
+            raise TypeError()
+        return int(self) < int(other)
 
     @property
     def version(self):
@@ -174,12 +220,20 @@ class AddonGroup(models.Model):
     def qa_synced(self):
         """A boolean that indicates if the QA channel on Balrog is in sync with Morgoth."""
         qa_addons_list = list(self.qa_addons.order_by('id'))
-        built_in_addons_list = list(self.addons.order_by('id'))
-        return qa_addons_list == built_in_addons_list
+        addons_list = list(self.addons.order_by('id'))
+        return qa_addons_list == addons_list
 
     @property
     def shipped_synced(self):
         """A boolean that indicates if the release channel on Balrog is in sync with Morgoth."""
         shipped_addons_list = list(self.shipped_addons.order_by('id'))
-        built_in_addons_list = list(self.addons.order_by('id'))
-        return shipped_addons_list == built_in_addons_list
+        addons_list = list(self.addons.order_by('id'))
+        return shipped_addons_list == addons_list
+
+    @property
+    def qa_sync_diff(self):
+        return addons_diff(self.qa_addons, self.addons)
+
+    @property
+    def shipped_sync_diff(self):
+        return addons_diff(self.shipped_addons, self.addons)

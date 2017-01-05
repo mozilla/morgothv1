@@ -116,3 +116,50 @@ body {
     }
   }
 }
+
+.group-diff {
+  padding: 24px;
+
+  .diff {
+    display: flex;
+    margin: 10px 0;
+    width: 100%;
+
+    > div {
+      border: 1px solid #ccc;
+      flex: 1;
+    }
+
+    header {
+      background: #ccc;
+      font-size: 13px;
+      font-weight: bold;
+      padding: 8px;
+    }
+
+    .addon {
+      font-family: monospace;
+      padding: 8px;
+
+      &.added {
+        background: #cfc;
+      }
+
+      &.removed {
+        background: #fcc;
+      }
+
+      &.upgraded {
+        > span {
+          background: #cfc;
+        }
+      }
+
+      &.downgraded {
+        > span {
+          background: #fcc;
+        }
+      }
+    }
+  }
+}

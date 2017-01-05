@@ -147,9 +147,11 @@ class AddonGroupsList extends React.Component {
           <ToolbarGroup className="align-right" lastChild>
             <RaisedButton
               label="Sync QA Channel"
+              onClick={() => goTo('/addon_groups/sync_qa/')}
             />
             <RaisedButton
               label="Sync Release Channel"
+              onClick={() => goTo('/addon_groups/sync_release/')}
             />
             <RaisedButton
               label="Create New Addon Group"
