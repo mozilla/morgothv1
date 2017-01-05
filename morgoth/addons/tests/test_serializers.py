@@ -36,4 +36,18 @@ class TestAddonGroupSerializer(object):
             'built_in_addons': [],
             'qa_addons': [],
             'shipped_addons': [],
+            'qa_sync_diff': {
+                'added': [addon.id],
+                'downgraded': [],
+                'removed': [],
+                'upgraded': []
+            },
+            'qa_synced': False,
+            'shipped_sync_diff': {
+                'added': [addon.id],
+                'downgraded': [],
+                'removed': [],
+                'upgraded': []
+            },
+            'shipped_synced': False
         }
