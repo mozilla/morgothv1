@@ -10,15 +10,15 @@ import {
   ADDON_GROUP_REQUEST,
   ADDON_GROUP_REQUEST_SUCCESS,
   ADDON_GROUP_REQUEST_FAILURE,
-  ADDON_GROUP_SYNC,
-  ADDON_GROUP_SYNC_SUCCESS,
-  ADDON_GROUP_SYNC_FAILURE,
   ADDON_GROUP_UPDATE,
   ADDON_GROUP_UPDATE_SUCCESS,
   ADDON_GROUP_UPDATE_FAILURE,
   ADDON_GROUPS_REQUEST,
   ADDON_GROUPS_REQUEST_SUCCESS,
   ADDON_GROUPS_REQUEST_FAILURE,
+  ADDON_GROUPS_SYNC,
+  ADDON_GROUPS_SYNC_SUCCESS,
+  ADDON_GROUPS_SYNC_FAILURE,
   ADDON_RECEIVED,
 } from '../action-types';
 
@@ -220,24 +220,42 @@ export function updateAddonGroup(pk, addonGroupData, saveAndContinue) {
   };
 }
 
-function syncAddonGroupSuccess(dispatch, requestId) {
+function syncAddonGroupsSuccess(dispatch, requestId, addonGroups) {
+  addonGroups.forEach(addonGroup => {
+    for (const addonType of ['addons', 'built_in_addons', 'qa_addons', 'shipped_addons']) {
+      addonGroup[addonType].forEach(addon => {
+        dispatch({
+          type: ADDON_RECEIVED,
+          addon,
+        });
+      });
+    }
+
+    dispatch({
+      type: ADDON_GROUP_RECEIVED,
+      addonGroup,
+    });
+  });
+
   dispatch({
-    type: ADDON_GROUP_SYNC_SUCCESS,
+    type: ADDON_GROUPS_SYNC_SUCCESS,
     requestId,
   });
+
+  dispatch(push('/addon_groups/'));
 }
 
-function syncAddonGroupFailure(dispatch, requestId, error) {
+function syncAddonGroupsFailure(dispatch, requestId, error) {
   dispatch({
-    type: ADDON_GROUP_SYNC_FAILURE,
+    type: ADDON_GROUPS_SYNC_FAILURE,
     requestId,
     error,
   });
 }
 
-export function syncAddonGroup(pk) {
+export function syncAddonGroups(channel) {
   return (dispatch, getState) => {
-    const requestId = `sync-${pk}`;
+    const requestId = `sync-${channel}`;
     const request = getRequest(getState(), requestId);
 
     if (request.loading) {
@@ -245,12 +263,12 @@ export function syncAddonGroup(pk) {
     }
 
     dispatch({
-      type: ADDON_GROUP_SYNC,
+      type: ADDON_GROUPS_SYNC,
       requestId,
     });
 
-    return apiFetch(`addon_group/${pk}/sync/`, { method: 'POST' })
-      .then(() => syncAddonGroupSuccess(dispatch, requestId))
-      .catch(error => syncAddonGroupFailure(dispatch, requestId, error));
+    return apiFetch('addon_group/sync/', { method: 'POST', data: { channel } })
+      .then(addonGroups => syncAddonGroupsSuccess(dispatch, requestId, addonGroups))
+      .catch(error => syncAddonGroupsFailure(dispatch, requestId, error));
   };
 }

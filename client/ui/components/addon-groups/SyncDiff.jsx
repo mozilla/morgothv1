@@ -47,6 +47,7 @@ class SyncDiff extends React.Component {
   static propTypes = {
     addonGroups: pt.array,
     count: pt.number,
+    syncAddonGroups: pt.func.isRequired,
     type: pt.string,
   };
 
@@ -90,7 +91,7 @@ class SyncDiff extends React.Component {
   }
 
   render() {
-    const { addonGroups, count } = this.props;
+    const { addonGroups, count, syncAddonGroups, type } = this.props;
 
     if (count !== addonGroups.length) {
       return (
@@ -118,6 +119,7 @@ class SyncDiff extends React.Component {
                 null :
                 <RaisedButton
                   label="Confirm Sync"
+                  onClick={() => syncAddonGroups(type)}
                   primary
                 />
             }
