@@ -93,6 +93,12 @@ Installation
 
       python manage.py createsuperuser
 
+.. note::
+
+    Any time a user logs in through basic auth with valid credentials a new user is created if one
+    doesn't already exist. This user will not have permission to actually post changes until an
+    existing super user assigns permissions to the new user.
+
 Once you've finished these steps, you should be able to start the site by
 running:
 
